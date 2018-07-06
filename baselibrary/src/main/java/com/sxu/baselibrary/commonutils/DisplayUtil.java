@@ -89,10 +89,9 @@ public class DisplayUtil {
 
 	/**
 	 * 获取屏幕参数
-	 * @param context
 	 * @return
 	 */
-	public static String getScreenParams(Context context) {
+	public static String getScreenParams() {
 		return getScreenWidth() + "*" + getScreenHeight();
 	}
 }

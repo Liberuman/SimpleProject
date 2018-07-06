@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sxu.baselibrary"/>
+          package="com.sxu.baselibrary">
+    <application>
+        <provider
+            android:authorities="com.sxu.baselibrary"
+            android:name=".commonutils.BaseContentProvider"/>
+    </application>
+</manifest>
