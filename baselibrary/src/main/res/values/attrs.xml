@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="bl_CircleImage">
+        <attr name="bl_border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="bl_CircleProgressBar">
+        <!-- 进度条外边框的宽度和颜色 -->
+        <attr name="bl_outBorderColor" format="color"/>
+        <attr name="bl_outBorderWidth" format="dimension"/>
+        <!-- 进度条内边框的宽度和颜色 -->
+        <attr name="bl_inBorderColor" format="color"/>
+        <attr name="bl_inBorderWidth" format="dimension"/>
+        <!-- 内部圆的颜色 -->
+        <attr name="bl_inCircleColor" format="color"/>
+        <attr name="bl_progressColor" format="color"/>
+        <!-- 进度条的颜色和宽度 -->
+        <attr name="bl_progressDefaultColor" format="color"/>
+        <attr name="bl_progressWidth" format="dimension"/>
+        <!-- 描述文字的内容,字体大小和字体颜色-->
+        <attr name="bl_descText" format="string"/>
+        <attr name="bl_descTextSize" format="dimension"/>
+        <attr name="bl_descTextColor" format="color"/>
+        <!-- 进度内容,字体大小和字体颜色-->
+        <attr name="bl_progressText" format="string"/>
+        <attr name="bl_progressTextSize" format="dimension"/>
+        <attr name="bl_progressTextColor" format="color"/>
+        <attr name="bl_progressTextStyle">
+            <enum name="bl_normal" value="0"/>
+            <enum name="bl_bold" value="1"/>
+        </attr>
+        <!-- 进度和描述文字之间的间距 -->
+        <attr name="bl_lineGap" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="bl_ZoomImageAttr">
+        <attr name="bl_placeHolderId" format="reference"/>
+        <attr name="bl_errorHolderId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="bl_LevelLayout">
+        <!-- the count of step that equals levels sub one-->
+        <attr name="bl_stepCount" format="integer"/>
+        <!-- the default position of chosen level -->
+        <attr name="bl_defaultPos" format="integer"/>
+        <!-- the icon of level -->
+        <attr name="bl_thumb" format="reference"/>
+        <!-- the width of level's icon -->
+        <attr name="bl_thumbWidth" format="dimension"/>
+        <!-- the height of level's icon -->
+        <attr name="bl_thumbHeight" format="dimension"/>
+        <!-- the height of line between level and level -->
+        <attr name="bl_lineHeight" format="dimension"/>
+        <!-- the color of line between level and level -->
+        <attr name="bl_lineColor" format="color"/>
+        <!-- the radius of point where is located level -->
+        <attr name="bl_pointRadius" format="dimension"/>
+        <!-- the color of point where is located level -->
+        <attr name="bl_pointColor" format="color"/>
+        <!-- the speed of thumb scrolling -->
+        <attr name="bl_scrollDuration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="bl_MixedTextImageLayout">
+        <attr name="bl_line_space" format="float" />
+        <attr name="bl_segment_space" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="bl_TabLayout">
+        <attr name="bl_textSize" format="dimension"/>
+        <attr name="bl_middleGap" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="bl_TabPageIndicatorEx">
+        <attr name="bl_itemWidth" format="dimension"/>
+        <attr name="bl_indicatorHeight" format="dimension" />
+        <attr name="bl_indicatorPadding" format="dimension"/>
+        <attr name="bl_indicatorColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="bl_SlidingDeleteLayout">
+        <attr name="bl_deleteViewResId" format="reference"/>
+        <attr name="bl_scrollOffset" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="bl_RefreshLayout">
+        <attr name="bl_headerViewResId" format="reference"/>
+        <attr name="bl_footerViewResId" format="reference"/>
+        <attr name="bl_supportTouchBottomLoad" format="boolean"/>
+        <attr name="bl_viscosity" format="float"/>
+        <attr name="bl_loadMoreOffset" format="dimension"/>
+        <attr name="bl_mode" format="enum">
+            <enum name="disable" value="0"/>
+            <enum name="refresh" value="1"/>
+            <enum name="load_more" value="2"/>
+            <enum name="both" value="3"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="bl_ShapeImageView">
+        <attr name="bl_borderColor" format="color"/>
+        <attr name="bl_borderWidth" format="dimension"/>
+        <attr name="bl_radius" format="dimension"/>
+        <attr name="bl_shape" format="enum">
+            <enum name="circle" value="0"/>
+            <enum name="round" value="1"/>
+        </attr>
+
+    </declare-styleable>
+</resources>

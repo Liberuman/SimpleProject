@@ -1,4 +1,8 @@
-apply plugin: 'com.android.library'
+if (isModule) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -8,6 +12,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        resourcePrefix "bl_"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,12 +36,17 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
 
+    // Okhttp3
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     compile 'com.google.code.gson:gson:2.8.1'
+    // Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    // RxJava
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    // AutoViewPager
+    implementation 'com.github.JuHonggang:Autoviewpager:v0.1'
 }

@@ -19,6 +19,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -26,6 +27,8 @@ project.ext {
     compileSdkVersion = COMPILE_SDK_VERSION.toInteger()
     minSdkVersion = MIN_SDK_VERSION
     targetSdkVersion = TARGET_SDK_VERSION
+
+    isModule = IS_MODULE.toBoolean()
 }
 
 task clean(type: Delete) {
