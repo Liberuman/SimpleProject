@@ -41,8 +41,6 @@ import rx.schedulers.Schedulers;
  *******************************************************************************/
 public class HttpManager {
 
-	private static HttpManager instance;
-
 	private static String baseUrl;
 	private static Context context;
 	private Retrofit retrofit;

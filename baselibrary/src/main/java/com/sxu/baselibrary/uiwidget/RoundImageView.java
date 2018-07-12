@@ -24,7 +24,7 @@ import android.widget.ImageView;
  * <p/>
  * Date: 16/4/7
  * <p/>
- * Copyright: all rights reserved by zhinanmao.
+ * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class RoundImageView extends ImageView {
 
