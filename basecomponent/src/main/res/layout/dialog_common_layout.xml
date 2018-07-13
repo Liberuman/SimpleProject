@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_white_12dp_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="提示"
+        android:textColor="@color/b1"
+        android:textSize="@dimen/font_size_34" />
+
+    <TextView
+        android:id="@+id/desc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="路线有更新,你是否需要重新下载路线有更新,你是否需要重新下载"
+        android:textColor="@color/b1"
+        android:textSize="@dimen/font_size_28" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="18dp"
+        android:background="@color/x1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/z1"
+            android:textSize="@dimen/font_size_32" />
+
+        <TextView
+            android:id="@+id/gap_line"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/x1" />
+
+        <TextView
+            android:id="@+id/ok_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/z1"
+            android:textSize="@dimen/font_size_32" />
+    </LinearLayout>
+</LinearLayout>

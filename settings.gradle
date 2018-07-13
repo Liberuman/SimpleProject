@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':commonbusiness'
+include ':app', ':baselibrary', ':commonbusiness', ':basecomponent'

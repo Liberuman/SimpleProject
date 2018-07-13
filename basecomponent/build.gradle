@@ -11,8 +11,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        resourcePrefix "cb_"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -28,20 +26,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'com.android.support:support-dynamic-animation:25.3.0'
 
-    // 微信分享，登录，支付等
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-    // 微博分享
-    compile 'com.sina.weibo.sdk:core:4.2.7:openDefaultRelease@aar'
-
-    // 极光推送
-    compile 'cn.jiguang.sdk:jpush:3.1.1'
-    compile 'cn.jiguang.sdk:jcore:1.1.9'
-    // 华为推送
-    compile 'com.huawei.android.hms:push:2.5.3.305'
+    // 侧滑关闭组件
+    compile 'me.imid.swipebacklayout.lib:library:1.1.0'
     compile project(path: ':baselibrary')
 }

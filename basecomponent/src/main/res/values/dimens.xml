@@ -1,0 +1,26 @@
+<resources>
+    
+    <!-- 字体大小 -->
+    <!-- 用于重要的标题,导航栏标题 -->
+    <dimen name="font_size_40">20dp</dimen>
+    <dimen name="font_size_36">18dp</dimen>
+    <dimen name="font_size_34">17dp</dimen>
+    <!-- 用于大多数按钮文字 -->
+    <dimen name="font_size_32">16dp</dimen>
+    <dimen name="font_size_30">15dp</dimen>
+    <!-- 用于大多数文字 -->
+    <dimen name="font_size_28">14dp</dimen>
+    <!-- 用于辅助性文字 -->
+    <dimen name="font_size_26">13dp</dimen>
+    <!-- 用于辅助性文字 -->
+    <dimen name="font_size_24">12dp</dimen>
+    <!-- 用于极少辅助行文字 -->
+    <dimen name="font_size_20">10dp</dimen>
+
+    <dimen name="font_size_44">22dp</dimen>
+    <dimen name="font_size_48">24dp</dimen>
+    <dimen name="font_size_56">28dp</dimen>
+    <dimen name="font_size_64">32dp</dimen>
+    <dimen name="font_size_72">36dp</dimen>
+    <dimen name="font_size_96">48dp</dimen>
+</resources>

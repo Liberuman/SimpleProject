@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--
+        常用透明度十六进制对照表：
+        10%: 1a     20%: 33     30%: 4d
+        40%: 66     50%: 80     60%: 99
+        70%: b3     80%: cc     90%: e6
+    -->
+
+    <!-- UI颜色标准 -->
+    <color name="b1">#40484d</color>
+    <color name="b1_90">#e640484d</color>
+    <color name="b2">#9dabb2</color>
+    <color name="b2_40">#669dabb2</color>
+    <color name="b3">#666666</color>
+    <color name="b4">#cccccc</color>
+    <color name="b4_50">#80cccccc</color>
+    <color name="b5">#fafafa</color>
+    <color name="f6">#f6f6f6</color>
+    <color name="z1">#33cccc</color>
+    <color name="z1_40">#6633cccc</color>
+    <color name="z1_50">#8033cccc</color>
+    <color name="z1_60">#9933cccc</color>
+    <color name="z2">#40d6bd</color>
+    <color name="z3">#33c2cc</color>
+    <color name="x1">#1a000000</color>
+    <color name="x2">#33000000</color>
+    <color name="x2_1">#99000000</color>
+    <color name="x3">#66000000</color>
+    <color name="x4">#99000000</color>
+    <color name="t1">#FFC433</color>
+    <color name="t2">#ff3300</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_10">#1affffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_70">#B3ffffff</color>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:drawable="@drawable/rectangle_z2_to_z3_8dp_bg"/>
+    <item android:state_enabled="false" android:drawable="@drawable/rectangle_x1_8dp_bg"/>
+</selector>
