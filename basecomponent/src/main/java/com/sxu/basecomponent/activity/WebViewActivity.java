@@ -49,17 +49,17 @@ public class WebViewActivity extends BaseActivity {
 			title = intent.getStringExtra("title");
 			boolean needShare = getIntent().getBooleanExtra("needShare", false);
 			if (needShare) {
-				navigationBar.setRightIconResAndEvent(R.drawable.nav_share_grey_icon, new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						shareInfo();
-					}
-				});
+//				navigationBar.setRightIconResAndEvent(R.drawable.nav_share_grey_icon, new View.OnClickListener() {
+//					@Override
+//					public void onClick(View v) {
+//						shareInfo();
+//					}
+//				});
 			}
 		}
 
 		loadUrl(url);
-		navigationBar.setTitle(!TextUtils.isEmpty(title) ? title : "加载中");
+		//navigationBar.setTitle(!TextUtils.isEmpty(title) ? title : "加载中");
 	}
 
 	protected void loadUrl(String url) {

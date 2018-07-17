@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="提示"
+        android:text="标题"
         android:textColor="@color/b1"
         android:textSize="@dimen/font_size_34" />
 
@@ -24,7 +24,7 @@
         android:lineSpacingMultiplier="1.2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="路线有更新,你是否需要重新下载路线有更新,你是否需要重新下载"
+        android:text="描述"
         android:textColor="@color/b1"
         android:textSize="@dimen/font_size_28" />
 
