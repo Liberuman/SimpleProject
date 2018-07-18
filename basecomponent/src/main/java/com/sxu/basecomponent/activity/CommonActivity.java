@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
 import com.sxu.basecomponent.uiwidget.NavigationBar;
@@ -32,6 +34,7 @@ public abstract class CommonActivity extends SwipeBackActivity {
 	protected Activity context;
 	protected ToolbarEx toolbar;
 	protected FragmentManager fragmentManager;
+	protected ViewGroup containerLayout;
 
 	protected final int TOOL_BAR_STYLE_NONE = 0;
 	protected final int TOOL_BAR_STYLE_NORMAL = 1;
@@ -61,17 +64,27 @@ public abstract class CommonActivity extends SwipeBackActivity {
 
 		pretreatment();
 
-		View contentView = initLayout();
-		if (contentView != null) {
-			setContentView(contentView);
+		initLayout();
+		if (containerLayout != null) {
+			setContentView(containerLayout);
 		}
 	}
 
 	/**
 	 * 根据toolbar的样式返回不同的布局
 	 */
-	protected View initLayout() {
-		return null;
+	protected void initLayout() {
+		switch (toolbarStyle) {
+			case TOOL_BAR_STYLE_NORMAL:
+				containerLayout = createNormalToolbarLayout();
+				break;
+			case TOOL_BAR_STYLE_TRANSPARENT:
+				containerLayout = createTransparentToolbarLayout(true);
+				break;
+			case TOOL_BAR_STYLE_TRANSLUCENT:
+				containerLayout = createTransparentToolbarLayout(false);
+				break;
+		}
 	}
 
 	/**
@@ -112,6 +125,29 @@ public abstract class CommonActivity extends SwipeBackActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	}
+
+	private ViewGroup createNormalToolbarLayout() {
+		LinearLayout containerLayout = new LinearLayout(this);
+		containerLayout.setOrientation(LinearLayout.VERTICAL);
+		toolbar = new ToolbarEx(this);
+		containerLayout.addView(toolbar);
+		View.inflate(this, getLayoutResId(), containerLayout);
+		return containerLayout;
+	}
+
+	private ViewGroup createTransparentToolbarLayout(boolean isTransparent) {
+		FrameLayout containerLayout = new FrameLayout(this);
+		View.inflate(this, getLayoutResId(), containerLayout);
+		toolbar = new ToolbarEx(this);
+		if (isTransparent) {
+			toolbar.setBackgroundAlpha(0);
+		} else {
+			toolbar.setBackgroundAlpha(128);
+		}
+		containerLayout.addView(toolbar);
+
+		return containerLayout;
 	}
 
 	@Override

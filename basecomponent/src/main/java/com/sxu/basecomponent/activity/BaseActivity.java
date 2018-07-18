@@ -41,48 +41,12 @@ public abstract class BaseActivity extends CommonActivity {
     }
 
     @Override
-    protected View initLayout() {
-        View contentView;
-        switch (toolbarStyle) {
-            case TOOL_BAR_STYLE_NONE:
-                contentView = View.inflate(this, getLayoutResId(), null);
-                break;
-            case TOOL_BAR_STYLE_NORMAL:
-                contentView = createNormalToolbarLayout();
-                break;
-            case TOOL_BAR_STYLE_TRANSPARENT:
-                contentView = createTransparentToolbarLayout(true);
-                break;
-            case TOOL_BAR_STYLE_TRANSLUCENT:
-                contentView = createTransparentToolbarLayout(false);
-                break;
-            default:
-                throw new IllegalArgumentException("The toolbarStyle value is not supported");
-        }
-
-        return contentView;
-    }
-
-    private View createNormalToolbarLayout() {
-        LinearLayout containerLayout = new LinearLayout(this);
-        containerLayout.setOrientation(LinearLayout.VERTICAL);
-        toolbar = new ToolbarEx(this);
-        containerLayout.addView(toolbar);
-        View.inflate(this, getLayoutResId(), containerLayout);
-        return containerLayout;
-    }
-
-    private View createTransparentToolbarLayout(boolean isTransparent) {
-        FrameLayout containerLayout = new FrameLayout(this);
-        View.inflate(this, getLayoutResId(), containerLayout);
-        toolbar = new ToolbarEx(this);
-        if (isTransparent) {
-            toolbar.setBackgroundAlpha(0);
+    protected void initLayout() {
+        if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
+            setContentView(getLayoutResId());
         } else {
-            toolbar.setBackgroundAlpha(128);
+            super.initLayout();
+            View.inflate(this, getLayoutResId(), containerLayout);
         }
-        containerLayout.addView(toolbar);
-
-        return containerLayout;
     }
 }

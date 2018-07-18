@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sxu.basecomponent.R;
@@ -31,30 +32,14 @@ import com.sxu.baselibrary.commonutils.ToastUtil;
  *******************************************************************************/
 public abstract class BaseProgressActivity extends CommonActivity {
 
-    private TextView tipsText;
-    protected Button reloadButton;
-    private ViewStub resultStub;
-    private View emptyLayout;
     private View loadingLayout;
-    private View baseResultLayout;
-    private ViewGroup emptyContainerLayout;
-    private View resultLayout;
-
-    public NavigationBar navigationBar;
-    private FrameLayout containerLayout;
-
-    private String emptyTips;
-    private int backgroundColor;
-    private String navigationTitle;
-    private boolean isInflated;
-    private boolean isFloating;
-    private boolean isTransparent;
-    private boolean foregroundIsWhite;
-    private boolean canRefresh;
-    private boolean hideProgressBar;
-    private boolean hideBottomLine;
-    protected int mScrWidth;
-    protected Context mContext;
+    private View failureLayout;
+    private View emptyLayout;
+    private View loginLayout;
+    /**
+     * 内容页面是否已被加载，用于区分第一次加载和刷新
+     */
+    private boolean hasLoaded = false;
 
     // 数据请求成功
     protected static final int MSG_LOAD_FINISH = 0x100;
@@ -74,14 +59,15 @@ public abstract class BaseProgressActivity extends CommonActivity {
         }
     };
 
-
     @Override
-    protected View initLayout() {
-        if (loadingLayout == null) {
-
+    protected void initLayout() {
+        loadLoadingLayout();
+        if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
+            setContentView(loadingLayout);
+        } else {
+            super.initLayout();
+            containerLayout.addView(loadingLayout);
         }
-
-        return loadingLayout;
     }
 
     @Override
@@ -95,107 +81,74 @@ public abstract class BaseProgressActivity extends CommonActivity {
      */
     protected abstract void requestData();
 
+    /**
+     * 刷新页面后的逻辑处理
+     */
+    protected void updateCallback() {
+
+    }
+
     protected void notifyLoadFinish(int msg) {
         handler.sendEmptyMessage(msg);
     }
 
-    protected void setEmptyText(String text) {
-        emptyTips = text;
-    }
-
-    protected void setCanRefresh(boolean canRefresh) {
-        this.canRefresh = canRefresh;
-    }
-
-
     private void handleMsg(Message msg) {
-        loadingLayout.setVisibility(View.GONE);
         switch (msg.what) {
             case MSG_LOAD_FINISH:
                 loadContentLayout();
                 break;
             case MSG_LOAD_FAILURE:
-                loadFailureLayout();
+                if (failureLayout == null) {
+                    failureLayout = loadEmptyLayout();
+                }
+                setContentView(failureLayout);
                 break;
             case MSG_LOAD_EMPTY:
-                loadEmptyLayout();
+                if (emptyLayout == null) {
+                    emptyLayout = loadEmptyLayout();
+                }
+                setContentView(emptyLayout);
                 break;
             case MSG_NO_MORE:
                 ToastUtil.show(this, "没有更多数据啦");
                 break;
             case MSG_LOAD_NO_LOGIN:
-                loadLoginLayout();
+                if (loadingLayout == null) {
+                    loadingLayout = loadEmptyLayout();
+                }
+                setContentView(loadingLayout);
                 break;
             default:
                 throw new IllegalArgumentException("The Message not supported!");
         }
     }
 
-    private void showEmptyLayout(int msgCode) {
-        if (emptyLayout == null) {
-            emptyLayout = resultStub.inflate();
-            tipsText = emptyLayout.findViewById(R.id.base_tips_text);
-            reloadButton = emptyLayout.findViewById(R.id.base_reload_button);
-            baseResultLayout = emptyLayout.findViewById(R.id.base_result_layout);
-            emptyContainerLayout = emptyLayout.findViewById(R.id.empty_container_layout);
+    protected View loadLoadingLayout() {
+        return View.inflate(this, R.layout.common_progress_layout, null);
+    }
+
+    private void loadContentLayout() {
+        if (!hasLoaded) {
+            hasLoaded = true;
+            setContentView(getLayoutResId());
+            getViews();
+            initActivity();
         } else {
-            emptyLayout.setVisibility(View.VISIBLE);
-        }
-        if (msgCode == MSG_LOAD_EMPTY) {
-            reloadButton.setVisibility(View.GONE);
-            if (!TextUtils.isEmpty(emptyTips)) {
-                tipsText.setText(emptyTips);
-            } else {
-                tipsText.setText("暂无数据");
-            }
-            if (canRefresh) {
-                tipsText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        emptyLayout.setVisibility(View.GONE);
-                        loadingLayout.setVisibility(View.VISIBLE);
-                        requestData();
-                    }
-                });
-            }
-            loadEmptyLayout();
-        } else if (msgCode == MSG_LOAD_FAILURE) {
-            tipsText.setText("网络异常，轻击屏幕重新加载");
-            reloadButton.setVisibility(View.GONE);
-            baseResultLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    emptyLayout.setVisibility(View.GONE);
-                    loadingLayout.setVisibility(View.VISIBLE);
-                    requestData();
-                }
-            });
-            loadFailureLayout();
-        } else if (msgCode == MSG_LOAD_NO_LOGIN) {
-            reloadButton.setVisibility(View.VISIBLE);
-            tipsText.setText("你还未登陆，请先登录");
-            reloadButton.setText("请先登录");
-            loadLoginLayout();
-        } else {
-            /**
-             * Nothing
-             */
+            updateCallback();
         }
     }
 
-    protected void loadContentLayout() {
-
+    protected View loadEmptyLayout() {
+        return View.inflate(this, R.layout.common_empty_layout, null);
     }
 
-    protected void loadEmptyLayout() {
-
+    protected View loadFailureLayout() {
+        return View.inflate(this, R.layout.common_failure_layout, null);
     }
 
-    protected void loadFailureLayout() {
-
+    protected View loadLoginLayout() {
+        return View.inflate(this, R.layout.common_login_layout, null);
     }
 
-    protected void loadLoginLayout() {
-
-    }
+    //todo 需要将布局添加到containerLayout
 }
