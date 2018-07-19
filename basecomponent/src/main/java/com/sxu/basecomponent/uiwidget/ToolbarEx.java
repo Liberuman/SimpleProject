@@ -43,13 +43,23 @@ public class ToolbarEx extends Toolbar {
 	}
 
 	public ToolbarEx(Context context, @Nullable AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs, 0);
 	}
 
 	public ToolbarEx(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
+		initToolbar();
 	}
 
+	private void initToolbar() {
+		//setNavigationIcon();
+		setNavigationOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((Activity)getContext()).finish();
+			}
+		});
+	}
 
 	public void setReturnIcon(@DrawableRes int resId) {
 		setNavigationIcon(resId);
@@ -190,9 +200,6 @@ public class ToolbarEx extends Toolbar {
 	}
 
 	public void setBackgroundAlpha(int alpha) {
-		Drawable drawable = super.getBackground();
-		if (drawable != null) {
-			drawable.setAlpha(alpha);
-		}
+		setBackgroundColor(Color.argb(alpha, 255, 255, 255));
 	}
 }

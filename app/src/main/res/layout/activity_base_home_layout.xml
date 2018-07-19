@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:orientation="vertical">
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/no_toolbar_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无ToolBar"/>
+        <RadioButton
+            android:id="@+id/normal_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标准ToolBar"/>
+        <RadioButton
+            android:id="@+id/transparent_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="透明ToolBar"/>
+        <RadioButton
+            android:id="@+id/translucent_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="半透明"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/entry_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:text="查看Activity的样式"/>
+
+    <Button
+        android:id="@+id/entry_button2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:text="查看ProgressActivity的样式"/>
+</LinearLayout>

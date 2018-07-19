@@ -18,23 +18,30 @@
         </activity>
 
         <!-- 微信支付 -->
-        <!--<activity-->
-            <!--android:name=".wxapi.WXEntryActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:exported="true"-->
-            <!--android:launchMode="singleTop">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <!-- <activity -->
+        <!-- android:name=".wxapi.WXEntryActivity" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:exported="true" -->
+        <!-- android:launchMode="singleTop"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-                <!--<data android:scheme="sdksample"/>-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
 
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW"/> -->
+        <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+        <!-- <data android:scheme="sdksample"/> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+
+        <activity android:name=".BaseHomeActivity">
+        </activity>
+        <activity android:name=".BaseActivityStyleActivity">
+        </activity>
+        <activity android:name=".BaseProgressActivityStyleActivity">
+        </activity>
     </application>
 
 </manifest>

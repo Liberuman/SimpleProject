@@ -1,6 +1,7 @@
 package com.sxu.basecomponent.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,11 +51,11 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		fragmentManager = getSupportFragmentManager();
 
 		// 设置沉浸式状态栏
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		}
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//		}
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		// 设置Activity的切换动画
 		overridePendingTransition(R.anim.anim_translate_right_in_300, R.anim.anim_translate_left_out_300);
