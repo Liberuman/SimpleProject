@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sxu.basecomponent.R;
+import com.sxu.baselibrary.commonutils.DisplayUtil;
+
+import rx.android.schedulers.AndroidSchedulers;
 
 /*******************************************************************************
  * Description: 封装ToolBar控件
@@ -48,17 +51,8 @@ public class ToolbarEx extends Toolbar {
 
 	public ToolbarEx(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		initToolbar();
-	}
-
-	private void initToolbar() {
-		//setNavigationIcon();
-		setNavigationOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((Activity)getContext()).finish();
-			}
-		});
+		setMinimumHeight(DisplayUtil.dpToPx(56));
+		ViewCompat.setElevation(this, DisplayUtil.dpToPx(6));
 	}
 
 	public void setReturnIcon(@DrawableRes int resId) {

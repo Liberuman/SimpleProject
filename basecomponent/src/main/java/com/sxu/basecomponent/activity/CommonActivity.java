@@ -2,6 +2,7 @@ package com.sxu.basecomponent.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.widget.LinearLayout;
 import com.sxu.basecomponent.R;
 import com.sxu.basecomponent.uiwidget.NavigationBar;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
+import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.InputMethodUtil;
+import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -142,11 +145,12 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		View.inflate(this, getLayoutResId(), containerLayout);
 		toolbar = new ToolbarEx(this);
 		if (isTransparent) {
-			toolbar.setBackgroundAlpha(0);
+			//toolbar.setBackgroundAlpha(0);
+			toolbar.setBackgroundColor(Color.RED);
 		} else {
-			toolbar.setBackgroundAlpha(128);
+			ViewBgUtil.setShapeBg(toolbar, GradientDrawable.RECTANGLE, GradientDrawable.Orientation.TOP_BOTTOM,
+					new int[] {Color.RED, Color.GREEN}, 0);
 		}
-		containerLayout.addView(toolbar);
 
 		return containerLayout;
 	}

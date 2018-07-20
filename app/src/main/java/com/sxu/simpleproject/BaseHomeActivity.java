@@ -18,6 +18,12 @@ public class BaseHomeActivity extends BaseActivity {
 	}
 
 	@Override
+	protected void pretreatment() {
+		super.pretreatment();
+		setToolbarStyle(TOOL_BAR_STYLE_NORMAL);
+	}
+
+	@Override
 	protected void getViews() {
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
 		Button entryButton = (Button) findViewById(R.id.entry_button);
