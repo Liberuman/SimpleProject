@@ -2,16 +2,23 @@ package com.sxu.basecomponent.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
@@ -69,6 +76,7 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		pretreatment();
 
 		initLayout();
+
 		if (containerLayout != null) {
 			setContentView(containerLayout);
 		}
@@ -88,6 +96,11 @@ public abstract class CommonActivity extends SwipeBackActivity {
 			case TOOL_BAR_STYLE_TRANSLUCENT:
 				containerLayout = createTransparentToolbarLayout(false);
 				break;
+		}
+
+		if (toolbar != null) {
+			setSupportActionBar(toolbar);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
 
@@ -136,21 +149,22 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		containerLayout.setOrientation(LinearLayout.VERTICAL);
 		toolbar = new ToolbarEx(this);
 		containerLayout.addView(toolbar);
-		View.inflate(this, getLayoutResId(), containerLayout);
 		return containerLayout;
 	}
 
 	private ViewGroup createTransparentToolbarLayout(boolean isTransparent) {
 		FrameLayout containerLayout = new FrameLayout(this);
-		View.inflate(this, getLayoutResId(), containerLayout);
 		toolbar = new ToolbarEx(this);
+		toolbar.setChildViewStyle();
 		if (isTransparent) {
-			//toolbar.setBackgroundAlpha(0);
-			toolbar.setBackgroundColor(Color.RED);
+			toolbar.setBackgroundColor(Color.TRANSPARENT);
 		} else {
-			ViewBgUtil.setShapeBg(toolbar, GradientDrawable.RECTANGLE, GradientDrawable.Orientation.TOP_BOTTOM,
-					new int[] {Color.RED, Color.GREEN}, 0);
+			ViewBgUtil.setShapeBg(toolbar, GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
+					ContextCompat.getColor(this, R.color.black_50), Color.TRANSPARENT}, 0);
 		}
+		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				DisplayUtil.dpToPx(56));
+		containerLayout.addView(toolbar, params);
 
 		return containerLayout;
 	}

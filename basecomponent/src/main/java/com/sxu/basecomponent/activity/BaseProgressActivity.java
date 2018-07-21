@@ -1,23 +1,12 @@
 package com.sxu.basecomponent.activity;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
-import com.sxu.basecomponent.uiwidget.NavigationBar;
-import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 
 
@@ -33,9 +22,9 @@ import com.sxu.baselibrary.commonutils.ToastUtil;
 public abstract class BaseProgressActivity extends CommonActivity {
 
     private View loadingLayout;
-    private View failureLayout;
-    private View emptyLayout;
-    private View loginLayout;
+    private View exceptionLayout;
+    private LinearLayout.LayoutParams params;
+    private int exceptionLayoutType = 0;
     /**
      * 内容页面是否已被加载，用于区分第一次加载和刷新
      */
@@ -52,6 +41,13 @@ public abstract class BaseProgressActivity extends CommonActivity {
     // 未登录
     protected static final int MSG_LOAD_NO_LOGIN = 0x105;
 
+    /**
+     * 异常布局类型
+     */
+    private final int LAYOUT_TYPE_FAILURE = 1; // 失败时的布局
+    private final int LAYOUT_TYPE_EMPTY = 2;   // 数据为空时的布局
+    private final int LAYOUT_TYPE_LOGIN = 3;   // 需要登录时的布局
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,13 +57,25 @@ public abstract class BaseProgressActivity extends CommonActivity {
 
     @Override
     protected void initLayout() {
-        loadLoadingLayout();
+        loadingLayout = loadLoadingLayout();
         if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
             setContentView(loadingLayout);
         } else {
             super.initLayout();
-            containerLayout.addView(loadingLayout);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            containerLayout.addView(loadingLayout, params);
         }
+    }
+
+    /**
+     * 网络请求完成后更换布局
+     * @param oldView
+     * @param newView
+     */
+    private void updateContentView(View oldView, View newView) {
+        int index = containerLayout.indexOfChild(oldView);
+        containerLayout.removeView(oldView);
+        containerLayout.addView(newView, index, params);
     }
 
     @Override
@@ -92,45 +100,68 @@ public abstract class BaseProgressActivity extends CommonActivity {
         handler.sendEmptyMessage(msg);
     }
 
+    /**
+     * 网络请求结果的处理过程
+     * @param msg
+     */
     private void handleMsg(Message msg) {
         switch (msg.what) {
             case MSG_LOAD_FINISH:
                 loadContentLayout();
                 break;
             case MSG_LOAD_FAILURE:
-                if (failureLayout == null) {
-                    failureLayout = loadEmptyLayout();
-                }
-                setContentView(failureLayout);
+                showExceptionLayout(LAYOUT_TYPE_FAILURE);
                 break;
             case MSG_LOAD_EMPTY:
-                if (emptyLayout == null) {
-                    emptyLayout = loadEmptyLayout();
-                }
-                setContentView(emptyLayout);
+                showExceptionLayout(LAYOUT_TYPE_EMPTY);
                 break;
             case MSG_NO_MORE:
                 ToastUtil.show(this, "没有更多数据啦");
                 break;
             case MSG_LOAD_NO_LOGIN:
-                if (loadingLayout == null) {
-                    loadingLayout = loadEmptyLayout();
-                }
-                setContentView(loadingLayout);
+                showExceptionLayout(LAYOUT_TYPE_LOGIN);
                 break;
             default:
                 throw new IllegalArgumentException("The Message not supported!");
         }
     }
 
-    protected View loadLoadingLayout() {
-        return View.inflate(this, R.layout.common_progress_layout, null);
+    /**
+     * 网络请求出现异常时加载相应的布局
+     * @param layoutType
+     */
+    private void showExceptionLayout(int layoutType) {
+        if (exceptionLayout == null || exceptionLayoutType != layoutType) {
+            if (layoutType == LAYOUT_TYPE_EMPTY) {
+                exceptionLayout = loadEmptyLayout();
+            } else if (layoutType == LAYOUT_TYPE_FAILURE) {
+                exceptionLayout = loadFailureLayout();
+            } else if (layoutType == LAYOUT_TYPE_LOGIN) {
+                exceptionLayout = loadLoginLayout();
+            }
+
+            final View tempView = exceptionLayout;
+            exceptionLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestData();
+                    updateContentView(tempView, loadingLayout);
+                }
+            });
+        }
+
+        exceptionLayoutType = layoutType;
+        updateContentView(loadingLayout, exceptionLayout);
     }
 
+    /**
+     * 网络请求成功后的处理逻辑
+     */
     private void loadContentLayout() {
-        if (!hasLoaded) {
+        if (!hasLoaded) { // 是否为初次加载，以区分刷新操作
             hasLoaded = true;
-            setContentView(getLayoutResId());
+            View contentLayout = View.inflate(this, getLayoutResId(), null);
+            updateContentView(loadingLayout, contentLayout);
             getViews();
             initActivity();
         } else {
@@ -138,17 +169,35 @@ public abstract class BaseProgressActivity extends CommonActivity {
         }
     }
 
+    /**
+     * 加载加载中的布局
+     * @return
+     */
+    protected View loadLoadingLayout() {
+        return View.inflate(this, R.layout.common_progress_layout, null);
+    }
+
+    /**
+     * 加载数据为空时的布局
+     * @return
+     */
     protected View loadEmptyLayout() {
         return View.inflate(this, R.layout.common_empty_layout, null);
     }
 
+    /**
+     * 加载网络请求失败时的布局
+     * @return
+     */
     protected View loadFailureLayout() {
         return View.inflate(this, R.layout.common_failure_layout, null);
     }
 
+    /**
+     * 加载需要登录时的布局
+     * @return
+     */
     protected View loadLoginLayout() {
         return View.inflate(this, R.layout.common_login_layout, null);
     }
-
-    //todo 需要将布局添加到containerLayout
 }

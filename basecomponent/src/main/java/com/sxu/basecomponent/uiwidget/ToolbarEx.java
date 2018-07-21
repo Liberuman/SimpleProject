@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -51,7 +52,8 @@ public class ToolbarEx extends Toolbar {
 
 	public ToolbarEx(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		setMinimumHeight(DisplayUtil.dpToPx(56));
+		setTitle("");
+		setMinimumHeight(getContext().getResources().getDimensionPixelOffset(R.dimen.toolbarHeight));
 		ViewCompat.setElevation(this, DisplayUtil.dpToPx(6));
 	}
 
@@ -60,7 +62,7 @@ public class ToolbarEx extends Toolbar {
 		setNavigationOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((Activity)getContext()).finish();
+				((Activity) getContext()).finish();
 			}
 		});
 	}
@@ -150,7 +152,7 @@ public class ToolbarEx extends Toolbar {
 		params.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
 		rightIcon = new ImageView(getContext());
 		rightIcon.setImageResource(resId);
-		rightIcon.setPadding(0,0, paddingRight, 0);
+		rightIcon.setPadding(0, 0, paddingRight, 0);
 		rightIcon.setOnClickListener(listeners);
 		addView(rightIcon, params);
 
@@ -195,5 +197,30 @@ public class ToolbarEx extends Toolbar {
 
 	public void setBackgroundAlpha(int alpha) {
 		setBackgroundColor(Color.argb(alpha, 255, 255, 255));
+	}
+
+	public void setChildViewStyle() {
+		for (int i = 0, size = getChildCount(); i < size; i++) {
+			View itemView = getChildAt(i);
+			if (itemView instanceof ImageView) {
+				DrawableCompat.setTint(((ImageView) itemView).getDrawable(), Color.WHITE);
+			} else if (itemView instanceof TextView) {
+				((TextView) itemView).setTextColor(Color.WHITE);
+			}
+		}
+	}
+
+	/**
+	 * 判断颜色值是否为暗色调
+	 * @param color
+	 * @return
+	 */
+	public boolean isDarkColor(int color) {
+		double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+		if (darkness < 0.5) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

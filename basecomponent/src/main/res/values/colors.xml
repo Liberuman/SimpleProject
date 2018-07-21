@@ -12,6 +12,30 @@
         70%: b3     80%: cc     90%: e6
     -->
 
+    <!-- 白色色系 -->
+    <color name="white">#ffffff</color>
+    <color name="white_10">#1affffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_30">#4dffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_70">#B3ffffff</color>
+    <color name="white_80">#ccffffff</color>
+    <color name="white_90">#e6ffffff</color>
+
+    <!-- 黑色色系-->
+    <color name="black">#000000</color>
+    <color name="black_10">#1a000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_30">#4d000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_80">#cc000000</color>
+    <color name="black_90">#e6000000</color>
+
     <!-- UI颜色标准 -->
     <color name="b1">#40484d</color>
     <color name="b1_90">#e640484d</color>
@@ -36,11 +60,4 @@
     <color name="t1">#FFC433</color>
     <color name="t2">#ff3300</color>
 
-    <color name="white">#ffffff</color>
-    <color name="white_10">#1affffff</color>
-    <color name="white_20">#33ffffff</color>
-    <color name="white_40">#66ffffff</color>
-    <color name="white_50">#80ffffff</color>
-    <color name="white_60">#99ffffff</color>
-    <color name="white_70">#B3ffffff</color>
 </resources>

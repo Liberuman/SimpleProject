@@ -22,7 +22,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:text=""
-        android:textSize="@dimen/font_size_36"
+        android:textSize="@dimen/fs_20"
         android:textColor="@color/b1"/>
     <TextView
         android:id="@+id/left_text"
@@ -33,7 +33,7 @@
         android:layout_alignParentLeft="true"
         android:gravity="center"
         android:text="取消"
-        android:textSize="@dimen/font_size_32"
+        android:textSize="@dimen/fs_16"
         android:textColor="@color/b1"
         android:visibility="gone"/>
     <TextView
@@ -45,7 +45,7 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:text="确定"
-        android:textSize="@dimen/font_size_32"
+        android:textSize="@dimen/fs_16"
         android:textColor="@drawable/right_text_color"
         android:visibility="gone"/>
     <ImageView

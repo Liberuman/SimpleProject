@@ -34,6 +34,6 @@
             android:gravity="center"
             android:text="知道了"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_size_32"/>
+            android:textSize="@dimen/fs_16"/>
     </RelativeLayout>
 </FrameLayout>

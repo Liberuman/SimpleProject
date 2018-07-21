@@ -46,7 +46,11 @@ public abstract class BaseActivity extends CommonActivity {
             setContentView(getLayoutResId());
         } else {
             super.initLayout();
-            View.inflate(this, getLayoutResId(), containerLayout);
+            if (toolbarStyle == TOOL_BAR_STYLE_NORMAL) {
+                View.inflate(this, getLayoutResId(), containerLayout);
+            } else {
+                containerLayout.addView(View.inflate(this, getLayoutResId(),null), 0);
+            }
         }
     }
 }

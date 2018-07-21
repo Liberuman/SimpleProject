@@ -1,26 +1,26 @@
 <resources>
-    
-    <!-- 字体大小 -->
-    <!-- 用于重要的标题,导航栏标题 -->
-    <dimen name="font_size_40">20dp</dimen>
-    <dimen name="font_size_36">18dp</dimen>
-    <dimen name="font_size_34">17dp</dimen>
-    <!-- 用于大多数按钮文字 -->
-    <dimen name="font_size_32">16dp</dimen>
-    <dimen name="font_size_30">15dp</dimen>
-    <!-- 用于大多数文字 -->
-    <dimen name="font_size_28">14dp</dimen>
-    <!-- 用于辅助性文字 -->
-    <dimen name="font_size_26">13dp</dimen>
-    <!-- 用于辅助性文字 -->
-    <dimen name="font_size_24">12dp</dimen>
-    <!-- 用于极少辅助行文字 -->
-    <dimen name="font_size_20">10dp</dimen>
 
-    <dimen name="font_size_44">22dp</dimen>
-    <dimen name="font_size_48">24dp</dimen>
-    <dimen name="font_size_56">28dp</dimen>
-    <dimen name="font_size_64">32dp</dimen>
-    <dimen name="font_size_72">36dp</dimen>
-    <dimen name="font_size_96">48dp</dimen>
+    <!-- toolbar默认高度 -->
+    <dimen name="toolbarHeight">56dp</dimen>
+
+    <!-- 字体标准 -->
+    <dimen name="fs_56">56sp</dimen>
+    <dimen name="fs_45">45sp</dimen>
+    <dimen name="fs_36">36sp</dimen>
+    <dimen name="fs_34">34sp</dimen>
+    <dimen name="fs_32">32sp</dimen>
+    <dimen name="fs_24">24sp</dimen>
+    <!-- 标题 同样式下中文字体比英文字体大1个sp， 下同 -->
+    <dimen name="fs_21">21sp</dimen>
+    <dimen name="fs_20">20sp</dimen>
+    <!-- 副标题 -->
+    <dimen name="fs_17">17sp</dimen>
+    <dimen name="fs_16">16sp</dimen>
+    <!-- 正文 -->
+    <dimen name="fs_15">15sp</dimen>
+    <dimen name="fs_14">14sp</dimen>
+    <!-- 辅助性文字 -->
+    <dimen name="fs_13">13sp</dimen>
+    <dimen name="fs_12">12sp</dimen>
+
 </resources>

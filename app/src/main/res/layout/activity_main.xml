@@ -27,4 +27,45 @@
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:text="Common组件层"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_56"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_45"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_34"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_24"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_21"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_17"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_15"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试字体"
+        android:textSize="@dimen/fs_13"/>
 </LinearLayout>

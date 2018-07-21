@@ -27,10 +27,17 @@ public class ViewBgUtil {
 	/**
 	 * 圆角相同的纯色背景
 	 * @param view
-	 * @param shape
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setShapeBg(View view, int bgColor, int radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, bgColor, radius));
+	}
+
+	public static void setShapeBg(View view, int bgColor, int borderColor, int borderWidth, int radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, bgColor, borderColor, borderWidth, radius));
+	}
+
 	public static void setShapeBg(View view, int shape, int bgColor, int radius) {
 		ViewCompat.setBackground(view, getDrawable(shape, bgColor, radius));
 	}
@@ -43,10 +50,18 @@ public class ViewBgUtil {
 	/**
 	 * 圆角不同的纯色背景
 	 * @param view
-	 * @param shape
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setShapeBg(View view, int bgColor, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, bgColor, radius));
+	}
+
+	public static void setShapeBg(View view, int bgColor, int borderColor,
+	                              int borderWidth, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, bgColor, borderColor, borderWidth, radius));
+	}
+
 	public static void setShapeBg(View view, int shape, int bgColor, float[] radius) {
 		ViewCompat.setBackground(view, getDrawable(shape, bgColor, radius));
 	}
@@ -59,11 +74,22 @@ public class ViewBgUtil {
 	/**
 	 * 圆角相同的渐变背景
 	 * @param view
-	 * @param shape
 	 * @param orientation
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setShapeBg(View view, GradientDrawable.Orientation orientation,
+	                              int[] bgColor, int radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, orientation, bgColor,
+				0, 0, radius));
+	}
+
+	public static void setShapeBg(View view, GradientDrawable.Orientation orientation,
+	                              int[] bgColor, int borderColor, int borderWidth, int radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, orientation, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
 	public static void setShapeBg(View view, int shape, GradientDrawable.Orientation orientation,
 	                              int[] bgColor, int radius) {
 		ViewCompat.setBackground(view, getDrawable(shape, orientation, bgColor, 0, 0, radius));
@@ -77,11 +103,22 @@ public class ViewBgUtil {
 	/**
 	 * 圆角不同的渐变背景
 	 * @param view
-	 * @param shape
 	 * @param orientation
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setShapeBg(View view, GradientDrawable.Orientation orientation,
+	                              int[] bgColor, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, orientation, bgColor,
+				0, 0, radius));
+	}
+
+	public static void setShapeBg(View view, GradientDrawable.Orientation orientation,
+	                              int[] bgColor, int borderColor, int borderWidth, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(GradientDrawable.RECTANGLE, orientation, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
 	public static void setShapeBg(View view, int shape, GradientDrawable.Orientation orientation,
 	                              int[] bgColor, float[] radius) {
 		ViewCompat.setBackground(view, getDrawable(shape, orientation, bgColor, 0, 0, radius));
@@ -96,10 +133,19 @@ public class ViewBgUtil {
 	 * 设置与状态关联的背景 -> 有相同圆角的纯色背景
 	 * @param view
 	 * @param state
-	 * @param shape
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setSelectorBg(View view, int state, int[] bgColor, int radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, bgColor, radius));
+	}
+
+	public static void setSelectorBg(View view, int state, int[] bgColor,
+	                                 int[] borderColor, int borderWidth, int radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
 	public static void setSelectorBg(View view, int state, int shape, int[] bgColor, int radius) {
 		ViewCompat.setBackground(view, getDrawable(state, shape, bgColor, radius));
 	}
@@ -113,10 +159,19 @@ public class ViewBgUtil {
 	 * 设置与状态关联的背景 -> 有不同圆角的纯色背景
 	 * @param view
 	 * @param state
-	 * @param shape
 	 * @param bgColor
 	 * @param radius
 	 */
+	public static void setSelectorBg(View view, int state, int[] bgColor, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, bgColor, radius));
+	}
+
+	public static void setSelectorBg(View view, int state, int[] bgColor,
+	                                 int[] borderColor, int borderWidth, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
 	public static void setSelectorBg(View view, int state, int shape, int[] bgColor, float[] radius) {
 		ViewCompat.setBackground(view, getDrawable(state, shape, bgColor, radius));
 	}
@@ -130,13 +185,24 @@ public class ViewBgUtil {
 	 * 设置与状态关联的背景 -> 有相同圆角的渐变背景
 	 * @param view
 	 * @param state
-	 * @param shape
 	 * @param orientation
 	 * @param bgColor
 	 * @param borderColor
 	 * @param borderWidth
 	 * @param radius
 	 */
+	public static void setSelectorBg(View view, int state, GradientDrawable.Orientation orientation,
+	                                 int[][] bgColor, int[] borderColor, int borderWidth, int radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, orientation, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
+	public static void setSelectorBg(View view, int state, GradientDrawable.Orientation[] orientation,
+	                                 int[][] bgColor, int[] borderColor, int borderWidth, int radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, orientation, bgColor,
+				borderColor, borderWidth, radius));
+	}
+
 	public static void setSelectorBg(View view, int state, int shape, GradientDrawable.Orientation orientation,
 	                                 int[][] bgColor, int[] borderColor, int borderWidth, int radius) {
 		ViewCompat.setBackground(view, getDrawable(state, shape, orientation, bgColor, borderColor, borderWidth, radius));
@@ -151,13 +217,24 @@ public class ViewBgUtil {
 	 * 设置与状态关联的背景 -> 有不同圆角的渐变背景
 	 * @param view
 	 * @param state
-	 * @param shape
 	 * @param orientation
 	 * @param bgColor
 	 * @param borderColor
 	 * @param borderWidth
 	 * @param radius
 	 */
+	public static void setSelectorBg(View view, int state, GradientDrawable.Orientation orientation,
+	                                 int[][] bgColor, int[] borderColor, int borderWidth, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, orientation,
+				bgColor, borderColor, borderWidth, radius));
+	}
+
+	public static void setSelectorBg(View view, int state, GradientDrawable.Orientation[] orientation,
+	                                 int[][] bgColor, int[] borderColor, int borderWidth, float[] radius) {
+		ViewCompat.setBackground(view, getDrawable(state, GradientDrawable.RECTANGLE, orientation,
+				bgColor, borderColor, borderWidth, radius));
+	}
+
 	public static void setSelectorBg(View view, int state, int shape, GradientDrawable.Orientation orientation,
 	                                 int[][] bgColor, int[] borderColor, int borderWidth, float[] radius) {
 		ViewCompat.setBackground(view, getDrawable(state, shape, orientation, bgColor, borderColor, borderWidth, radius));

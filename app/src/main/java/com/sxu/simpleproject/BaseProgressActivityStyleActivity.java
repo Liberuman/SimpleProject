@@ -2,6 +2,7 @@ package com.sxu.simpleproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -26,7 +27,12 @@ public class BaseProgressActivityStyleActivity extends BaseProgressActivity {
 
 	@Override
 	protected void requestData() {
-
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				notifyLoadFinish(MSG_LOAD_NO_LOGIN);
+			}
+		}, 2000);
 	}
 
 	@Override

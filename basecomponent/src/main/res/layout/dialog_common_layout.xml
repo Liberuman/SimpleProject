@@ -13,7 +13,7 @@
         android:layout_marginTop="18dp"
         android:text="标题"
         android:textColor="@color/b1"
-        android:textSize="@dimen/font_size_34" />
+        android:textSize="@dimen/fs_17" />
 
     <TextView
         android:id="@+id/desc_text"
@@ -26,7 +26,7 @@
         android:paddingRight="25dp"
         android:text="描述"
         android:textColor="@color/b1"
-        android:textSize="@dimen/font_size_28" />
+        android:textSize="@dimen/fs_14" />
 
     <TextView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:gravity="center"
             android:text="取消"
             android:textColor="@color/z1"
-            android:textSize="@dimen/font_size_32" />
+            android:textSize="@dimen/fs_16" />
 
         <TextView
             android:id="@+id/gap_line"
@@ -63,6 +63,6 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/z1"
-            android:textSize="@dimen/font_size_32" />
+            android:textSize="@dimen/fs_16" />
     </LinearLayout>
 </LinearLayout>
