@@ -10,16 +10,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /*******************************************************************************
- * FileName: ThreadPoolManager
- * <p>
- * Description:
- * <p>
- * Author: juhg
- * <p>
- * Version: v1.0
- * <p>
- * Date: 16/11/8
- * <p>
+ * Description: 线程池
+ *
+ * Author: Freeman
+ *
+ * Date: 2017/12/12
+ *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class ThreadPoolManager {

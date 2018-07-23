@@ -101,6 +101,12 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		if (toolbar != null) {
 			setSupportActionBar(toolbar);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
 		}
 	}
 

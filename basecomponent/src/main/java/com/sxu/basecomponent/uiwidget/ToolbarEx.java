@@ -54,7 +54,6 @@ public class ToolbarEx extends Toolbar {
 		super(context, attrs, defStyleAttr);
 		setTitle("");
 		setMinimumHeight(getContext().getResources().getDimensionPixelOffset(R.dimen.toolbarHeight));
-		ViewCompat.setElevation(this, DisplayUtil.dpToPx(6));
 	}
 
 	public void setReturnIcon(@DrawableRes int resId) {

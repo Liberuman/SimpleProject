@@ -1,16 +1,14 @@
 package com.sxu.basecomponent.manager;
 
-/**
- * Copyright (c) 2017. Freeman Inc. All rights reserved.
- * <p>
- * <p>
- * 类或接口的描述信息
+/*******************************************************************************
+ * Description: APP的版本管理
  *
- * @author Freeman
- * @date 17/6/22
- */
-
-
+ * Author: Freeman
+ *
+ * Date: 2018/07/23
+ *
+ * Copyright: all rights reserved by Freeman.
+ *******************************************************************************/
 public class VersionManager {
 
 }

@@ -8,16 +8,15 @@ import com.sxu.baselibrary.commonutils.FileUtil;
 
 import java.io.File;
 
-/**
- * Copyright (c) 2017. Freeman Inc. All rights reserved.
- * <p>
- * <p>
- * 类或接口的描述信息
+/*******************************************************************************
+ * Description: App路径管理
  *
- * @author Freeman
- * @date 17/6/22
- */
-
+ * Author: Freeman
+ *
+ * Date: 2018/07/12
+ *
+ * Copyright: all rights reserved by Freeman.
+ *******************************************************************************/
 
 public class PathManager {
 
