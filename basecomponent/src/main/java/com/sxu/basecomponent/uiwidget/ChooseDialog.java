@@ -2,6 +2,9 @@ package com.sxu.basecomponent.uiwidget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
 import java.util.Arrays;
@@ -17,40 +20,16 @@ import java.util.List;
  * Copyright: all rights reserved by ZhiNanMao.
  *******************************************************************************/
 
-public class ChooseDialog extends AlertDialog {
+public class ChooseDialog extends BaseDialog {
 
 	private boolean isSingle = true;
-	private String title;
 	private String[] items;
 	private int checkedItemIndex = -1;
 	private boolean[] checkedItems;
 	private Dialog.OnClickListener itemListener;
-	private OnMultiChoiceClickListener multiChoiceListener;
+	private DialogInterface.OnMultiChoiceClickListener multiChoiceListener;
 
 	private AlertDialog.Builder builder;
-
-	public ChooseDialog(Context context) {
-		super(context);
-		builder = new AlertDialog.Builder(context);
-	}
-
-	public ChooseDialog(Context context, boolean isSingle, String title, String[] items) {
-		super(context);
-		this.isSingle = isSingle;
-		this.title = title;
-		this.items = items;
-		builder = new AlertDialog.Builder(context);
-	}
-
-	public ChooseDialog(Context context, boolean isSingle, String title, List<String> itemList) {
-		this(context, isSingle, title, itemList.toArray(new String[itemList != null ? itemList.size() : 0]));
-	}
-
-	public ChooseDialog setTitle(String title) {
-		this.title = title;
-		builder.setTitle(title);
-		return this;
-	}
 
 	public ChooseDialog setIsSingle(boolean isSingle) {
 		this.isSingle = isSingle;
@@ -81,18 +60,31 @@ public class ChooseDialog extends AlertDialog {
 		return this;
 	}
 
-	public ChooseDialog setMultiChoiceListener(OnMultiChoiceClickListener listener) {
+	public ChooseDialog setMultiChoiceListener(DialogInterface.OnMultiChoiceClickListener listener) {
 		this.multiChoiceListener = listener;
 		return this;
 	}
 
-	public void show() {
-		if (isSingle) {
-			builder.setSingleChoiceItems(items, checkedItemIndex, itemListener);
+	@NonNull
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		builder = new AlertDialog.Builder(getContext());
+		if (dialogStyle == DIALOG_STYLE_MATERIAL) {
+			if (isSingle) {
+				builder.setSingleChoiceItems(items, checkedItemIndex, itemListener);
+			} else {
+				builder.setMultiChoiceItems(items, checkedItems, multiChoiceListener);
+			}
+			if (okListener != null) {
+				builder.setPositiveButton(okText, okListener);
+			}
+			if (cancelListener != null) {
+				builder.setNegativeButton(cancelText, cancelListener);
+			}
 		} else {
-			builder.setMultiChoiceItems(items, checkedItems, multiChoiceListener);
+
 		}
 
-		builder.show();
+		return builder.create();
 	}
 }

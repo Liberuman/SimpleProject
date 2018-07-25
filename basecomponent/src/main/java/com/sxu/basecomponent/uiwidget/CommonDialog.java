@@ -49,7 +49,7 @@ public class CommonDialog extends AlertDialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_common_layout);
         titleText = (TextView) findViewById(R.id.title_text);
-        descText = (TextView) findViewById(R.id.desc_text);
+        descText = (TextView) findViewById(R.id.message);
         cancelText = (TextView) findViewById(R.id.cancel_text);
         okText = (TextView) findViewById(R.id.ok_text);
         gapLine = (TextView) findViewById(R.id.gap_line);

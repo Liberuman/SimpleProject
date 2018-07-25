@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rectangle_white_12dp_bg"
     android:gravity="center_horizontal"
@@ -11,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="标题"
+        tools:text="标题"
         android:textColor="@color/b1"
         android:textSize="@dimen/fs_17" />
 
     <TextView
-        android:id="@+id/desc_text"
+        android:id="@+id/message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -24,7 +25,7 @@
         android:lineSpacingMultiplier="1.2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="描述"
+        tools:text="描述"
         android:textColor="@color/b1"
         android:textSize="@dimen/fs_14" />
 
@@ -35,6 +36,7 @@
         android:background="@color/x1" />
 
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal">
