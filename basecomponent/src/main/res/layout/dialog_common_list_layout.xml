@@ -3,5 +3,5 @@
     android:id="@+id/listView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:divider="@color/x1"
+    android:divider="@color/w4"
     android:dividerHeight="1px"/>

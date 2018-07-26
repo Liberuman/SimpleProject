@@ -4,7 +4,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/b5">
+    android:background="@color/b4">
     <ImageView
         android:id="@+id/return_icon"
         android:layout_width="wrap_content"
@@ -83,6 +83,6 @@
         android:id="@+id/nav_bottom_line"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/x1"
+        android:background="@color/w4"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

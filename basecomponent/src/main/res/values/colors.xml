@@ -37,27 +37,38 @@
     <color name="black_90">#e6000000</color>
 
     <!-- UI颜色标准 -->
-    <color name="b1">#40484d</color>
-    <color name="b1_90">#e640484d</color>
-    <color name="b2">#9dabb2</color>
-    <color name="b2_40">#669dabb2</color>
-    <color name="b3">#666666</color>
-    <color name="b4">#cccccc</color>
-    <color name="b4_50">#80cccccc</color>
-    <color name="b5">#fafafa</color>
-    <color name="f6">#f6f6f6</color>
-    <color name="z1">#33cccc</color>
-    <color name="z1_40">#6633cccc</color>
-    <color name="z1_50">#8033cccc</color>
-    <color name="z1_60">#9933cccc</color>
-    <color name="z2">#40d6bd</color>
-    <color name="z3">#33c2cc</color>
-    <color name="x1">#1a000000</color>
-    <color name="x2">#33000000</color>
-    <color name="x2_1">#99000000</color>
-    <color name="x3">#66000000</color>
-    <color name="x4">#99000000</color>
-    <color name="t1">#FFC433</color>
-    <color name="t2">#ff3300</color>
+    <!--
+        深色字体颜色标准： 不透明度一次为87%，54%， 38%， 12%
+     -->
+    <!-- 主色 -->
+    <color name="b1">#de000000</color>
+    <!-- 辅助色 -->
+    <color name="b2">#8a000000</color>
+    <!-- 禁用文本，提示文本 -->
+    <color name="b3">#61000000</color>
+    <!-- 分割线 -->
+    <color name="b4">#1f000000</color>
+
+    <!--
+        浅色字体颜色标准：不透明度一次为100%，70%， 50%， 12%
+    -->
+    <!-- 主色 -->
+    <color name="w1">#ffffff</color>
+    <!-- 辅助色 -->
+    <color name="w2">#b3ffffff</color>
+    <!-- 禁用文本，提示文本 -->
+    <color name="w3">#80ffffff</color>
+    <!-- 分割线 -->
+    <color name="w4">#1fffffff</color>
+
+    <color name="g1">#333333</color>
+    <color name="g2">#666666</color>
+    <color name="g3">#999999</color>
+    <color name="g4">#cccccc</color>
+    <color name="g5">#e0e0e0</color>
+
+    <!-- 主题色 -->
+    <color name="t1">#3F51B5</color>
+    <color name="t2">#303F9F</color>
 
 </resources>

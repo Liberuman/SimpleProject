@@ -42,65 +42,69 @@ public class NewDialog extends BaseDialog {
 		return this;
 	}
 
-	@NonNull
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-		if (dialogStyle == DIALOG_STYLE_MATERIAL) {
-			builder.setTitle(title).setMessage(message);
-			if (cancelListener != null) {
-				builder.setNegativeButton(cancelText, cancelListener);
-			}
-			if (okListener != null) {
-				builder.setPositiveButton(okText, okListener);
-			}
-		} else {
-			View itemView = View.inflate(getContext(), R.layout.dialog_common_layout, null);
-			TextView titleText = itemView.findViewById(R.id.title_text);
-			TextView messageText = itemView.findViewById(R.id.message_text);
-			TextView cancelText = itemView.findViewById(R.id.cancel_text);
-			final TextView okText = itemView.findViewById(R.id.ok_text);
-			View gapLine = itemView.findViewById(R.id.gap_line);
-			View buttonLayout = itemView.findViewById(R.id.button_layout);
-			titleText.setText(title);
-			messageText.setText(message);
-			cancelText.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
+	private View createView() {
+		View itemView = View.inflate(getContext(), R.layout.dialog_common_layout, null);
+		TextView titleText = itemView.findViewById(R.id.title_text);
+		TextView messageText = itemView.findViewById(R.id.message_text);
+		final TextView cancelText = itemView.findViewById(R.id.cancel_text);
+		final TextView okText = itemView.findViewById(R.id.ok_text);
+		View gapLine = itemView.findViewById(R.id.gap_line);
+		View buttonLayout = itemView.findViewById(R.id.button_layout);
+		titleText.setText(title);
+		messageText.setText(message);
+		cancelText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (cancelListener != null) {
 					cancelListener.onClick(null, 0);
 				}
-			});
-			okText.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
+				dismiss();
+			}
+		});
+		okText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (okListener != null) {
 					okListener.onClick(null, 0);
 				}
-			});
-			int state = android.R.attr.state_pressed;
-			int radius = DisplayUtil.dpToPx(8);
-			int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(getContext(), R.color.b5)};
-			// 根据设置的listener显示按钮，并设置相应的背景
-			if (cancelListener != null && okListener != null) {
-				ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
-						new float[] {0 , 0, 0, 0, 0, 0, radius, radius});
-				ViewBgUtil.setSelectorBg(okText, state, bgColor,
-						new float[] {0 , 0, 0, 0, radius, radius, 0, 0});
-			} else if (cancelListener != null && okListener == null) {
-				gapLine.setVisibility(View.GONE);
-				okText.setVisibility(View.GONE);
-				ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
-						new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
-			} else if (cancelListener == null && okListener != null) {
-				gapLine.setVisibility(View.GONE);
-				cancelText.setVisibility(View.GONE);
-				ViewBgUtil.setSelectorBg(okText, state, bgColor,
-						new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
-			} else {
-				buttonLayout.setVisibility(View.GONE);
+				dismiss();
 			}
-			builder.setView(itemView);
+		});
+		int state = android.R.attr.state_pressed;
+		int radius = DisplayUtil.dpToPx(8);
+		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(getContext(), R.color.g5)};
+		// 根据设置的listener显示按钮，并设置相应的背景
+		if (cancelListener != null && okListener != null) {
+			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
+					new float[] {0 , 0, 0, 0, 0, 0, radius, radius});
+			ViewBgUtil.setSelectorBg(okText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, 0, 0});
+		} else if (cancelListener != null && okListener == null) {
+			gapLine.setVisibility(View.GONE);
+			okText.setVisibility(View.GONE);
+			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
+		} else if (cancelListener == null && okListener != null) {
+			gapLine.setVisibility(View.GONE);
+			cancelText.setVisibility(View.GONE);
+			ViewBgUtil.setSelectorBg(okText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
+		} else {
+			buttonLayout.setVisibility(View.GONE);
 		}
 
-		return builder.create();
+		return itemView;
+	}
+
+	@Override
+	protected void initMaterialDialog(AlertDialog.Builder builder) {
+		if (!TextUtils.isEmpty(message)) {
+			builder.setMessage(message);
+		}
+	}
+
+	@Override
+	protected void initCustomDialog(AlertDialog.Builder builder) {
+		builder.setView(createView());
 	}
 }

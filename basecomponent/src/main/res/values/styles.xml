@@ -28,29 +28,24 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
-    <style name="CommonF4Theme" parent="AppTheme">
-        <item name="android:opacity">opaque</item>
-        <item name="android:windowBackground">@color/b5</item>
-    </style>
-
     <!-- 通用的分割线样式 -->
     <style name="CommonLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
-        <item name="android:background">@color/x1</item>
+        <item name="android:background">@color/g4</item>
     </style>
     <style name="CommonLine_24_0">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:layout_marginLeft">24dp</item>
-        <item name="android:background">@color/x1</item>
+        <item name="android:background">@color/w4</item>
     </style>
     <style name="CommonLine_24_24">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:layout_marginLeft">24dp</item>
         <item name="android:layout_marginRight">24dp</item>
-        <item name="android:background">@color/x1</item>
+        <item name="android:background">@color/w4</item>
     </style>
     <style name="CommonBigButton">
         <item name="android:layout_width">match_parent</item>
@@ -87,12 +82,17 @@
     </style>
 
     <style name="CommonDialog">
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.4</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+        <item name="android:windowBackground">@drawable/rectangle_white_8dp_bg</item>
+    </style>
+    <style name="ProgressDialogStyle">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+        <item name="android:windowBackground">@drawable/rectangle_white_8dp_bg</item>
     </style>
 
     <style name="BottomDialogTheme">

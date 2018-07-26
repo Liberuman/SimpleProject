@@ -251,7 +251,7 @@ public class NavigationBar extends FrameLayout {
 			rootLayout.setBackgroundColor(Color.argb((int)(alpha * 255), 252, 252, 252));
 		} else {
 			bottomLine.setVisibility(VISIBLE);
-			rootLayout.setBackgroundColor(getResources().getColor(R.color.b5));
+			rootLayout.setBackgroundColor(getResources().getColor(R.color.b4));
 		}
 	}
 
@@ -263,7 +263,7 @@ public class NavigationBar extends FrameLayout {
 		} else {
 			bottomLine.setVisibility(VISIBLE);
 			returnIcon.setImageResource(R.drawable.nav_back_grey_icon);
-			rootLayout.setBackgroundColor(getResources().getColor(R.color.b5));
+			rootLayout.setBackgroundColor(getResources().getColor(R.color.b4));
 		}
 	}
 

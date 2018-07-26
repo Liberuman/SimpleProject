@@ -4,7 +4,7 @@
      >
 
     <!--  边框 -->
-    <stroke  android:color="@color/x1" android:width="1dp"/>
+    <stroke  android:color="@color/w4" android:width="1dp"/>
 
     <!-- 填充颜色 -->
     <solid android:color="@color/white"/>

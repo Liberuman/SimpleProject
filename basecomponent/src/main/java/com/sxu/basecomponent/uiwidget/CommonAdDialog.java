@@ -62,8 +62,8 @@ public class CommonAdDialog extends AlertDialog {
 
 		ViewBgUtil.setShapeBg(button, GradientDrawable.RECTANGLE, GradientDrawable.Orientation.LEFT_RIGHT,
 				new int[] {
-						getContext().getResources().getColor(R.color.z2),
-						getContext().getResources().getColor(R.color.z3)
+						getContext().getResources().getColor(R.color.t2),
+						getContext().getResources().getColor(R.color.t1)
 				},
 				DisplayUtil.dpToPx(25));
 		ViewBgUtil.setShapeBg(contentLayout, GradientDrawable.RECTANGLE, Color.WHITE, DisplayUtil.dpToPx(12));

@@ -32,6 +32,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.android.support:support-dynamic-animation:25.3.0'
+    compile 'com.android.support:design:27.1.0'
+
 
     // 侧滑关闭组件
     compile 'me.imid.swipebacklayout.lib:library:1.1.0'
