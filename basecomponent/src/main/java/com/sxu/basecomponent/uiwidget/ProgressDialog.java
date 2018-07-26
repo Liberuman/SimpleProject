@@ -16,7 +16,7 @@ import com.sxu.basecomponent.R;
  *
  * Date: 2018/7/26
  *
- * Copyright: all rights reserved by ZhiNanMao.
+ * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
 public class ProgressDialog extends DialogFragment {

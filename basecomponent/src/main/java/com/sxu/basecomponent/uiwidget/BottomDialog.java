@@ -28,7 +28,7 @@ import java.util.List;
  *
  * Date: 2018/7/26
  *
- * Copyright: all rights reserved by ZhiNanMao.
+ * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
 public class BottomDialog extends DialogFragment {
