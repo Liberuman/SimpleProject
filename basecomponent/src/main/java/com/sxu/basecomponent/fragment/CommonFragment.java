@@ -2,13 +2,15 @@ package com.sxu.basecomponent.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 /*******************************************************************************
- * Description: 不需要网络请求的Fragment
+ * Description: 通用Fragment基类
  *
  * Author: Freeman
  *
@@ -16,17 +18,21 @@ import android.view.ViewGroup;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class BaseFragment extends CommonFragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getLayoutResId() != 0) {
-            contentView = inflater.inflate(getLayoutResId(), null);
-            contentView.setClickable(true);
-            getViews();
-            initFragment();
-        }
+public abstract class CommonFragment extends Fragment {
 
-        return contentView;
-    }
+	protected Context context;
+	protected View contentView;
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		this.context = context;
+	}
+
+	protected abstract int getLayoutResId();
+
+	protected abstract void getViews();
+
+	protected abstract void initFragment();
 }

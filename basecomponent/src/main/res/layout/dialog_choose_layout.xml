@@ -42,7 +42,7 @@
             android:id="@+id/gap_line"
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/w4" />
+            android:background="@color/g5" />
         <TextView
             android:id="@+id/ok_text"
             android:layout_width="0dp"

@@ -1,5 +1,6 @@
 package com.sxu.simpleproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,8 @@ public class BaseHomeActivity extends BaseActivity {
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
 		Button entryButton = (Button) findViewById(R.id.entry_button);
 		Button entryButton2 = (Button) findViewById(R.id.entry_button2);
+		Button dialogButton = (Button) findViewById(R.id.dialog_button);
+		Button navigationButton = (Button) findViewById(R.id.navigation_button);
 
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
@@ -57,10 +60,24 @@ public class BaseHomeActivity extends BaseActivity {
 				BaseProgressActivityStyleActivity.enter(context, toolbarStyle);
 			}
 		});
+
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(context, DialogHomeActivity.class));
+			}
+		});
+
+		navigationButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(context, NavigationBarHomeActivity.class));
+			}
+		});
 	}
 
 	@Override
 	protected void initActivity() {
-
+		toolbar.setTitle("基础业务层");
 	}
 }

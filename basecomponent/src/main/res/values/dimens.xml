@@ -1,7 +1,11 @@
 <resources>
 
     <!-- toolbar默认高度 -->
-    <dimen name="toolbarHeight">56dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="toolbar_padding">20dp</dimen>
+    <dimen name="toolbar_title_padding">48dp</dimen>
+
 
     <!-- 字体标准 -->
     <dimen name="fs_56">56sp</dimen>

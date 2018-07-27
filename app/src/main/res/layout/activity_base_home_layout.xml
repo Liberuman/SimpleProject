@@ -5,12 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:paddingTop="24dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="基础业务层是对Android系统组件的二次封装，包括Activity, Fragment, Dialog, Toolbar等元素"/>
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <RadioButton
             android:id="@+id/no_toolbar_radio"
@@ -38,13 +45,40 @@
         android:id="@+id/entry_button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="查看Activity的样式"/>
 
     <Button
         android:id="@+id/entry_button2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="查看ProgressActivity的样式"/>
+
+    <Button
+        android:id="@+id/fragment_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="查看Fragment的样式"/>
+
+    <Button
+        android:id="@+id/fragment_prgress_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="查看ProgressFragment的样式"/>
+
+    <Button
+        android:id="@+id/dialog_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="查看通用的Dialog"/>
+    <Button
+        android:id="@+id/navigation_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="Navigation样式"/>
 </LinearLayout>

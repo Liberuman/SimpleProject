@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.sxu.basecomponent.activity.BaseActivity;
 
@@ -16,7 +17,16 @@ public class BaseActivityStyleActivity extends BaseActivity {
 
 	@Override
 	protected void getViews() {
-
+		TextView descText = (TextView) findViewById(R.id.desc_text);
+		if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
+			descText.setText("没有Toolbar的布局");
+		} else if (toolbarStyle == TOOL_BAR_STYLE_NORMAL) {
+			descText.setText("有Toolbar的线性布局");
+		} else if (toolbarStyle == TOOL_BAR_STYLE_TRANSPARENT) {
+			descText.setText("透明Toolbar的帧布局");
+		} else if (toolbarStyle == TOOL_BAR_STYLE_TRANSLUCENT) {
+			descText.setText("半透明Toolbar的帧布局");
+		}
 	}
 
 	@Override

@@ -1,137 +1,98 @@
 package com.sxu.basecomponent.uiwidget;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.text.SpannableString;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sxu.basecomponent.R;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
-
+import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 /*******************************************************************************
- * FileName: CommonDialog
- * <p>
- * Description:
- * <p>
- * Author: juhg
- * <p>
- * Version: v1.0
- * <p>
- * Date: 16/9/28
- * <p>
+ * Description: 
+ *
+ * Author: Freeman
+ *
+ * Date: 2018/7/16
+ *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class CommonDialog extends AlertDialog {
 
-    private TextView titleText;
-    private TextView descText;
-    private TextView cancelText;
-    private TextView okText;
-    private TextView gapLine;
+public class CommonDialog extends BaseDialog {
 
-    private String title;
-    private String desc;
+	private String message;
 
-    public CommonDialog(Context context, String title, String desc) {
-        super(context, R.style.CommonDialog);
-        this.title = title;
-        this.desc = desc;
-    }
+	public CommonDialog setMessage(String message) {
+		this.message = message;
+		return this;
+	}
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_common_layout);
-        titleText = (TextView) findViewById(R.id.title_text);
-        descText = (TextView) findViewById(R.id.message);
-        cancelText = (TextView) findViewById(R.id.cancel_text);
-        okText = (TextView) findViewById(R.id.ok_text);
-        gapLine = (TextView) findViewById(R.id.gap_line);
+	private View createView() {
+		View itemView = View.inflate(getContext(), R.layout.dialog_common_layout, null);
+		TextView titleText = itemView.findViewById(R.id.title_text);
+		TextView messageText = itemView.findViewById(R.id.message_text);
+		final TextView cancelText = itemView.findViewById(R.id.cancel_text);
+		final TextView okText = itemView.findViewById(R.id.ok_text);
+		View gapLine = itemView.findViewById(R.id.gap_line);
+		View buttonLayout = itemView.findViewById(R.id.button_layout);
+		titleText.setText(title);
+		messageText.setText(message);
+		cancelText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (cancelListener != null) {
+					cancelListener.onClick(null, 0);
+				}
+				dismiss();
+			}
+		});
+		okText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (okListener != null) {
+					okListener.onClick(null, 0);
+				}
+				dismiss();
+			}
+		});
+		int state = android.R.attr.state_pressed;
+		int radius = DisplayUtil.dpToPx(8);
+		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(getContext(), R.color.g5)};
+		// 根据设置的listener显示按钮，并设置相应的背景
+		if (cancelListener != null && okListener != null) {
+			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
+					new float[] {0 , 0, 0, 0, 0, 0, radius, radius});
+			ViewBgUtil.setSelectorBg(okText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, 0, 0});
+		} else if (cancelListener != null && okListener == null) {
+			gapLine.setVisibility(View.GONE);
+			okText.setVisibility(View.GONE);
+			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
+		} else if (cancelListener == null && okListener != null) {
+			gapLine.setVisibility(View.GONE);
+			cancelText.setVisibility(View.GONE);
+			ViewBgUtil.setSelectorBg(okText, state, bgColor,
+					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
+		} else {
+			buttonLayout.setVisibility(View.GONE);
+		}
 
-        if (!TextUtils.isEmpty(title)) {
-            titleText.setText(title);
-        } else {
-            titleText.setVisibility(View.GONE);
-            // 没有标题时内容居中
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) descText.getLayoutParams();
-            params.topMargin = DisplayUtil.dpToPx(20);
-            descText.setLayoutParams(params);
-        }
-        descText.setText(desc);
+		return itemView;
+	}
 
-        cancelText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        okText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-    }
+	@Override
+	protected void initMaterialDialog(AlertDialog.Builder builder) {
+		if (!TextUtils.isEmpty(message)) {
+			builder.setMessage(message);
+		}
+	}
 
-    // 设置富文本内容
-    public void setSpanContent(SpannableString text) {
-        descText.setText(text);
-    }
-
-    public void setCancelColor(int color) {
-        cancelText.setTextColor(color);
-    }
-
-    public void setOkButtonText(String text) {
-        okText.setText(text);
-    }
-    public TextView getOkButton(){
-        return okText;
-    }
-
-    public void setCancelText(String text) {
-        cancelText.setText(text);
-    }
-
-    public void setCancelTextHide() {
-        cancelText.setVisibility(View.GONE);
-        gapLine.setVisibility(View.GONE);
-    }
-
-    public void setOkButtonClickListener(final View.OnClickListener listener) {
-        if (listener != null) {
-            okText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClick(v);
-                    dismiss();
-                }
-            });
-        }
-    }
-
-    public void setCancelButtonClickListener(final View.OnClickListener listener) {
-        if (listener != null) {
-            cancelText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClick(v);
-                    dismiss();
-                }
-            });
-        }
-    }
-
-    public void show() {
-        super.show();
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = DisplayUtil.getScreenWidth() - DisplayUtil.dpToPx(80);
-        getWindow().setAttributes(params);
-    }
+	@Override
+	protected void initCustomDialog(AlertDialog.Builder builder) {
+		builder.setView(createView());
+	}
 }

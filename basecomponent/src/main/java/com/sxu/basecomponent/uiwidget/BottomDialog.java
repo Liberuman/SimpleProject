@@ -1,7 +1,9 @@
 package com.sxu.basecomponent.uiwidget;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.DialogFragment;
@@ -36,6 +38,7 @@ public class BottomDialog extends DialogFragment {
 	private String title;
 	private List<String> menuList;
 	private OnItemClickListener listener;
+	private View contentView;
 
 	public BottomDialog setTitle(String title) {
 		this.title = title;
@@ -52,10 +55,20 @@ public class BottomDialog extends DialogFragment {
 		return this;
 	}
 
+	public BottomDialog setContentView(View contentView) {
+		this.contentView = contentView;
+		return this;
+	}
+
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+		if (contentView != null) {
+			dialog.setContentView(contentView);
+			return dialog;
+		}
+
 		dialog.setContentView(R.layout.dialog_bottom_layout);
 		TextView titleText = dialog.findViewById(R.id.title_text);
 		TextView cancelText = dialog.findViewById(R.id.cancel_text);
@@ -77,14 +90,14 @@ public class BottomDialog extends DialogFragment {
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					DisplayUtil.dpToPx(48));
 			params.gravity = Gravity.CENTER;
-			int textColor = ContextCompat.getColor(getContext(), R.color.b2);
+			int textColor = ContextCompat.getColor(getContext(), R.color.b1);
 			for (final String menu : menuList) {
 				TextView menuText = new TextView(getContext());
 				menuText.setText(menu);
-				menuText.setTextSize(15);
+				menuText.setTextSize(17);
 				menuText.setTextColor(textColor);
 				menuText.setGravity(Gravity.CENTER);
-				menuLayout.addView(menuText, params);
+				menuText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.common_button_bg));
 
 				menuText.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -95,6 +108,8 @@ public class BottomDialog extends DialogFragment {
 						dismiss();
 					}
 				});
+
+				menuLayout.addView(menuText, params);
 			}
 		}
 

@@ -52,7 +52,7 @@ public abstract class CommonActivity extends SwipeBackActivity {
 	protected final int TOOL_BAR_STYLE_TRANSPARENT = 2;
 	protected final int TOOL_BAR_STYLE_TRANSLUCENT = 3;
 
-	protected int toolbarStyle = TOOL_BAR_STYLE_NONE;
+	protected int toolbarStyle = TOOL_BAR_STYLE_NORMAL;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +99,14 @@ public abstract class CommonActivity extends SwipeBackActivity {
 		}
 
 		if (toolbar != null) {
-			setSupportActionBar(toolbar);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					finish();
-				}
-			});
+//			setSupportActionBar(toolbar);
+//			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					finish();
+//				}
+//			});
 		}
 	}
 
@@ -161,7 +161,6 @@ public abstract class CommonActivity extends SwipeBackActivity {
 	private ViewGroup createTransparentToolbarLayout(boolean isTransparent) {
 		FrameLayout containerLayout = new FrameLayout(this);
 		toolbar = new ToolbarEx(this);
-		toolbar.setChildViewStyle();
 		if (isTransparent) {
 			toolbar.setBackgroundColor(Color.TRANSPARENT);
 		} else {

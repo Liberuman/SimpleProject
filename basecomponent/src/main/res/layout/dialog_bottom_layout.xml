@@ -17,15 +17,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:divider="@drawable/common_divider"
+        android:showDividers="beginning|middle|end"
         android:orientation="vertical"/>
-    <View
-        style="@style/CommonLine"/>
+
     <TextView
         android:id="@+id/cancel_text"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:gravity="center"
         android:text="取消"
         android:textSize="@dimen/fs_17"
-        android:textColor="@color/b1"/>
+        android:textColor="@color/b1"
+        android:background="@drawable/common_button_bg"/>
 </LinearLayout>

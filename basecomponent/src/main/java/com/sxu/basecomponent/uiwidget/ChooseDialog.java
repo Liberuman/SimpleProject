@@ -144,7 +144,6 @@ public class ChooseDialog extends BaseDialog {
 				if (okListener != null) {
 					okListener.onClick(null, 0);
 				}
-				ToastUtil.show(checkedItemIndex + "");
 				dismiss();
 			}
 		});

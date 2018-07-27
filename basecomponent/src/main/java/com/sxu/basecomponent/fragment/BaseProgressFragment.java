@@ -25,10 +25,6 @@ import com.sxu.baselibrary.commonutils.ToastUtil;
  *
  * Author: Freeman
  *
- * Version: v1.0
- *
- * Date: 2018/1/25
- *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public abstract class BaseProgressFragment extends Fragment {

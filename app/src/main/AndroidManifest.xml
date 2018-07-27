@@ -42,6 +42,10 @@
         </activity>
         <activity android:name=".BaseProgressActivityStyleActivity">
         </activity>
+        <activity android:name=".DialogHomeActivity">
+        </activity>
+        <activity android:name=".NavigationBarHomeActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -50,12 +50,12 @@ public abstract class BaseWithNavFragment extends BaseFragment {
 		navigationBar = new NavigationBar(getContext());
 		containerLayout.addView(navigationBar);
 		if (getLayoutResId() != 0) {
-			mContentView = inflater.inflate(getLayoutResId(), containerLayout);
-			mContentView.setClickable(true);
+			contentView = inflater.inflate(getLayoutResId(), containerLayout);
+			contentView.setClickable(true);
 			getViews();
 			initFragment();
 		}
 
-		return mContentView;
+		return contentView;
 	}
 }
