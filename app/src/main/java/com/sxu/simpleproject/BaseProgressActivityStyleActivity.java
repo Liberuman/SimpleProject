@@ -3,8 +3,6 @@ package com.sxu.simpleproject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.sxu.basecomponent.activity.BaseProgressActivity;
 
@@ -30,7 +28,7 @@ public class BaseProgressActivityStyleActivity extends BaseProgressActivity {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				notifyLoadFinish(MSG_LOAD_NO_LOGIN);
+				notifyLoadFinish(MSG_LOAD_EMPTY);
 			}
 		}, 2000);
 	}

@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
+import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
+import com.sxu.basecomponent.uiwidget.ContainerLayoutStyleImpl;
 import com.sxu.basecomponent.uiwidget.NavigationBar;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
@@ -40,17 +42,14 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
-public abstract class CommonActivity extends SwipeBackActivity {
+public abstract class CommonActivity extends SwipeBackActivity implements ContainerLayoutStyle {
 
-	protected Activity context;
 	protected ToolbarEx toolbar;
-	protected FragmentManager fragmentManager;
 	protected ViewGroup containerLayout;
 
-	protected final int TOOL_BAR_STYLE_NONE = 0;
-	protected final int TOOL_BAR_STYLE_NORMAL = 1;
-	protected final int TOOL_BAR_STYLE_TRANSPARENT = 2;
-	protected final int TOOL_BAR_STYLE_TRANSLUCENT = 3;
+	protected Activity context;
+	protected FragmentManager fragmentManager;
+	protected ContainerLayoutStyleImpl layoutStyle;
 
 	protected int toolbarStyle = TOOL_BAR_STYLE_NORMAL;
 
@@ -73,41 +72,19 @@ public abstract class CommonActivity extends SwipeBackActivity {
 			recreateActivity(savedInstanceState);
 		}
 
+		layoutStyle = new ContainerLayoutStyleImpl(this);
 		pretreatment();
-
-		initLayout();
-
+		initLayout(toolbarStyle);
 		if (containerLayout != null) {
 			setContentView(containerLayout);
 		}
 	}
 
-	/**
-	 * 根据toolbar的样式返回不同的布局
-	 */
-	protected void initLayout() {
-		switch (toolbarStyle) {
-			case TOOL_BAR_STYLE_NORMAL:
-				containerLayout = createNormalToolbarLayout();
-				break;
-			case TOOL_BAR_STYLE_TRANSPARENT:
-				containerLayout = createTransparentToolbarLayout(true);
-				break;
-			case TOOL_BAR_STYLE_TRANSLUCENT:
-				containerLayout = createTransparentToolbarLayout(false);
-				break;
-		}
-
-		if (toolbar != null) {
-//			setSupportActionBar(toolbar);
-//			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					finish();
-//				}
-//			});
-		}
+	@Override
+	public void initLayout(int toolbarStyle) {
+		layoutStyle.initLayout(toolbarStyle);
+		toolbar = layoutStyle.getToolbar();
+		containerLayout = layoutStyle.getContainerLayout();
 	}
 
 	/**
@@ -148,30 +125,6 @@ public abstract class CommonActivity extends SwipeBackActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-	}
-
-	private ViewGroup createNormalToolbarLayout() {
-		LinearLayout containerLayout = new LinearLayout(this);
-		containerLayout.setOrientation(LinearLayout.VERTICAL);
-		toolbar = new ToolbarEx(this);
-		containerLayout.addView(toolbar);
-		return containerLayout;
-	}
-
-	private ViewGroup createTransparentToolbarLayout(boolean isTransparent) {
-		FrameLayout containerLayout = new FrameLayout(this);
-		toolbar = new ToolbarEx(this);
-		if (isTransparent) {
-			toolbar.setBackgroundColor(Color.TRANSPARENT);
-		} else {
-			ViewBgUtil.setShapeBg(toolbar, GradientDrawable.Orientation.TOP_BOTTOM, new int[] {
-					ContextCompat.getColor(this, R.color.black_50), Color.TRANSPARENT}, 0);
-		}
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				DisplayUtil.dpToPx(56));
-		containerLayout.addView(toolbar, params);
-
-		return containerLayout;
 	}
 
 	@Override

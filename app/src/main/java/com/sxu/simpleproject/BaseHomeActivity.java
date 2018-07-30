@@ -29,6 +29,8 @@ public class BaseHomeActivity extends BaseActivity {
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
 		Button entryButton = (Button) findViewById(R.id.entry_button);
 		Button entryButton2 = (Button) findViewById(R.id.entry_button2);
+		Button fragmentButton = (Button) findViewById(R.id.fragment_button);
+		Button progressFragmentButton = (Button) findViewById(R.id.fragment_progress_button);
 		Button dialogButton = (Button) findViewById(R.id.dialog_button);
 		Button navigationButton = (Button) findViewById(R.id.navigation_button);
 
@@ -60,6 +62,22 @@ public class BaseHomeActivity extends BaseActivity {
 				BaseProgressActivityStyleActivity.enter(context, toolbarStyle);
 			}
 		});
+
+		fragmentButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BaseFragmentStyleActivity.enter(context, toolbarStyle);
+			}
+		});
+
+		progressFragmentButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BaseProgressFragmentStyleActivity.enter(context, toolbarStyle);
+			}
+		});
+
+
 
 		dialogButton.setOnClickListener(new View.OnClickListener() {
 			@Override

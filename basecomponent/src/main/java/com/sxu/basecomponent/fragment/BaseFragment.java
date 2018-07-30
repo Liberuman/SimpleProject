@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sxu.basecomponent.uiwidget.ToolbarEx;
+
 /*******************************************************************************
  * Description: 不需要网络请求的Fragment
  *
@@ -20,13 +22,26 @@ public abstract class BaseFragment extends CommonFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getLayoutResId() != 0) {
-            contentView = inflater.inflate(getLayoutResId(), null);
-            contentView.setClickable(true);
-            getViews();
-            initFragment();
-        }
+        super.onCreateView(inflater, container, savedInstanceState);
+        initLayout(toolbarStyle);
+        getViews();
+        initFragment();
 
         return contentView;
+    }
+
+    @Override
+    public void initLayout(int toolbarStyle) {
+        if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
+            contentView = View.inflate(context, getLayoutResId(), null);
+        } else {
+            super.initLayout(toolbarStyle);
+            if (toolbarStyle == TOOL_BAR_STYLE_NORMAL) {
+                View.inflate(context, getLayoutResId(), containerLayout);
+            } else {
+                containerLayout.addView(View.inflate(context, getLayoutResId(),null), 0);
+            }
+            contentView = containerLayout;
+        }
     }
 }

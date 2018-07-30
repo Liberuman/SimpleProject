@@ -41,11 +41,11 @@ public abstract class BaseActivity extends CommonActivity {
     }
 
     @Override
-    protected void initLayout() {
+    public void initLayout(int toolbarStyle) {
         if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
             setContentView(getLayoutResId());
         } else {
-            super.initLayout();
+            super.initLayout(toolbarStyle);
             if (toolbarStyle == TOOL_BAR_STYLE_NORMAL) {
                 View.inflate(this, getLayoutResId(), containerLayout);
             } else {

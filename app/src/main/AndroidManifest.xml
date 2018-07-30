@@ -46,6 +46,10 @@
         </activity>
         <activity android:name=".NavigationBarHomeActivity">
         </activity>
+        <activity android:name=".BaseFragmentStyleActivity">
+        </activity>
+        <activity android:name=".BaseProgressFragmentStyleActivity">
+        </activity>
     </application>
 
 </manifest>
