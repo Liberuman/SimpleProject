@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,21 +35,6 @@
         <!-- <data android:scheme="sdksample"/> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-
-        <activity android:name=".BaseHomeActivity">
-        </activity>
-        <activity android:name=".BaseActivityStyleActivity">
-        </activity>
-        <activity android:name=".BaseProgressActivityStyleActivity">
-        </activity>
-        <activity android:name=".DialogHomeActivity">
-        </activity>
-        <activity android:name=".NavigationBarHomeActivity">
-        </activity>
-        <activity android:name=".BaseFragmentStyleActivity">
-        </activity>
-        <activity android:name=".BaseProgressFragmentStyleActivity">
-        </activity>
     </application>
 
 </manifest>

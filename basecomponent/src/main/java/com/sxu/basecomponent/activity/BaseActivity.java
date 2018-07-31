@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 
-import com.sxu.basecomponent.R;
 import com.sxu.basecomponent.uiwidget.NavigationBar;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
 import com.sxu.baselibrary.commonutils.InputMethodUtil;

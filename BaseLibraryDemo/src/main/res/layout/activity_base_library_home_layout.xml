@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="24dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.4"
+        android:text="BaseLibrary是对开发中使用的数据集（网络，文件，SharePreference等），通用的工具类，通用的UI组件的封装, 下面演示部分工具类和UI组件。"/>
+
+    <Button
+        android:id="@+id/tool_button"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:text="工具类介绍"/>
+
+    <Button
+        android:id="@+id/ui_button"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:text="UI组件介绍"/>
+</LinearLayout>

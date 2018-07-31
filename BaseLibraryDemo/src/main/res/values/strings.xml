@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">BaseLibraryDemo</string>
+
+    <string name="tool_introduce">工具类集合中提供了丰富的工具类，包括：\n\n
+        AppUtil: App相关的一些操作，如版本号，进程号，是否已安装，是否正在运行，是否运行在前台等；\n\n
+
+        BitmapUtil: Bitmap相关的一些操作，如缩放，与Drawable之间的转换等；\n\n
+
+        CollectionUtil: 与集合/数组相关的操作；\n\n
+
+        ConvertUtil: 基本类型与String之间的转换操作；\n\n
+
+        DateTimeUtil: 时间格式化相关的操作；\n\n
+
+        DeviceUtil: 设备相关的操作，如获取系统的各种参数；\n\n
+
+        EncryptUtil: 加密操作，如MD5， 隐藏手机号，邮箱等操作；\n\n
+
+        FileUtil: 与文件相关的操作；\n\n
+
+        InputMethodUtil: 与键盘相关的操作，如打开/隐藏键盘，键盘弹出时调整EditText位置等；\n\n
+
+        LaunchUtil: 跳转到其他APP的操作，如打开电话，短信等；\n\n
+
+        LogUtil: 日志工具类；\n\n
+
+        NetworkUtil: 与网络相关的工具类，如获取网络参数，获取联网状态等；\n\n
+
+        PermissionUtil: 权限验证类；\n\n
+
+        RomUtil: 判断手机ROM的类型；\n\n
+
+        ScrollStateUtil: 判断可滑动View是否到达顶部或底部；\n\n
+
+        SpanStyleUtil: 富文本工具类；\n\n
+
+        ToastUtil: Toast工具类\n\n
+
+        VerificationUtil: 验证工具类，如手机号，邮箱，身份证，是否为中文等；\n\n
+
+        ViewBgUtil: 动态设置View背景的工具类；
+    </string>
+
+    <string name="ui_introduce">
+        UI集合中提供了一些自定义的View：\n\n
+
+        CircleProgressBar: 圆形进度条；\n\n
+        GuideLayerLayout: 引导图层；\n\n
+        LevelView: 类似Uber的等级选择器；\n\n
+        RefreshLayout: 下拉刷新、上拉加载组件；\n\n
+        ResilienceListView: 下拉可回弹的ListView;\n\n
+        ShapeImageView: 可定义形状的ImageView;\n\n
+        TabLayout: 类似微信底部的Tab组件；
+    </string>
+</resources>

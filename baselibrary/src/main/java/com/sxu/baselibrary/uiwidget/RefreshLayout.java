@@ -20,7 +20,7 @@ import android.widget.Scroller;
 import com.sxu.baselibrary.R;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ScrollStateUtils;
+import com.sxu.baselibrary.commonutils.ScrollStateUtil;
 
 /*******************************************************************************
  * Description: 下拉刷新组件
@@ -190,7 +190,7 @@ public class RefreshLayout extends LinearLayout {
 
 					@Override
 					public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-						if (getScrollY() > mHeaderViewHeight && ScrollStateUtils.reachBottom(view)) {
+						if (getScrollY() > mHeaderViewHeight && ScrollStateUtil.reachBottom(view)) {
 							setLoadMoreEnabled();
 						}
 					}
@@ -200,7 +200,7 @@ public class RefreshLayout extends LinearLayout {
 					getChildAt(0).setOnScrollChangeListener(new OnScrollChangeListener() {
 						@Override
 						public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-							if (ScrollStateUtils.reachBottom(v)) {
+							if (ScrollStateUtil.reachBottom(v)) {
 								setLoadMoreEnabled();
 							}
 						}
@@ -215,7 +215,7 @@ public class RefreshLayout extends LinearLayout {
 						@Override
 						public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 							super.onScrolled(recyclerView, dx, dy);
-							if (ScrollStateUtils.reachBottom(recyclerView)) {
+							if (ScrollStateUtil.reachBottom(recyclerView)) {
 								setLoadMoreEnabled();
 							}
 						}
@@ -254,10 +254,10 @@ public class RefreshLayout extends LinearLayout {
 				break;
 			case MotionEvent.ACTION_MOVE:
 				if (Math.abs(ev.getY() - mStartY) > Math.abs(ev.getX() - mStartX)
-						&& ((mMode == Mode.MODE_REFRESH && ev.getY() > mStartY && ScrollStateUtils.reachTop(getChildAt(1)))
-						|| (mMode == Mode.MODE_LOAD_MORE && ev.getY() < mStartY && ScrollStateUtils.reachBottom(getChildAt(1))
-						|| (mMode == Mode.MODE_BOTH && ((ev.getY() > mStartY && ScrollStateUtils.reachTop(getChildAt(1)))
-						|| (ev.getY() < mStartY && ScrollStateUtils.reachBottom(getChildAt(1)))))))) {
+						&& ((mMode == Mode.MODE_REFRESH && ev.getY() > mStartY && ScrollStateUtil.reachTop(getChildAt(1)))
+						|| (mMode == Mode.MODE_LOAD_MORE && ev.getY() < mStartY && ScrollStateUtil.reachBottom(getChildAt(1))
+						|| (mMode == Mode.MODE_BOTH && ((ev.getY() > mStartY && ScrollStateUtil.reachTop(getChildAt(1)))
+						|| (ev.getY() < mStartY && ScrollStateUtil.reachBottom(getChildAt(1)))))))) {
 					return true;
 				}
 				break;
