@@ -3,6 +3,7 @@ if (isModule) {
 } else {
     apply plugin: 'com.android.application'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -15,6 +16,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
     sourceSets {
@@ -39,9 +45,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    testImplementation "junit:junit:${JUNIT_VERSION}"
+    androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
+
+    kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
+
     implementation project(':basecomponent')
 }

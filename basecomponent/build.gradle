@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
-
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -13,6 +13,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
     buildTypes {
@@ -28,14 +33,24 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compile 'com.android.support:support-dynamic-animation:25.3.0'
-    compile 'com.android.support:design:27.1.0'
+    testImplementation "junit:junit:${JUNIT_VERSION}"
+    androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
 
+    compile "com.android.support:support-dynamic-animation:${SUPPORT_LIB_VERSION}"
+    compile "com.android.support:design:${SUPPORT_LIB_VERSION}"
+    compile "com.android.support:multidex:${MULTIDEX_VERSION}"
+    compile "com.google.android:flexbox:${FLEXBOX_VERSION}"
+    compile "com.android.support.constraint:constraint-layout:${CONSTRAINT_LAYOUT_VERSION}"
 
+    // ARouter
+    compile "com.alibaba:arouter-api:${AROUTER_API_VERSION}"
+    kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
+
+    // EventBus
+    compile "org.greenrobot:eventbus:${EVENTBUS_VERSION}"
     // 侧滑关闭组件
-    compile 'me.imid.swipebacklayout.lib:library:1.1.0'
+    compile "me.imid.swipebacklayout.lib:library:${SWIPEBACK_VERSION}"
+
     compile project(path: ':baselibrary')
 }

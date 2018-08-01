@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 public class SplashActivity extends AppCompatActivity {
 
 	@Override
@@ -18,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 		entryButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//startActivity(new Intent(SplashActivity.this, MainActivity.class));
+				ARouter.getInstance().build("/main/home").navigation();
 			}
 		});
 	}

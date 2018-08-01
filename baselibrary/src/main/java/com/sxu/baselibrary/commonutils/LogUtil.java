@@ -1,6 +1,7 @@
 package com.sxu.baselibrary.commonutils;
-import android.support.compat.BuildConfig;
 import android.util.Log;
+
+import com.sxu.baselibrary.BuildConfig;
 
 /*******************************************************************************
  * Description: Log工具类

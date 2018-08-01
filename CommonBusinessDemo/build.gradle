@@ -1,0 +1,63 @@
+if (isModule) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+
+        manifestPlaceholders =[
+                JPUSH_PKGNAME : "packageName",
+                JPUSH_APPKEY : "appkey",
+                JPUSH_CHANNEL : "channel"
+        ]
+    }
+
+    sourceSets {
+        main {
+            if (isModule) {
+                manifest.srcFile '../CommonBusinessDemo/src/main/AndroidManifest.xml'
+            } else {
+                manifest.srcFile '../CommonBusinessDemo/src/AndroidManifest.xml'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    testImplementation "junit:junit:${JUNIT_VERSION}"
+    androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
+
+    kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
+
+    implementation project(':basecomponent')
+    implementation project(':commonbusiness')
+}

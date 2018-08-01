@@ -44,13 +44,12 @@ public class ToastUtil {
 			TextView textView = new TextView(context);
 			textView.setText(info);
 			textView.setTextSize(16);
-			textView.setTextColor(Color.RED);
+			textView.setTextColor(Color.WHITE);
 			textView.setGravity(Gravity.CENTER);
-			int verticalPadding = DisplayUtil.dpToPx(8);
+			int verticalPadding = DisplayUtil.dpToPx(6);
 			int horizontalPadding = DisplayUtil.dpToPx(10);
 			textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
-			ViewBgUtil.setShapeBg(textView, GradientDrawable.RECTANGLE,
-					Color.parseColor("#333333"), DisplayUtil.dpToPx(6));
+			ViewBgUtil.setShapeBg(textView, Color.parseColor("#444444"), DisplayUtil.dpToPx(6));
 			toast.setView(textView);
 			toast.setGravity(Gravity.CENTER, 0, DisplayUtil.dpToPx(70));
 			textView.postDelayed(new Runnable() {

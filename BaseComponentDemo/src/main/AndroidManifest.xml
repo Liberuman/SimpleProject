@@ -1,20 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sxu.module1">
 
-    <application
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    <application>
 
-        <activity android:name="com.sxu.module1.BaseActivityStyleActivity">
-        </activity>
-        <activity android:name="com.sxu.module1.BaseProgressActivityStyleActivity">
-        </activity>
-        <activity android:name="com.sxu.module1.DialogHomeActivity">
-        </activity>
-        <activity android:name="com.sxu.module1.NavigationBarHomeActivity">
-        </activity>
-        <activity android:name="com.sxu.module1.BaseFragmentStyleActivity">
-        </activity>
-        <activity android:name="com.sxu.module1.BaseProgressFragmentStyleActivity">
-        </activity>
+        <activity android:name=".BaseHomeActivity"/>
+
+        <activity android:name="com.sxu.module1.BaseActivityStyleActivity"/>
+
+        <activity android:name="com.sxu.module1.BaseProgressActivityStyleActivity"/>
+
+        <activity android:name="com.sxu.module1.DialogHomeActivity"/>
+
+        <activity android:name="com.sxu.module1.NavigationBarHomeActivity"/>
+
+        <activity android:name="com.sxu.module1.BaseFragmentStyleActivity"/>
+
+        <activity android:name="com.sxu.module1.BaseProgressFragmentStyleActivity"/>
+
     </application>
 </manifest>

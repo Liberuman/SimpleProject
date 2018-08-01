@@ -1,14 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sxu.baselibrarydemo">
-    <application
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <application>
+
         <activity android:name=".BaseLibraryHomeActivity"/>
 
-        <activity android:name=".ToolHomeActivity">
-        </activity>
+        <activity android:name=".ToolHomeActivity"/>
 
-        <activity android:name=".UIHomeActivity">
-        </activity>
+        <activity android:name=".UIHomeActivity"/>
 
     </application>
+
 </manifest>

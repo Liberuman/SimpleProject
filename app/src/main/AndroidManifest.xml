@@ -3,6 +3,7 @@
           package="com.sxu.simpleproject">
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,6 +36,8 @@
         <!-- <data android:scheme="sdksample"/> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
+        <service android:name=".InitService"/>
+
     </application>
 
 </manifest>

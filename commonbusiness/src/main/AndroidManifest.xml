@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.sxu.commonbusiness">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -69,12 +70,12 @@
         </receiver>
 
         <!-- 极光推送 -->
-        <!--<meta-data-->
-            <!--android:name="JPUSH_APPKEY"-->
-            <!--android:value="" />-->
-        <!--<meta-data-->
-            <!--android:name="JPUSH_CHANNEL"-->
-            <!--android:value="channel" />-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="${JPUSH_CHANNEL}" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="${JPUSH_APPKEY}" />
 
         <!-- 支付宝支付 -->
         <activity
@@ -91,5 +92,8 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+
+        <activity android:name=".share.activity.ShareActivity"/>
+
     </application>
 </manifest>

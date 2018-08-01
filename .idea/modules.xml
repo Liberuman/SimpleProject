@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BaseComponentDemo/module1.iml" filepath="$PROJECT_DIR$/BaseComponentDemo/module1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseComponentDemo/BaseComponentDemo.iml" filepath="$PROJECT_DIR$/BaseComponentDemo/BaseComponentDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/BaseLibraryDemo/BaseLibraryDemo.iml" filepath="$PROJECT_DIR$/BaseLibraryDemo/BaseLibraryDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CommonBusinessDemo/CommonBusinessDemo.iml" filepath="$PROJECT_DIR$/CommonBusinessDemo/CommonBusinessDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MainModule/MainModule.iml" filepath="$PROJECT_DIR$/MainModule/MainModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimpleProject.iml" filepath="$PROJECT_DIR$/SimpleProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/basecomponent/basecomponent.iml" filepath="$PROJECT_DIR$/basecomponent/basecomponent.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonbusiness/commonbusiness.iml" filepath="$PROJECT_DIR$/commonbusiness/commonbusiness.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mainmodule/mainmodule.iml" filepath="$PROJECT_DIR$/mainmodule/mainmodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseComponentDemo/module1.iml" filepath="$PROJECT_DIR$/BaseComponentDemo/module1.iml" />
     </modules>
   </component>
 </project>

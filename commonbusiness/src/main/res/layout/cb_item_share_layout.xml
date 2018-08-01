@@ -20,6 +20,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="新浪微博"
-        android:textColor="@color/cl_b1"
-        android:textSize="@dimen/cl_font_size_28"/>
+        android:textColor="#333333"
+        android:textSize="14sp"/>
 </LinearLayout>

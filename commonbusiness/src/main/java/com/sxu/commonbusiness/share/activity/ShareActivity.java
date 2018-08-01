@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sina.weibo.sdk.utils.LogUtil;
+import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;

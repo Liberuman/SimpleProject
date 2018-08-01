@@ -1,30 +1,111 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
+
     compileSdkVersion rootProject.ext.compileSdkVersion
+
     defaultConfig {
         applicationId "com.sxu.simpleproject"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
+
+        manifestPlaceholders =[
+                JPUSH_PKGNAME : "packageName",
+                JPUSH_APPKEY : "appkey",
+                JPUSH_CHANNEL : "channel"
+        ]
+    }
+
+    signingConfigs {
+        config {
+            keyAlias '别名'
+            keyPassword 'key密码'
+            storePassword 'store密码'
+            storeFile file('keystoreFile文件路径') // 将keystore存放在项目中的指定目录下
+        }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
     }
 
     buildTypes {
-        release {
+        debug {
+            debuggable true
+            // 开启混淆
             minifyEnabled false
+            // 开启对齐优化
+            zipAlignEnabled true
+            // 签名
+            //signingConfig signingConfigs.config
+        }
+
+        release {
+
+            debuggable false
+            // 删除无用的资源
+            shrinkResources true
+            // 开启混淆
+            minifyEnabled true
+            // 开启对齐优化
+            zipAlignEnabled true
+            // 签名
+            signingConfig signingConfigs.config
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 构建变体
+    flavorDimensions "mode"
+    productFlavors {
+        free {
+            versionCode 1
+            versionName "1.0"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+            dimension "mode"
+        }
+
+        pro {
+            versionCode 1
+            versionName "1.0"
+            applicationIdSuffix ".pro"
+            versionNameSuffix "-pro"
+            dimension "mode"
         }
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //implementation project(':mainmodule')
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    testImplementation "junit:junit:${JUNIT_VERSION}"
+    androidTestCompile 'com.android.support:support-annotations:26.1.0'
+    androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
+
+    kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
+
+    implementation project(':basecomponent')
+    if (isModule) {
+        implementation project(':MainModule')
+    }
 }

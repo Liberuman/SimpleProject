@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 /*******************************************************************************
  * Description: 
  *
@@ -16,7 +18,7 @@ import android.widget.Button;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-
+@Route(path = "/base/home")
 public class BaseLibraryHomeActivity extends AppCompatActivity {
 
 	@Override

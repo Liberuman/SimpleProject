@@ -15,6 +15,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        manifestPlaceholders =[
+                JPUSH_PKGNAME : "com.sxu.library",
+                JPUSH_APPKEY : "appkey",
+                JPUSH_CHANNEL : "channel"
+        ]
     }
 
     buildTypes {
@@ -29,19 +34,19 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation "junit:junit:${JUNIT_VERSION}"
+    androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
 
     // 微信分享，登录，支付等
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     // 微博分享
-    compile 'com.sina.weibo.sdk:core:4.2.7:openDefaultRelease@aar'
+    compile "com.sina.weibo.sdk:core:${WEIBO_VERSION}:openDefaultRelease@aar"
 
     // 极光推送
-    compile 'cn.jiguang.sdk:jpush:3.1.1'
-    compile 'cn.jiguang.sdk:jcore:1.1.9'
+    compile "cn.jiguang.sdk:jpush:${JPUSH_VERSION}"
+    compile "cn.jiguang.sdk:jcore:${JCORE_VERSION}"
     // 华为推送
-    compile 'com.huawei.android.hms:push:2.5.3.305'
+    compile "com.huawei.android.hms:push:${HMS_PUSH_VERSION}"
     compile project(path: ':baselibrary')
 }

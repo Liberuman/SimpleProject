@@ -10,11 +10,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseComponentDemo" />
             <option value="$PROJECT_DIR$/BaseLibraryDemo" />
+            <option value="$PROJECT_DIR$/CommonBusinessDemo" />
+            <option value="$PROJECT_DIR$/MainModule" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basecomponent" />
             <option value="$PROJECT_DIR$/baselibrary" />
             <option value="$PROJECT_DIR$/commonbusiness" />
-            <option value="$PROJECT_DIR$/mainmodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

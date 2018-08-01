@@ -5,9 +5,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
 
+@Route(path = "/component/home")
 public class BaseHomeActivity extends BaseActivity {
 
 	private int toolbarStyle;

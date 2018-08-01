@@ -2,7 +2,7 @@
           package="com.sxu.baselibrary">
     <application>
         <provider
-            android:authorities="com.sxu.baselibrary"
+            android:authorities="${applicationId}.provider"
             android:name=".commonutils.BaseContentProvider"/>
     </application>
 </manifest>

@@ -307,7 +307,7 @@ public class ViewBgUtil {
 	public static Drawable getDrawable(int shape, int bgColor, int borderColor,
 	                                   int borderWidth, int radius) {
 		GradientDrawable drawable = new GradientDrawable();
-		drawable.setShape(GradientDrawable.LINE);
+		drawable.setShape(shape);
 		drawable.setColor(bgColor);
 		drawable.setStroke(borderWidth, borderColor);
 		drawable.setCornerRadius(radius);
