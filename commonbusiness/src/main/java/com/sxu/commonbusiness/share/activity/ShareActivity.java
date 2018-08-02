@@ -3,23 +3,31 @@ package com.sxu.commonbusiness.share.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.sxu.commonbusiness.share.ShareManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Copyright (c) 2017. Freeman Inc. All rights reserved.
@@ -75,7 +83,7 @@ public class ShareActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(Intent.ACTION_SEND);
-				intent.setType("image/*");
+				intent.setType("text/plain");
 				intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
 				intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app");
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -87,7 +95,11 @@ public class ShareActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		overridePendingTransition(0, 0);
+
+		WindowManager.LayoutParams params = getWindow().getAttributes();
+		params.gravity = Gravity.BOTTOM;
+		getWindow().setAttributes(params);
+
 		setContentView(R.layout.cb_activity_share_layout);
 		getViews();
 		initActivity();
@@ -155,12 +167,6 @@ public class ShareActivity extends Activity {
 		if (shareManager.getShareInstance() != null) {
 			shareManager.getShareInstance().handleResult(0, 0, intent);
 		}
-	}
-
-	@Override
-	public void finish() {
-		super.finish();
-		overridePendingTransition(0, 0);
 	}
 
 	public class ShareAdapter extends BaseAdapter {

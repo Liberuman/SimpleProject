@@ -93,7 +93,28 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
 
-        <activity android:name=".share.activity.ShareActivity"/>
+        <!-- QQ Share -->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:taskAffinity="com.sxu.commonbusiness"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            >
+        </activity>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent${QQ_ID}" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".share.activity.ShareActivity"
+            android:theme="@style/cb_CommonDialog"/>
 
     </application>
 </manifest>

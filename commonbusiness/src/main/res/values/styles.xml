@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="cb_CommonDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/cb_ShareDialogAnim</item>
+    </style>
+
+    <style name="cb_ShareDialogAnim">
+        <item name="android:windowEnterAnimation">@anim/cb_sliding_from_bottom_anim</item>
+        <item name="android:windowExitAnimation">@anim/cb_sliding_to_bottom_anim</item>
+
+    </style>
+</resources>

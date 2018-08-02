@@ -22,10 +22,15 @@ android {
             }
         }
 
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
+
         manifestPlaceholders =[
                 JPUSH_PKGNAME : "packageName",
                 JPUSH_APPKEY : "appkey",
-                JPUSH_CHANNEL : "channel"
+                JPUSH_CHANNEL : "channel",
+                QQ_ID: "qq_id"
         ]
     }
 

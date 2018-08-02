@@ -16,9 +16,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders =[
-                JPUSH_PKGNAME : "com.sxu.library",
-                JPUSH_APPKEY : "appkey",
-                JPUSH_CHANNEL : "channel"
+                JPUSH_PKGNAME: "com.sxu.library",
+                JPUSH_APPKEY: "appkey",
+                JPUSH_CHANNEL: "channel",
+                QQ_ID: "qq_id"
         ]
     }
 

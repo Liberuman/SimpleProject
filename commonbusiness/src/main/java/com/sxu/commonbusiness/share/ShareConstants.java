@@ -23,33 +23,32 @@ public class ShareConstants {
 
 
 	/** 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY */
-	public static String APP_WEIBO_KEY      = "";
+	public static String APP_WEIBO_KEY      = "appkey";
 
 	/**
 	 * 腾讯QQ_APP_KEY
 	 */
-	public static String APP_QQ_KEY         = "";
-	//String APP_QQ_KEY         = "GLeABBBWMSQWZ2cR";
+	public static String APP_QQ_KEY         = "appkey";
 
 	/**
 	 * 微信分享APP_KEY
 	 */
-	public static String APP_WECHAT_KEY      = "";
+	public static String APP_WECHAT_KEY      = "appkey";
 
 	/**
 	 * 微信小程序URL
 	 */
-	public static String APP_MINI_PROGRAM_WEB_PAGE      = "";
+	public static String APP_MINI_PROGRAM_WEB_PAGE      = "url";
 
 	/**
 	 * 微信小程序ID
 	 */
-	public static String APP_MINI_PROGRAM_NAME      = "";
+	public static String APP_MINI_PROGRAM_NAME      = "program";
 
 	/**
 	 * 微信app_secret
 	 */
-	public static String APP_WECHAT_SECRET = "";
+	public static String APP_WECHAT_SECRET = "secret";
 	/**
 	 * 当前 DEMO 应用的回调页，第三方应用可以使用自己的回调页。
 	 *

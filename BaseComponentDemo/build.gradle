@@ -21,6 +21,10 @@ android {
                 arguments = [ moduleName : project.getName() ]
             }
         }
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
     }
 
     sourceSets {

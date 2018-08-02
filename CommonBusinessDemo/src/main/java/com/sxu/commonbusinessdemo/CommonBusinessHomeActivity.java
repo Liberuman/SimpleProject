@@ -23,9 +23,9 @@ public class CommonBusinessHomeActivity extends AppCompatActivity {
 		shareButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				ShareActivity.enter(CommonBusinessHomeActivity.this, "标题", "描述",
-//						"http://m.baidu.com",
-//						"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png");
+				ShareActivity.enter(CommonBusinessHomeActivity.this, "标题", "描述",
+						"http://m.baidu.com",
+						"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png");
 			}
 		});
 	}

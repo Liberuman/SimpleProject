@@ -14,6 +14,7 @@
             <!--tools:replace="android:value"-->
             <!--android:name="JPUSH_APPKEY"-->
             <!--android:value="123" />-->
+        <activity android:name=".wxapi.WXEntryActivity"/>
 
         <activity android:name=".CommonBusinessHomeActivity">
             <intent-filter>
