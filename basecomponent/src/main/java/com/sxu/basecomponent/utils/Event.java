@@ -7,7 +7,7 @@ package com.sxu.basecomponent.utils;
  *
  * Date: 2018/8/7
  *
- * Copyright: all rights reserved by ZhiNanMao.
+ * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
 public class Event {
