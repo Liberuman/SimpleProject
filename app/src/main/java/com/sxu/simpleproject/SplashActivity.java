@@ -64,6 +64,7 @@ public class SplashActivity extends BaseActivity {
 				} else {
 					ARouter.getInstance().build("/main/home").navigation();
 				}
+				finish();
 			}
 		});
 	}

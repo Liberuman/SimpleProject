@@ -3,7 +3,11 @@ package com.sxu.baselibrary.uiwidget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sxu.baselibrary.R;
+import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 
@@ -28,6 +33,7 @@ import com.sxu.baselibrary.commonutils.ViewBgUtil;
  *******************************************************************************/
 public class TabLayout extends LinearLayout {
 
+	private int mIconSize;
 	private int mTextSize;
 	private int mMiddleGap;
 	private int currentIndex = -1;
@@ -41,10 +47,19 @@ public class TabLayout extends LinearLayout {
 	public TabLayout(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 		TypedArray arrays = context.obtainStyledAttributes(attrs, R.styleable.bl_TabLayout);
+
+		mIconSize = arrays.getDimensionPixelSize(R.styleable.bl_TabLayout_bl_iconSize, 0);
 		mTextSize = arrays.getDimensionPixelSize(R.styleable.bl_TabLayout_bl_textSize, 11);
 		mMiddleGap = arrays.getDimensionPixelSize(R.styleable.bl_TabLayout_bl_middleGap, 0);
 		arrays.recycle();
 		setOrientation(LinearLayout.HORIZONTAL);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			setBackgroundColor(Color.WHITE);
+			ViewCompat.setElevation(this, DisplayUtil.dpToPx(8));
+		} else {
+			setShowDividers(SHOW_DIVIDER_BEGINNING);
+			setDividerDrawable(new ColorDrawable(Color.parseColor("#eeeeee")));
+		}
 	}
 
 	@Override
@@ -54,12 +69,7 @@ public class TabLayout extends LinearLayout {
 		}
 	}
 
-
 	public void setItemData(int[] textColor, String[] tabText, int[] normalIconIds, int[] selectedIconIds) {
-		setItemData(0, textColor, tabText, normalIconIds, selectedIconIds);
-	}
-
-	public void setItemData(int textPaddingTop, int[] textColor, String[] tabText, int[] normalIconIds, int[] selectedIconIds) {
 		if (tabText == null || normalIconIds == null || selectedIconIds == null) {
 			throw new NullPointerException("tabText or selectedIconId or unselectedIconId is null");
 		} else if (tabText.length == 0 || tabText.length != normalIconIds.length
@@ -74,16 +84,24 @@ public class TabLayout extends LinearLayout {
 				new int[]{android.R.attr.state_selected},
 				new int[]{}
 		}, textColor);
+
+		LinearLayout.LayoutParams iconParams = null;
+		if (mIconSize != 0) {
+			iconParams = new LinearLayout.LayoutParams(mIconSize, mIconSize);
+			iconParams.gravity = Gravity.CENTER;
+		}
 		for (int i = 0; i < tabText.length; i++) {
 			View childView = View.inflate(getContext(), R.layout.bl_item_tab_layout, null);
 			TextView textView = childView.findViewById(R.id.bl_tab_text);
 			ImageView tabIcon = childView.findViewById(R.id.bl_tab_icon);
-			textView.setPadding(0, textPaddingTop, 0, 0);
 			textView.setText(tabText[i]);
 			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
 			textView.setTextColor(colorState);
 			if (mMiddleGap != 0) {
 				textView.setPadding(0, mMiddleGap, 0, 0);
+			}
+			if (iconParams != null) {
+				tabIcon.setLayoutParams(iconParams);
 			}
 			ViewBgUtil.setTextColor(textView, android.R.attr.state_selected, textColor);
 			ViewBgUtil.setSelectorBg(tabIcon, android.R.attr.state_selected, new int[]{
@@ -94,23 +112,25 @@ public class TabLayout extends LinearLayout {
 
 	public void setCurrentItem(int index) {
 		this.currentIndex = index;
-		if (mListener != null && index < getChildCount()) {
-			if (lastSelectedViewIndex != -1) {
-				if (lastSelectedViewIndex != index) {
-					getChildAt(lastSelectedViewIndex).setSelected(false);
-					mListener.onItemUnSelected();
-					if (lastSelectedViewIndex != index) {
-						getChildAt(index).setSelected(true);
-						mListener.onItemSelected(index);
-					}
-				}
-			} else {
-				getChildAt(index).setSelected(true);
-				mListener.onItemSelected(index);
-			}
-
-			lastSelectedViewIndex = index;
+		if (mListener == null || index >= getChildCount()) {
+			return;
 		}
+
+		if (lastSelectedViewIndex != -1) {
+			if (lastSelectedViewIndex != index) {
+				getChildAt(lastSelectedViewIndex).setSelected(false);
+				mListener.onItemUnSelected();
+				if (lastSelectedViewIndex != index) {
+					getChildAt(index).setSelected(true);
+					mListener.onItemSelected(index);
+				}
+			}
+		} else {
+			getChildAt(index).setSelected(true);
+			mListener.onItemSelected(index);
+		}
+
+		lastSelectedViewIndex = index;
 	}
 
 	public int getCurrentIndex() {
