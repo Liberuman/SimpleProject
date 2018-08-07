@@ -113,6 +113,16 @@ public class ToolbarEx extends Toolbar {
 		return this;
 	}
 
+	/**
+	 * 调用默认的setTitle
+	 * @param title
+	 * @return
+	 */
+	public ToolbarEx setDefaultTitle(String title) {
+		super.setTitle(title);
+		return this;
+	}
+
 	public ToolbarEx setTitleGravity(int gravity) {
 		initTitleText(true);
 		((LayoutParams) titleText.getLayoutParams()).gravity = gravity;

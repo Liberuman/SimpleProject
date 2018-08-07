@@ -26,11 +26,11 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a'
         }
 
-        manifestPlaceholders =[
-                JPUSH_PKGNAME : "packageName",
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "packageName",
                 JPUSH_APPKEY : "appkey",
-                JPUSH_CHANNEL : "channel",
-                QQ_ID: "qq_id"
+                JPUSH_CHANNEL: "channel",
+                QQ_ID        : "qq_id"
         ]
     }
 
@@ -143,6 +143,7 @@ andResGuard {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation "junit:junit:${JUNIT_VERSION}"
     androidTestCompile 'com.android.support:support-annotations:26.1.0'
     androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"

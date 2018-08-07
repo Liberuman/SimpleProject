@@ -3,6 +3,8 @@ package com.sxu.baselibrary.datasource.preference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.sxu.baselibrary.commonutils.BaseContentProvider;
+
 import java.util.Set;
 
 /*******************************************************************************
@@ -24,6 +26,10 @@ public class PreferencesManager {
     private static SharedPreferences.Editor editor;
     private static String PREFERENCE_NAME = "SXU";
     private static Context context;
+
+    static {
+        init(BaseContentProvider.context, PREFERENCE_NAME);
+    }
 
     public static void init(Context context) {
         init(context, PREFERENCE_NAME);

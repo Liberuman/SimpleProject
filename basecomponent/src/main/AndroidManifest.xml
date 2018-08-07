@@ -1,2 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sxu.basecomponent"/>
+          package="com.sxu.basecomponent">
+    <application>
+        <activity android:name=".activity.WebViewActivity"/>
+    </application>
+</manifest>

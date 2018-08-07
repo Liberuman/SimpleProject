@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".NewUserGuideActivity"/>
+
         <!-- 微信支付 -->
         <!-- <activity -->
         <!-- android:name=".wxapi.WXEntryActivity" -->
@@ -38,6 +40,8 @@
         <!-- </activity> -->
         <service android:name=".InitService"/>
 
+        <activity android:name=".NewUserGuideActivity">
+        </activity>
     </application>
 
 </manifest>
