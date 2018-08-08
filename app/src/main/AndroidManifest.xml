@@ -40,8 +40,6 @@
         <!-- </activity> -->
         <service android:name=".InitService"/>
 
-        <activity android:name=".NewUserGuideActivity">
-        </activity>
     </application>
 
 </manifest>

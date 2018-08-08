@@ -35,6 +35,7 @@ public class ConvertUtil {
 
         return 0;
     }
+
     public static int stringToInt(String value,int defaultValue) {
         if (!TextUtils.isEmpty(value)) {
             try {

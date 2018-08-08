@@ -35,6 +35,7 @@
     </LinearLayout>
 
 
+
     <com.sxu.baselibrary.uiwidget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"

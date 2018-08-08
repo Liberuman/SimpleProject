@@ -27,7 +27,7 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME: "packageName",
+                JPUSH_PKGNAME: "${applicationId}",
                 JPUSH_APPKEY : "appkey",
                 JPUSH_CHANNEL: "channel",
                 QQ_ID        : "qq_id"

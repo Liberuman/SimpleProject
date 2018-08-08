@@ -6,6 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -153,8 +156,47 @@ public class TabLayout extends LinearLayout {
 		}
 	}
 
+	@Nullable
+	@Override
+	protected Parcelable onSaveInstanceState() {
+		Parcelable parcelable =  super.onSaveInstanceState();
+		SaveState saveState = new SaveState(parcelable);
+		saveState.setCurrentIndex(currentIndex);
+		return saveState;
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state) {
+		SaveState saveState = (SaveState) state;
+		super.onRestoreInstanceState(saveState.getSuperState());
+		setCurrentItem(saveState.getCurrentIndex());
+	}
+
 	public interface OnItemStateListener {
 		void onItemSelected(int position);
 		void onItemUnSelected();
+	}
+
+	public static class SaveState extends BaseSavedState {
+
+		private int currentIndex;
+
+		public SaveState(Parcelable state) {
+			super(state);
+		}
+
+		@Override
+		public void writeToParcel(Parcel out, int flags) {
+			super.writeToParcel(out, flags);
+			out.writeInt(currentIndex);
+		}
+
+		public void setCurrentIndex(int currentIndex) {
+			this.currentIndex = currentIndex;
+		}
+
+		public int getCurrentIndex() {
+			return currentIndex;
+		}
 	}
 }

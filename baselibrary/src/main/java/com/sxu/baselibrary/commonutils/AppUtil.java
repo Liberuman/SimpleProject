@@ -112,12 +112,10 @@ public class AppUtil {
 	 */
 	public static boolean appIsInstalled(Application context, String packageName) {
 		PackageManager pm = context.getPackageManager();
-		if (pm != null) {
-			List<PackageInfo> packageList = pm.getInstalledPackages(0);
-			for (PackageInfo appInfo : packageList) {
-				if (appInfo.packageName.equals(packageName)) {
-					return true;
-				}
+		List<PackageInfo> packageList = pm.getInstalledPackages(0);
+		for (PackageInfo appInfo : packageList) {
+			if (appInfo.packageName.equals(packageName)) {
+				return true;
 			}
 		}
 
