@@ -49,6 +49,19 @@ public class VerificationUtil {
     }
 
     /**
+     * 是否是有效的银行卡
+     * @param bankCard
+     * @return
+     */
+    public static boolean isValidBankCard(String bankCard) {
+        if (!TextUtils.isEmpty(bankCard)) {
+            String regex = "^[1-9](\\d{15} | \\d{18})$";
+            return Pattern.matches(regex, bankCard);
+        }
+        return false;
+    }
+
+    /**
      * 判断内容是否由字母，数字，下划线组成
      * @param content
      * @return

@@ -17,16 +17,16 @@ import android.text.TextUtils;
  *******************************************************************************/
 public class NetworkUtil {
 
-	private final static String NETWORK_TYPE_NONE = "unknown";
-	private final static String NETWORK_TYPE_2G = "2G";
-	private final static String NETWORK_TYPE_3G = "3G";
-	private final static String NETWORK_TYPE_4G = "4G";
-	private final static String NETWORK_TYPE_WIFI = "Wifi";
+	public final static String NETWORK_TYPE_2G = "2G";
+	public final static String NETWORK_TYPE_3G = "3G";
+	public final static String NETWORK_TYPE_4G = "4G";
+	public final static String NETWORK_TYPE_WIFI = "Wifi";
+	public final static String NETWORK_TYPE_NONE = "unknown";
 
-	private final static String CARRIER_TYPE_CMCC = "CMCC"; // 中国移动
-	private final static String CARRIER_TYPE_CUCC = "CUCC"; // 中国联通
-	private final static String CARRIER_TYPE_CTCC = "CTCC"; // 中国电信
-	private final static String CARRIER_TYPE_UNKNOWN = "unknown";
+	public final static String CARRIER_TYPE_CMCC = "CMCC"; // 中国移动
+	public final static String CARRIER_TYPE_CUCC = "CUCC"; // 中国联通
+	public final static String CARRIER_TYPE_CTCC = "CTCC"; // 中国电信
+	public final static String CARRIER_TYPE_UNKNOWN = "UNKNOWN";
 
 	/**
 	 * 网络是否连接

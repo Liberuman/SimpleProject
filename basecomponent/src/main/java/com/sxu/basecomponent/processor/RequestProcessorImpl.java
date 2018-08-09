@@ -80,7 +80,7 @@ public class RequestProcessorImpl implements RequestProcessor {
 				showExceptionLayout(LAYOUT_TYPE_EMPTY);
 				break;
 			case MSG_NO_MORE:
-				ToastUtil.show(context, "没有更多数据啦");
+				ToastUtil.show("没有更多数据啦");
 				break;
 			case MSG_LOAD_NO_LOGIN:
 				showExceptionLayout(LAYOUT_TYPE_LOGIN);

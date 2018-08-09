@@ -155,18 +155,18 @@ public class WeChatShareInstance extends ShareInstance {
 	@Override
 	public void shareSuccess() {
 		LogUtil.i("shareSuccess");
-		ToastUtil.show(activity, "分享成功");
+		ToastUtil.show("分享成功");
 	}
 
 	@Override
 	public void shareFailure(Exception e) {
 		LogUtil.i("shareFailure");
-		ToastUtil.show(activity, "分享失败");
+		ToastUtil.show("分享失败");
 	}
 
 	@Override
 	public void shareCancel() {
 		LogUtil.i("shareCancel");
-		ToastUtil.show(activity, "取消分享");
+		ToastUtil.show("取消分享");
 	}
 }

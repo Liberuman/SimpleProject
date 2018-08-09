@@ -1,15 +1,13 @@
 package com.sxu.mainmodule;
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 
 /*******************************************************************************
@@ -50,6 +48,7 @@ public class MainActivity extends BaseActivity {
 		return R.layout.activity_main;
 	}
 
+	int count = 0;
 	@Override
 	protected void getViews() {
 		Button publicButton = (Button) findViewById(R.id.public_button);
@@ -61,6 +60,17 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				ARouter.getInstance().build("/base/home").navigation();
+//				if (count < 2) {
+//					ToastUtil.show("默认样式默认样式" + count);
+//				} else if (count < 4) {
+//					ToastUtil.show("正确样式正确样式" + count, ToastUtil.TOAST_STYLE_CORRECT);
+//				} else if (count < 6) {
+//					ToastUtil.show("警告样式警告样式" + count, ToastUtil.TOAST_STYLE_WARNING);
+//				} else if (count < 8) {
+//					ToastUtil.show("错误样式错误样式" + count, ToastUtil.TOAST_STYLE_ERROR);
+//				}
+//				ToastUtil.show("错误样式错误样式" + count);
+//				count++;
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {

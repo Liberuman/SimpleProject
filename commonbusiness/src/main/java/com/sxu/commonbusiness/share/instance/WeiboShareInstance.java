@@ -126,19 +126,19 @@ public class WeiboShareInstance extends ShareInstance {
 
 	@Override
 	public void shareSuccess() {
-		ToastUtil.show(activity, "分享成功");
+		ToastUtil.show("分享成功");
 		activity.finish();
 	}
 
 	@Override
 	public void shareFailure(Exception e) {
-		ToastUtil.show(activity, "分享失败");
+		ToastUtil.show("分享失败");
 		activity.finish();
 	}
 
 	@Override
 	public void shareCancel() {
-		ToastUtil.show(activity, "取消分享");
+		ToastUtil.show("取消分享");
 		activity.finish();
 	}
 
