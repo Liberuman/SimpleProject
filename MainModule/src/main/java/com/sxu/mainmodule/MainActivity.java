@@ -7,6 +7,8 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.baselibrary.commonutils.EncodeUtil;
+import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 
@@ -59,7 +61,7 @@ public class MainActivity extends BaseActivity {
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ARouter.getInstance().build("/base/home").navigation();
+//				ARouter.getInstance().build("/base/home").navigation();
 //				if (count < 2) {
 //					ToastUtil.show("默认样式默认样式" + count);
 //				} else if (count < 4) {
@@ -70,7 +72,10 @@ public class MainActivity extends BaseActivity {
 //					ToastUtil.show("错误样式错误样式" + count, ToastUtil.TOAST_STYLE_ERROR);
 //				}
 //				ToastUtil.show("错误样式错误样式" + count);
-//				count++;
+				count++;
+				LogUtil.i("value===" + EncodeUtil.encodeByHash("123" + count, "sha1"));
+				LogUtil.i("value===" + EncodeUtil.getSha("123" + count));
+
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {

@@ -68,4 +68,19 @@ public class ViewUtil {
 		view.buildDrawingCache();
 		return view.getDrawingCache();
 	}
+
+	/**
+	 * 点击点是否在指定View内
+	 * @param view
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static boolean pointInView(View view, int x, int y) {
+		int[] position = new int[2];
+		view.getLocationOnScreen(position);
+		int right = view.getWidth() + position[0];
+		int bottom = view.getHeight() + position[1];
+		return x >= position[0] && x <= right && y >= position[1] && y < bottom;
+	}
 }
