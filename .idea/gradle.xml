@@ -13,9 +13,9 @@
             <option value="$PROJECT_DIR$/CommonBusinessDemo" />
             <option value="$PROJECT_DIR$/MainModule" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/basecomponent" />
-            <option value="$PROJECT_DIR$/baselibrary" />
-            <option value="$PROJECT_DIR$/commonbusiness" />
+            <option value="$PROJECT_DIR$/library/basecomponent" />
+            <option value="$PROJECT_DIR$/library/baselibrary" />
+            <option value="$PROJECT_DIR$/library/commonbusiness" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

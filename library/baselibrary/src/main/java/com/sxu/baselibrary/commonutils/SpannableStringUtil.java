@@ -288,6 +288,10 @@ public class SpannableStringUtil {
 			return this;
 		}
 
+		public SpannableString getSpan() {
+			return span;
+		}
+
 		public void apply(TextView textView) {
 			textView.setText(span);
 		}

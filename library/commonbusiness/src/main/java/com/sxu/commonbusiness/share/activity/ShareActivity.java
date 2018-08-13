@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ import java.util.List;
  */
 
 
-public class ShareActivity extends Activity {
+public class ShareActivity extends AppCompatActivity {
 
 	private TextView cancelText;
 	private GridView shareGrid;

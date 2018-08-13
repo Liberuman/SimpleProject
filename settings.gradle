@@ -1,1 +1,4 @@
 include ':app', ':baselibrary', ':commonbusiness', ':basecomponent', ':BaseComponentDemo', ':MainModule', ':BaseLibraryDemo', ':CommonBusinessDemo'
+project(':baselibrary').projectDir = new File('library/baselibrary')
+project(':basecomponent').projectDir = new File('library/basecomponent')
+project(':commonbusiness').projectDir = new File('library/commonbusiness')

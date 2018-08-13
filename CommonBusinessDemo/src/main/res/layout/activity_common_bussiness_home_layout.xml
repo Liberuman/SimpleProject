@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.3"
-        android:text="commbusiness是一个封装一些通用组件的类库，如分享，推送，埋点，支付，即时通讯等。"/>
+        android:text="Common组件层是一个封装一些通用组件的类库，如分享，推送，埋点，支付，即时通讯等。"/>
 
     <Button
         android:id="@+id/share_button"

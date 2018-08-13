@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.4"
-        android:text="BaseLibrary是对开发中使用的数据集（网络，文件，SharePreference等），通用的工具类，通用的UI组件的封装, 下面演示部分工具类和UI组件。"/>
+        android:text="公共组件层是对开发中使用的数据集（网络，文件，SharePreference等），通用的工具类，通用的UI组件的封装, 下面演示部分工具类和UI组件。"/>
 
     <Button
         android:id="@+id/tool_button"

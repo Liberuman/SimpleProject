@@ -8,9 +8,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.baselibrary.commonutils.EncodeUtil;
+import com.sxu.baselibrary.commonutils.EncryptUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 
 /*******************************************************************************
  * Description: 
@@ -61,21 +65,7 @@ public class MainActivity extends BaseActivity {
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				ARouter.getInstance().build("/base/home").navigation();
-//				if (count < 2) {
-//					ToastUtil.show("默认样式默认样式" + count);
-//				} else if (count < 4) {
-//					ToastUtil.show("正确样式正确样式" + count, ToastUtil.TOAST_STYLE_CORRECT);
-//				} else if (count < 6) {
-//					ToastUtil.show("警告样式警告样式" + count, ToastUtil.TOAST_STYLE_WARNING);
-//				} else if (count < 8) {
-//					ToastUtil.show("错误样式错误样式" + count, ToastUtil.TOAST_STYLE_ERROR);
-//				}
-//				ToastUtil.show("错误样式错误样式" + count);
-				count++;
-				LogUtil.i("value===" + EncodeUtil.encodeByHash("123" + count, "sha1"));
-				LogUtil.i("value===" + EncodeUtil.getSha("123" + count));
-
+				ARouter.getInstance().build("/base/home").navigation();
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +77,7 @@ public class MainActivity extends BaseActivity {
 		commonButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ARouter.getInstance().build("/base/home").navigation();
+				ARouter.getInstance().build("/business/Home").navigation();
 			}
 		});
 	}
