@@ -1,6 +1,7 @@
 package com.sxu.baselibrary.datasource.http.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +16,7 @@ import java.security.cert.X509Certificate;
 import java.util.WeakHashMap;
 
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
@@ -93,7 +95,12 @@ public class HttpManager {
 				.hostnameVerifier(new HostnameVerifier() {
 					@Override
 					public boolean verify(String hostname, SSLSession session) {
-						return true;
+						if (!TextUtils.isEmpty(baseUrl) && baseUrl.contains(hostname)) {
+							return true;
+						} else {
+							HostnameVerifier hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
+							return hostnameVerifier.verify(hostname, session);
+						}
 					}
 				})
 				.build();
@@ -121,47 +128,7 @@ public class HttpManager {
 	 * @param <T>
 	 */
 	public <T> void executeRequest(final rx.Observable<ResponseBean<T>> observable,
-	                               final ResponseProcessor.RequestListenerEx listener) {
-		if (observable == null) {
-			throw new IllegalArgumentException("observable can't be null");
-		}
-
-		final Subscription subscription = observable.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Subscriber<ResponseBean>() {
-					@Override
-					public void onCompleted() {
-						Subscription subscript = subscriptionHashMap.get(observable.hashCode());
-						if (subscript != null) {
-							if (subscript.isUnsubscribed()) {
-								subscript.unsubscribe();
-							}
-						}
-						subscriptionHashMap.remove(observable.hashCode());
-					}
-
-					@Override
-					public void onError(Throwable e) {
-						ResponseProcessor.process(null, listener);
-						Subscription subscript = subscriptionHashMap.get(observable.hashCode());
-						if (subscript != null) {
-							if (subscript.isUnsubscribed()) {
-								subscript.unsubscribe();
-							}
-						}
-						subscriptionHashMap.remove(observable.hashCode());
-					}
-
-					@Override
-					public void onNext(ResponseBean result) {
-						ResponseProcessor.process(result, listener);
-					}
-				});
-		subscriptionHashMap.put(observable.hashCode(), subscription);
-	}
-
-	public <T> void executeRequest(final rx.Observable<ResponseBean<T>> observable,
-	                               final ResponseProcessor.RequestListener listener) {
+	                               final RequestListener listener) {
 		if (observable == null) {
 			throw new IllegalArgumentException("observable can't be null");
 		}

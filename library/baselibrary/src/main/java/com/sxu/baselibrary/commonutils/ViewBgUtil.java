@@ -3,6 +3,7 @@ package com.sxu.baselibrary.commonutils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -276,8 +277,16 @@ public class ViewBgUtil {
 		return null;
 	}
 
+	public static Drawable getDrawable(int bgColor, int radius) {
+		return getDrawable(GradientDrawable.RECTANGLE, bgColor, 0, 0, radius);
+	}
+
 	public static Drawable getDrawable(int shape, int bgColor, int radius) {
 		return getDrawable(shape, bgColor, 0, 0, radius);
+	}
+
+	public static Drawable getDrawable(int bgColor, float[] radius) {
+		return getDrawable(GradientDrawable.RECTANGLE, bgColor, 0, 0, radius);
 	}
 
 	public static Drawable getDrawable(int shape, int bgColor, float[] radius) {
@@ -290,6 +299,11 @@ public class ViewBgUtil {
 
 	public static Drawable getDrawable(int state, int shape, int[] bgColor, float[] radius) {
 		return getDrawable(state, shape, bgColor, new int[2], 0, radius);
+	}
+
+	public static Drawable getDrawable(int bgColor, int borderColor,
+	                                   int borderWidth, int radius) {
+		return getDrawable(GradientDrawable.RECTANGLE, bgColor, borderColor, borderWidth, radius);
 	}
 
 	/**
@@ -506,5 +520,26 @@ public class ViewBgUtil {
 				new int[] {}
 		}, textColor);
 		textView.setTextColor(colorState);
+	}
+
+	/**
+	 * 创建分割线
+	 * @param color
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	public static Drawable getDivider(int color, final int width, final int height) {
+		return new ColorDrawable(color) {
+			@Override
+			public int getIntrinsicWidth() {
+				return width != 0 ? width : super.getIntrinsicWidth();
+			}
+
+			@Override
+			public int getIntrinsicHeight() {
+				return height != 0 ? height : super.getIntrinsicHeight();
+			}
+		};
 	}
 }

@@ -74,7 +74,7 @@
     </declare-styleable>
 
     <declare-styleable name="bl_TabPageIndicatorEx">
-        <attr name="bl_itemWidth" format="dimension"/>
+        <attr name="bl_tabWidth" format="dimension"/>
         <attr name="bl_indicatorHeight" format="dimension" />
         <attr name="bl_indicatorPadding" format="dimension"/>
         <attr name="bl_indicatorColor" format="color" />
@@ -107,6 +107,22 @@
             <enum name="circle" value="0"/>
             <enum name="round" value="1"/>
         </attr>
+    </declare-styleable>
 
+    <declare-styleable name="bl_VerificationCodeLayout">
+        <attr name="bl_itemWidth" format="dimension"/>
+        <attr name="bl_itemHeight" format="dimension"/>
+        <attr name="bl_itemCount" format="integer"/>
+        <attr name="bl_itemGap" format="dimension"/>
+        <attr name="bl_itemDefaultGap" format="dimension"/>
+        <attr name="bl_itemDefaultGapColor" format="color"/>
+        <attr name="bl_itemBgColor" format="color"/>
+        <attr name="bl_itemBorderWidth" format="dimension"/>
+        <attr name="bl_itemBorderColor" format="color"/>
+        <attr name="bl_itemRadius" format="dimension"/>
+        <attr name="bl_itemTextSize" format="dimension"/>
+        <attr name="bl_itemTextColor" format="color"/>
+        <attr name="bl_itemTextIsBold" format="boolean"/>
+        <attr name="bl_isPassword" format="boolean"/>
     </declare-styleable>
 </resources>

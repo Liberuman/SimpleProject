@@ -70,5 +70,6 @@
     <!-- 主题色 -->
     <color name="t1">#3F51B5</color>
     <color name="t2">#303F9F</color>
+    <color name="t3">#FF4081</color>
 
 </resources>

@@ -29,42 +29,38 @@ public class ResponseProcessor {
 
 
 	public static void process(ResponseBean response, RequestListener listener) {
-		if (listener != null) {
-			if (response != null) {
-				if (response.code == RESPONSE_CODE_SUCCESS) {
-					listener.onSuccess(response.data);
-				} else {
-					listener.onFailure(response.code, response.msg);
-				}
-			} else {
-				listener.onFailure(RESPONSE_CODE_DEFAULT, ERROR_MSG_NETWORK_ERROR);
-			}
+		if (listener == null) {
+			return;
+		}
+
+		if (listener instanceof RequestListener.SimpleRequestListener) {
+			simpleRequestProcess(response, (RequestListener.SimpleRequestListener) listener);
+		} else {
+			requestProcess(response, (RequestListener.RequestListenerEx) listener);
 		}
 	}
 
-	public static void process(ResponseBean response, RequestListenerEx listener) {
-		if (listener != null) {
-			if (response != null) {
-				if (response.code == RESPONSE_CODE_SUCCESS) {
-					listener.onSuccess(response.data, response.msg);
-				} else {
-					listener.onFailure(response, response.code, response.msg);
-				}
+	private static void simpleRequestProcess(ResponseBean response, RequestListener.SimpleRequestListener listener) {
+		if (response != null) {
+			if (response.code == RESPONSE_CODE_SUCCESS) {
+				listener.onSuccess(response.data);
 			} else {
-				listener.onFailure(null, RESPONSE_CODE_DEFAULT, ERROR_MSG_NETWORK_ERROR);
+				listener.onFailure(response.code, response.msg);
 			}
+		} else {
+			listener.onFailure(RESPONSE_CODE_DEFAULT, ERROR_MSG_NETWORK_ERROR);
 		}
 	}
 
-	public interface RequestListener<T> {
-		void onSuccess(T response);
-
-		void onFailure(int code, String msg);
-	}
-
-	public interface RequestListenerEx<T> {
-		void onSuccess(T response, String msg);
-
-		void onFailure(T response, int code, String msg);
+	private static void requestProcess(ResponseBean response, RequestListener.RequestListenerEx listener) {
+		if (response != null) {
+			if (response.code == RESPONSE_CODE_SUCCESS) {
+				listener.onSuccess(response.data, response.msg);
+			} else {
+				listener.onFailure(response, response.code, response.msg);
+			}
+		} else {
+			listener.onFailure(null, RESPONSE_CODE_DEFAULT, ERROR_MSG_NETWORK_ERROR);
+		}
 	}
 }

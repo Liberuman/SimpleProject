@@ -54,7 +54,7 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 		super(context, attrs);
 		this.context = context;
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.bl_TabPageIndicatorEx);
-		mItemWidth = array.getDimension(R.styleable.bl_TabPageIndicatorEx_bl_itemWidth, 200);
+		mItemWidth = array.getDimension(R.styleable.bl_TabPageIndicatorEx_bl_tabWidth, 200);
 		mIndicatorPadding = array.getDimension(R.styleable.bl_TabPageIndicatorEx_bl_indicatorPadding, 0);
 		mIndicatorHeight = array.getDimension(R.styleable.bl_TabPageIndicatorEx_bl_indicatorHeight, 10);
 		mIndicatorColor = array.getColor(R.styleable.bl_TabPageIndicatorEx_bl_indicatorColor, Color.parseColor("#00c8d7"));
