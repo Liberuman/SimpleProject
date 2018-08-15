@@ -25,9 +25,4 @@
         android:layout_marginTop="36dp"
         android:text="UI组件介绍"/>
 
-    <com.sxu.baselibrary.uiwidget.VerificationCodeLayout
-        android:id="@+id/code_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"/>
 </LinearLayout>

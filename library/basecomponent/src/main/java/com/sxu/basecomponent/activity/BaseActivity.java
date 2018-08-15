@@ -41,6 +41,11 @@ public abstract class BaseActivity extends CommonActivity {
 
     @Override
     public void initLayout(int toolbarStyle) {
+        if (getLayoutResId() == 0) {
+            super.initLayout(toolbarStyle);
+            return;
+        }
+
         if (toolbarStyle == TOOL_BAR_STYLE_NONE) {
             setContentView(getLayoutResId());
         } else {

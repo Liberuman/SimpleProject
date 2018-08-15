@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.basecomponent.activity.BaseWebViewActivity;
 import com.sxu.baselibrary.commonutils.EncodeUtil;
 import com.sxu.baselibrary.commonutils.EncryptUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				ARouter.getInstance().build("/base/home").navigation();
+				//BaseWebViewActivity.enter(context, null, "http://m.baidu.com");
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {

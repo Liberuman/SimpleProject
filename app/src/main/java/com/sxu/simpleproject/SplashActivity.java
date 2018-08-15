@@ -2,23 +2,16 @@ package com.sxu.simpleproject;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.Postcard;
-import com.alibaba.android.arouter.facade.callback.NavCallback;
-import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
-import com.sxu.basecomponent.activity.WebViewActivity;
 import com.sxu.basecomponent.utils.PreferenceTag;
 import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.SpannableStringUtil;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
-import com.sxu.mainmodule.MainActivity;
 
 public class SplashActivity extends BaseActivity {
 
