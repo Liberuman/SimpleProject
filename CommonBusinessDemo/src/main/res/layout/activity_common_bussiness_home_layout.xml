@@ -21,4 +21,18 @@
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:text="分享组件"/>
+
+    <Button
+        android:id="@+id/ali_pay_text"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:text="支付宝支付"/>
+
+    <Button
+        android:id="@+id/wx_pay_text"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:text="微信支付"/>
 </LinearLayout>

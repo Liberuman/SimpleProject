@@ -3,6 +3,7 @@
 
     <style name="cb_CommonDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowMinWidthMinor">100%</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/cb_ShareDialogAnim</item>
@@ -11,6 +12,5 @@
     <style name="cb_ShareDialogAnim">
         <item name="android:windowEnterAnimation">@anim/cb_sliding_from_bottom_anim</item>
         <item name="android:windowExitAnimation">@anim/cb_sliding_to_bottom_anim</item>
-
     </style>
 </resources>

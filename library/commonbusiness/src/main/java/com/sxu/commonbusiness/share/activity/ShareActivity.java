@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -47,7 +48,6 @@ public class ShareActivity extends AppCompatActivity {
 	private GridView shareGrid;
 	private LinearLayout rootLayout;
 
-	private Drawable itemBg;
 	private ShareManager shareManager;
 	private ShareItemBean[] shareData = {
 		new ShareItemBean(R.drawable.cb_share_wechat_icon, "微信好友", new View.OnClickListener() {
@@ -97,6 +97,7 @@ public class ShareActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		overridePendingTransition(0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
 		params.gravity = Gravity.BOTTOM;
 		getWindow().setAttributes(params);
@@ -120,11 +121,10 @@ public class ShareActivity extends AppCompatActivity {
 //		params.width = (DisplayUtil.getScreenWidth() - DisplayUtil.dpToPx(60));
 //		rootLayout.setLayoutParams(params);
 //		ViewBgUtil.setShapeBg(rootLayout, GradientDrawable.RECTANGLE, Color.WHITE, DisplayUtil.dpToPx(4));
-		itemBg = ViewBgUtil.getDrawable(android.R.attr.state_pressed, GradientDrawable.RECTANGLE,
+		ViewBgUtil.setSelectorBg(cancelText, android.R.attr.state_pressed, GradientDrawable.RECTANGLE,
 				new int[] {Color.WHITE, Color.parseColor("#eeeeee")}, 0);
-		cancelText.setBackground(itemBg);
 		shareGrid.setNumColumns(shareData.length % 3 == 0 ? 3 : 4);
-		shareGrid.setAdapter(new ShareAdapter());
+		shareGrid.setAdapter(new ShareAdapter(this, shareData));
 
 		cancelText.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -170,11 +170,22 @@ public class ShareActivity extends AppCompatActivity {
 		}
 	}
 
-	public class ShareAdapter extends BaseAdapter {
+	public static class ShareAdapter extends BaseAdapter {
+
+		private Context context;
+		private Drawable itemBg;
+		private ShareItemBean[] shareItems;
+
+		public ShareAdapter(Context context, ShareItemBean[] shareItems) {
+			this.context = context;
+			this.shareItems = shareItems;
+			itemBg = ViewBgUtil.getDrawable(android.R.attr.state_pressed, GradientDrawable.RECTANGLE,
+					new int[] {Color.WHITE, Color.parseColor("#eeeeee")}, 0);
+		}
 
 		@Override
 		public int getCount() {
-			return shareData.length;
+			return shareItems.length;
 		}
 
 		@Override
@@ -184,12 +195,12 @@ public class ShareActivity extends AppCompatActivity {
 
 		@Override
 		public ShareItemBean getItem(int position) {
-			return shareData[position];
+			return shareItems[position];
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View itemView = getLayoutInflater().inflate(R.layout.cb_item_share_layout, null);
+			View itemView = LayoutInflater.from(context).inflate(R.layout.cb_item_share_layout, null);
 			((ImageView)itemView.findViewById(R.id.cb_share_icon)).setImageResource(getItem(position).shareIcon);
 			((TextView)itemView.findViewById(R.id.cb_share_text)).setText(getItem(position).shareText);
 			itemView.setBackground(itemBg);
@@ -209,5 +220,11 @@ public class ShareActivity extends AppCompatActivity {
 			this.shareText = shareText;
 			this.listener = listener;
 		}
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(0, 0);
 	}
 }

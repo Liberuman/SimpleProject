@@ -3,6 +3,7 @@ package com.sxu.commonbusiness.pay;
 import android.text.TextUtils;
 
 import java.util.Collections;
+import java.util.Map;
 
 /*******************************************************************************
  * Description: 支付宝支付返回的结果数据
@@ -39,6 +40,22 @@ public class PayResultBean {
 			}
 			if (resultParam.startsWith("memo")) {
 				memo = gatValue(resultParam, "memo");
+			}
+		}
+	}
+
+	public PayResultBean(Map<String, String> rawResult) {
+		if (rawResult == null) {
+			return;
+		}
+
+		for (String key : rawResult.keySet()) {
+			if (TextUtils.equals(key, "resultStatus")) {
+				resultStatus = rawResult.get(key);
+			} else if (TextUtils.equals(key, "result")) {
+				result = rawResult.get(key);
+			} else if (TextUtils.equals(key, "memo")) {
+				memo = rawResult.get(key);
 			}
 		}
 	}

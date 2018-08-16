@@ -19,6 +19,10 @@ public class PayRequestBean {
 	public String sign;
 	public String extData;
 
+	public PayRequestBean() {
+
+	}
+
 	public PayRequestBean(String appId, String partnerId, String prepayId, String nonceStr, String timeStamp, String packageValue, String sign) {
 		this.appId = appId;
 		this.partnerId = partnerId;

@@ -152,6 +152,7 @@ dependencies {
     kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
 
     implementation project(':basecomponent')
+    implementation project(':commonbusiness')
     if (isModule) {
         implementation project(':MainModule')
     }

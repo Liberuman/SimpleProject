@@ -11,6 +11,8 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.Map;
+
 /*******************************************************************************
  * Description: 支付管理器
  *
@@ -20,7 +22,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class PayManager implements Handler.Callback {
+public class PayManager {
 
 	private volatile static PayManager instance;
 	private IWXAPI mWxApi;
@@ -32,7 +34,13 @@ public class PayManager implements Handler.Callback {
 
 	private PayManager(Context context) {
 		mWxApi = WXAPIFactory.createWXAPI(context.getApplicationContext(), null);
-		mHandler = new Handler(context.getMainLooper());
+		mHandler = new Handler(context.getMainLooper()) {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				handlePayMessage(msg);
+			}
+		};
 	}
 
 	public static PayManager getInstance(Context context) {
@@ -71,7 +79,7 @@ public class PayManager implements Handler.Callback {
 			@Override
 			public void run() {
 				PayTask aliPay = new PayTask(context);
-				String result = aliPay.pay(requestStr, true);
+				Map<String, String> result = aliPay.payV2(requestStr, true);
 				Message msg = Message.obtain();
 				msg.what = MSG_WHAT_ALI_PAY;
 				msg.obj = result;
@@ -80,11 +88,10 @@ public class PayManager implements Handler.Callback {
 		}).start();
 	}
 
-	@Override
-	public boolean handleMessage(Message msg) {
+	public boolean handlePayMessage(Message msg) {
 		if (msg.what == MSG_WHAT_ALI_PAY) {
 			if (mListener != null) {
-				PayResultBean payResultBean = new PayResultBean((String)msg.obj);
+				PayResultBean payResultBean = new PayResultBean((Map<String, String>)msg.obj);
 				String resultStatus = payResultBean.getResultStatus();
 				if (TextUtils.equals(resultStatus, PAY_RESULT_SUCCESS)) {
 					mListener.onSuccess();

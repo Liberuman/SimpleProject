@@ -1,5 +1,10 @@
 package com.sxu.mainmodule;
 
+import android.animation.IntEvaluator;
+import android.animation.Keyframe;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +67,14 @@ public class MainActivity extends BaseActivity {
 		Button baseButton = (Button) findViewById(R.id.base_button);
 		Button commonButton = (Button) findViewById(R.id.common_button);
 		tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+
+		Keyframe keyframe = Keyframe.ofFloat(0, 0);
+		Keyframe keyframe2 = Keyframe.ofFloat(0.5f, 180);
+		Keyframe keyframe3 = Keyframe.ofFloat(1.0f, 270);
+		PropertyValuesHolder valuesHolder = PropertyValuesHolder.ofKeyframe("rotate", keyframe, keyframe2, keyframe3);
+		ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(publicButton, valuesHolder);
+		animator.start();
 
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
