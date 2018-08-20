@@ -96,49 +96,49 @@ android {
     }
 }
 
-andResGuard {
-    // mappingFile = file("./resource_mapping.txt")
-    mappingFile = null
-    use7zip = true
-    useSign = true
-    // 打开这个开关，会keep住所有资源的原始路径，只混淆资源的名字
-    keepRoot = false
-    whiteList = [
-            // for your icon
-            "R.drawable.icon",
-            // for fabric
-            "R.string.com.crashlytics.*",
-            // for google-services
-            "R.string.google_app_id",
-            "R.string.gcm_defaultSenderId",
-            "R.string.default_web_client_id",
-            "R.string.ga_trackingId",
-            "R.string.firebase_database_url",
-            "R.string.google_api_key",
-            "R.string.google_crash_reporting_api_key"
-    ]
-    compressFilePattern = [
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-    ]
-    sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.13'
-        //path = "/usr/local/bin/7za"
-    }
-
-    /**
-     * 可选： 如果不设置则会默认覆盖assemble输出的apk
-     **/
-    // finalApkBackupPath = "${project.rootDir}/final.apk"
-
-    /**
-     * 可选: 指定v1签名时生成jar文件的摘要算法
-     * 默认值为“SHA-1”
-     **/
-    // digestalg = "SHA-256"
-}
+//andResGuard {
+//    // mappingFile = file("./resource_mapping.txt")
+//    mappingFile = null
+//    use7zip = true
+//    useSign = true
+//    // 打开这个开关，会keep住所有资源的原始路径，只混淆资源的名字
+//    keepRoot = false
+//    whiteList = [
+//            // for your icon
+//            "R.drawable.icon",
+//            // for fabric
+//            "R.string.com.crashlytics.*",
+//            // for google-services
+//            "R.string.google_app_id",
+//            "R.string.gcm_defaultSenderId",
+//            "R.string.default_web_client_id",
+//            "R.string.ga_trackingId",
+//            "R.string.firebase_database_url",
+//            "R.string.google_api_key",
+//            "R.string.google_crash_reporting_api_key"
+//    ]
+//    compressFilePattern = [
+//            "*.png",
+//            "*.jpg",
+//            "*.jpeg",
+//            "*.gif",
+//    ]
+//    sevenzip {
+//        artifact = 'com.tencent.mm:SevenZip:1.2.13'
+//        //path = "/usr/local/bin/7za"
+//    }
+//
+//    /**
+//     * 可选： 如果不设置则会默认覆盖assemble输出的apk
+//     **/
+//    // finalApkBackupPath = "${project.rootDir}/final.apk"
+//
+//    /**
+//     * 可选: 指定v1签名时生成jar文件的摘要算法
+//     * 默认值为“SHA-1”
+//     **/
+//    // digestalg = "SHA-256"
+//}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -155,5 +155,45 @@ dependencies {
     implementation project(':commonbusiness')
     if (isModule) {
         implementation project(':MainModule')
+    }
+}
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+project.android.applicationVariants.all { variant ->
+    def log = project.logger
+    JavaCompile javaCompile = variant.javaCompiler
+
+    javaCompile.doLast {
+        String[] args = ["-showWeaveInfo",
+                         "-1.8",
+                         "-inpath", javaCompile.destinationDir.toString(),
+                         "-aspectpath", javaCompile.classpath.asPath,
+                         "-d", javaCompile.destinationDir.toString(),
+                         "-classpath", javaCompile.classpath.asPath,
+                         "-bootclasspath", project.android.bootClasspath.join(
+                File.pathSeparator)]
+
+        MessageHandler handler = new MessageHandler(true)
+        new Main().run(args, handler)
+
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break
+                case IMessage.WARNING:
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break
+            }
+        }
     }
 }

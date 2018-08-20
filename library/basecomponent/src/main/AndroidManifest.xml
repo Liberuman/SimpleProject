@@ -3,5 +3,7 @@
     <application>
         <activity android:name=".activity.BaseWebViewActivity"
                   android:process=":web_process"/>
+        <activity android:name=".activity.PermissionActivity"
+            android:theme="@style/TransparentTheme"/>
     </application>
 </manifest>

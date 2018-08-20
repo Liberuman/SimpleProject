@@ -18,4 +18,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckPermission {
 
+	String[] permissions();
+	int resquestCode() default 0;
 }

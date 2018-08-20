@@ -13,11 +13,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.activity.BaseWebViewActivity;
+import com.sxu.basecomponent.annotation.CheckLogin;
+import com.sxu.basecomponent.aspect.LoginAspect;
+import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.EncodeUtil;
 import com.sxu.baselibrary.commonutils.EncryptUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
+
+import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -113,5 +118,27 @@ public class MainActivity extends BaseActivity {
 
 			}
 		});
+
+		// 设置全局的登录逻辑
+		LoginAspect.setOnLoginListener(new LoginAspect.OnLoginListener() {
+			@Override
+			public void onLogin(ProceedingJoinPoint joinPoint) {
+				if (BaseApplication.isLogin) {
+					try {
+						joinPoint.proceed();
+					} catch (Throwable throwable) {
+						throwable.printStackTrace(System.err);
+					}
+				} else {
+					LogUtil.i("===========跳转登录");
+					// 跳转到登录页面，登录成功后调用joinPoint.proceed();
+				}
+			}
+		});
+	}
+
+	@CheckLogin
+	private void login() {
+		LogUtil.i("===========测试loginAspect");
 	}
 }

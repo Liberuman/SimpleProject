@@ -31,6 +31,11 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
+    <style name="TransparentTheme" parent="AppTheme">
+        <item name="android:opacity">opaque</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <!-- 通用的分割线样式 -->
     <style name="CommonLine">
         <item name="android:layout_width">match_parent</item>

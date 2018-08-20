@@ -3,6 +3,11 @@ package com.sxu.simpleproject;
 import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.sxu.basecomponent.aspect.LoginAspect;
+import com.sxu.basecomponent.utils.BaseApplication;
+import com.sxu.baselibrary.commonutils.ToastUtil;
+
+import org.aspectj.lang.ProceedingJoinPoint;
 
 /*******************************************************************************
  * Description: 
@@ -14,7 +19,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends BaseApplication {
 
 	@Override
 	public void onCreate() {

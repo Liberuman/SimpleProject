@@ -9,13 +9,8 @@
       <module fileurl="file://$PROJECT_DIR$/SimpleProject.iml" filepath="$PROJECT_DIR$/SimpleProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/basecomponent/basecomponent.iml" filepath="$PROJECT_DIR$/library/basecomponent/basecomponent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../library/basecomponent/basecomponent.iml" filepath="$PROJECT_DIR$/../library/basecomponent/basecomponent.iml" />
       <module fileurl="file://$PROJECT_DIR$/../library/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/../library/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/../library/commonbusiness/commonbusiness.iml" filepath="$PROJECT_DIR$/../library/commonbusiness/commonbusiness.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../library/basecomponent/library-basecomponent.iml" filepath="$PROJECT_DIR$/../library/basecomponent/library-basecomponent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../library/baselibrary/library-baselibrary.iml" filepath="$PROJECT_DIR$/../library/baselibrary/library-baselibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../library/commonbusiness/library-commonbusiness.iml" filepath="$PROJECT_DIR$/../library/commonbusiness/library-commonbusiness.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BaseComponentDemo/module1.iml" filepath="$PROJECT_DIR$/BaseComponentDemo/module1.iml" />
     </modules>
   </component>
 </project>
