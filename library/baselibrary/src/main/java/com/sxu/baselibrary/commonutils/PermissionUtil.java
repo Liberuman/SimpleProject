@@ -30,6 +30,10 @@ import android.widget.Toast;
 
 import com.sxu.baselibrary.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /*******************************************************************************
  * Description: 动态申请权限
  *
@@ -56,18 +60,28 @@ public class PermissionUtil {
         return true;
     }
 
-    public static boolean checkPermission(Activity context, String[] permission) {
+    public static void checkPermission(Activity context, String[] permission) {
         if (permission == null || permission.length == 0) {
-            return true;
+            return;
         }
 
+        List<String> refusedPermission = new ArrayList<>();
         for (int i = 0; i < permission.length; i++) {
-            if (!checkPermission(context, permission[i])) {
-                return false;
+            if (ContextCompat.checkSelfPermission(context, permission[i]) != PackageManager.PERMISSION_GRANTED) {
+                refusedPermission.add(permission[i]);
             }
         }
-
-        return true;
+        int refusedPermissionSize = refusedPermission.size();
+        if (refusedPermissionSize > 0) {
+            ActivityCompat.requestPermissions(context, refusedPermission.toArray(new String[refusedPermissionSize]),
+                    PERMISSION_REQUEST_CODE);
+        } else {
+            if (requestListener != null) {
+                requestListener.onGranted();
+                requestListener = null;
+                context.finish();
+            }
+        }
     }
 
     public static void requestCallback(final Activity context, int requestCode, String permissions[], int[] grantResults) {
@@ -75,37 +89,50 @@ public class PermissionUtil {
             return;
         }
 
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        int refusedPermissionIndex = -1;
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                refusedPermissionIndex = i;
+                break;
+            }
+        }
+        if (refusedPermissionIndex != -1) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, permissions[refusedPermissionIndex])) {
+                Toast.makeText(context, permissionDesc, Toast.LENGTH_LONG).show();
+                context.finish();
+            } else {
+                showSettingPermissionDialog(context);
+            }
+        } else {
             if (requestListener != null) {
                 requestListener.onGranted();
                 requestListener = null;
             }
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(context,
-                    permissions != null && permissions.length > 0 ? permissions[0] : "")) {
-                Toast.makeText(context, permissionDesc, Toast.LENGTH_LONG).show();
-            } else {
-                showSettingPermissionDialog(context);
-            }
+            context.finish();
         }
     }
 
-    private static void showSettingPermissionDialog(final Context context) {
-        new AlertDialog.Builder(context, android.R.style.Theme_Holo_Light_Dialog)
+    private static void showSettingPermissionDialog(final Activity context) {
+        new AlertDialog.Builder(context)
                 .setMessage(permissionSettingDesc)
-                .setNegativeButton("去设置",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.fromParts("package", context.getPackageName(), null));
-                                if (intent.resolveActivity(context.getPackageManager()) != null) {
-                                    context.startActivity(intent);
-                                } else {
-                                    Toast.makeText(context, "无法打开应用详情，请手动开启权限~", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        })
+                .setNegativeButton("去设置", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+                        if (intent.resolveActivity(context.getPackageManager()) != null) {
+                            context.startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "无法打开应用详情，请手动开启权限~", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        context.finish();
+                    }
+                })
                 .show();
     }
 
@@ -116,6 +143,13 @@ public class PermissionUtil {
     }
 
     public interface OnPermissionRequestListener {
+        // 权限已获取
         void onGranted();
+
+        // 权限被取消
+        void onCanceled();
+
+        // 权限别拒绝
+        void onDenied();
     }
 }

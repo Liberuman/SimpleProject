@@ -1,5 +1,6 @@
 package com.sxu.mainmodule;
 
+import android.Manifest;
 import android.animation.IntEvaluator;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
@@ -14,10 +15,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.activity.BaseWebViewActivity;
 import com.sxu.basecomponent.annotation.CheckLogin;
+import com.sxu.basecomponent.annotation.CheckPermission;
 import com.sxu.basecomponent.aspect.LoginAspect;
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.EncodeUtil;
 import com.sxu.baselibrary.commonutils.EncryptUtil;
+import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
@@ -26,6 +29,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.Permission;
 
 /*******************************************************************************
  * Description: 
@@ -84,8 +88,9 @@ public class MainActivity extends BaseActivity {
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ARouter.getInstance().build("/base/home").navigation();
+				//ARouter.getInstance().build("/base/home").navigation();
 				//BaseWebViewActivity.enter(context, null, "http://m.baidu.com");
+				login();
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +142,11 @@ public class MainActivity extends BaseActivity {
 		});
 	}
 
-	@CheckLogin
+	@CheckPermission(permissions = {Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA,
+	Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION},
+			permissionDesc = "没权限搞不了", settingDesc = "快去设置中开启权限")
 	private void login() {
+		//LaunchUtil.openPhone(context, "18516295124");
 		LogUtil.i("===========测试loginAspect");
 	}
 }

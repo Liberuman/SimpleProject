@@ -18,6 +18,24 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckPermission {
 
+	String DEFAULT_PERMISSION_DESC = "此功能需要开启权限才可使用~";
+	String DEFAULT_SETTING_DESC = "此功能需要开启权限才可使用, 请去设置中开启";
+
+	/**
+	 * 所需要申请的权限
+	 * @return
+	 */
 	String[] permissions();
-	int resquestCode() default 0;
+
+	/**
+	 * 权限被拒绝时的提示信息
+	 * @return
+	 */
+	String permissionDesc() default DEFAULT_PERMISSION_DESC;
+
+	/**
+	 * 设置权限的描述信息
+	 * @return
+	 */
+	String settingDesc() default DEFAULT_SETTING_DESC;
 }

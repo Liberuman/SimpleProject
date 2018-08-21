@@ -33,6 +33,7 @@
 
     <style name="TransparentTheme" parent="AppTheme">
         <item name="android:opacity">opaque</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 

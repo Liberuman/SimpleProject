@@ -1,16 +1,24 @@
 package com.sxu.basecomponent.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.sxu.baselibrary.commonutils.CollectionUtil;
+import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.PermissionUtil;
+import com.sxu.baselibrary.commonutils.ToastUtil;
 
 /*******************************************************************************
- * Description: 
+ * Description: 用于申请权限的透明页面
  *
  * Author: Freeman
  *
@@ -20,12 +28,24 @@ import com.sxu.baselibrary.commonutils.PermissionUtil;
  *******************************************************************************/
 public class PermissionActivity extends AppCompatActivity {
 
-	private static OnPermissionListener permissionListener;
+	private static String desc;
+	private static String settingDesc;
+	private static String[] requestPermissions;
+	private static PermissionUtil.OnPermissionRequestListener permissionListener;
+
+	private static final String PARAMS_PERMISSION_DESC = "permission_desc";
+	private static final String PARAMS_SETTING_DESC = "setting_desc";
+	private static final String PARAMS_PERMISSIONS = "permissions";
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(0, 0);
+		String desc = getIntent().getStringExtra(PARAMS_PERMISSION_DESC);
+		String settingDesc = getIntent().getStringExtra(PARAMS_SETTING_DESC);
+		String[] requestPermissions = getIntent().getStringArrayExtra(PARAMS_PERMISSIONS);
+		PermissionUtil.setPermissionRequestListener(desc, settingDesc, permissionListener);
+		PermissionUtil.checkPermission(this, requestPermissions);
 	}
 
 	@Override
@@ -34,20 +54,16 @@ public class PermissionActivity extends AppCompatActivity {
 		PermissionUtil.requestCallback(this, requestCode, permissions, grantResults);
 	}
 
-	public static void enter(Context context, OnPermissionListener listener) {
-		permissionListener = listener;
-		context.startActivity(new Intent(context, PermissionActivity.class));
+	public static void enter(Context context, String[] permissions, String permissionDesc, String permissionSettingDesc) {
+		Intent intent = new Intent(context, PermissionActivity.class);
+		intent.putExtra(PARAMS_PERMISSION_DESC, permissionDesc);
+		intent.putExtra(PARAMS_SETTING_DESC, permissionSettingDesc);
+		intent.putExtra(PARAMS_PERMISSIONS, permissions);
+		context.startActivity(intent);
 	}
 
-	public interface OnPermissionListener {
-		// 权限已获取
-		void onGranted();
-
-		// 权限被取消
-		void onCanceled();
-
-		// 权限别拒绝
-		void onDenied();
+	public static void setOnPermissionRequestListener(PermissionUtil.OnPermissionRequestListener listener) {
+		permissionListener = listener;
 	}
 
 	@Override

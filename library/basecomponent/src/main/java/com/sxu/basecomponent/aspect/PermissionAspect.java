@@ -1,17 +1,23 @@
 package com.sxu.basecomponent.aspect;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 
 import com.sxu.basecomponent.activity.PermissionActivity;
 import com.sxu.basecomponent.annotation.CheckPermission;
+import com.sxu.baselibrary.commonutils.LogUtil;
+import com.sxu.baselibrary.commonutils.PermissionUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+
+import java.lang.reflect.Method;
 
 /*******************************************************************************
  * Description: 权限切面
@@ -22,6 +28,7 @@ import org.aspectj.lang.reflect.MethodSignature;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
+@Aspect
 public class PermissionAspect {
 
 	@Pointcut("execution(@com.sxu.basecomponent.annotation.CheckPermission * *(..))")
@@ -42,7 +49,7 @@ public class PermissionAspect {
 		}
 
 		if (context != null) {
-			PermissionActivity.enter(context, new PermissionActivity.OnPermissionListener() {
+			PermissionActivity.setOnPermissionRequestListener(new PermissionUtil.OnPermissionRequestListener() {
 				@Override
 				public void onGranted() {
 					try {
@@ -54,22 +61,20 @@ public class PermissionAspect {
 
 				@Override
 				public void onCanceled() {
-					MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-					CheckPermission checkPermission = signature.getMethod().getAnnotation(CheckPermission.class);
-					if (checkPermission != null) {
-						ToastUtil.show("申请权限被取消");
-					}
+
 				}
 
 				@Override
 				public void onDenied() {
-					MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-					CheckPermission checkPermission = signature.getMethod().getAnnotation(CheckPermission.class);
-					if (checkPermission != null) {
-						ToastUtil.show("申请权限被拒绝");
-					}
+
 				}
 			});
+
+			MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+			Method method = signature.getMethod();
+			CheckPermission checkPermission = method.getAnnotation(CheckPermission.class);
+			PermissionActivity.enter(context, checkPermission.permissions(), checkPermission.permissionDesc(),
+					checkPermission.settingDesc());
 		}
 
 		return null;
