@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
-import com.sxu.basecomponent.annotation.CheckLogin;
 import com.sxu.basecomponent.utils.PreferenceTag;
 import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.SpannableStringUtil;

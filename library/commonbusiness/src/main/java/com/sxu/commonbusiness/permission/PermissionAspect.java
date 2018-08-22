@@ -1,15 +1,10 @@
-package com.sxu.basecomponent.aspect;
+package com.sxu.commonbusiness.permission;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 
-import com.sxu.basecomponent.activity.PermissionActivity;
-import com.sxu.basecomponent.annotation.CheckPermission;
-import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.PermissionUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,7 +26,7 @@ import java.lang.reflect.Method;
 @Aspect
 public class PermissionAspect {
 
-	@Pointcut("execution(@com.sxu.basecomponent.annotation.CheckPermission * *(..))")
+	@Pointcut("execution(@com.sxu.commonbusiness.permission.CheckPermission * *(..))")
 	public void executionCheckPermission() {
 
 	}
@@ -49,32 +44,30 @@ public class PermissionAspect {
 		}
 
 		if (context != null) {
-			PermissionActivity.setOnPermissionRequestListener(new PermissionUtil.OnPermissionRequestListener() {
-				@Override
-				public void onGranted() {
-					try {
-						joinPoint.proceed();
-					} catch (Throwable throwable) {
-						throwable.printStackTrace(System.err);
-					}
-				}
-
-				@Override
-				public void onCanceled() {
-
-				}
-
-				@Override
-				public void onDenied() {
-
-				}
-			});
-
 			MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 			Method method = signature.getMethod();
 			CheckPermission checkPermission = method.getAnnotation(CheckPermission.class);
 			PermissionActivity.enter(context, checkPermission.permissions(), checkPermission.permissionDesc(),
-					checkPermission.settingDesc());
+					checkPermission.settingDesc(), new PermissionUtil.OnPermissionRequestListener() {
+						@Override
+						public void onGranted() {
+							try {
+								joinPoint.proceed();
+							} catch (Throwable throwable) {
+								throwable.printStackTrace(System.err);
+							}
+						}
+
+						@Override
+						public void onCanceled() {
+
+						}
+
+						@Override
+						public void onDenied() {
+
+						}
+					});
 		}
 
 		return null;

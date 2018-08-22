@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.sxu.basecomponent.annotation.CheckLogin;
 import com.sxu.baselibrary.commonutils.LogUtil;
 
 /*******************************************************************************
@@ -34,8 +33,7 @@ public class BaseLibraryHomeActivity extends AppCompatActivity {
 		toolButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				login();
-				//startActivity(new Intent(BaseLibraryHomeActivity.this, ToolHomeActivity.class));
+				startActivity(new Intent(BaseLibraryHomeActivity.this, ToolHomeActivity.class));
 			}
 		});
 		uiButton.setOnClickListener(new View.OnClickListener() {
@@ -44,10 +42,5 @@ public class BaseLibraryHomeActivity extends AppCompatActivity {
 				startActivity(new Intent(BaseLibraryHomeActivity.this, UIHomeActivity.class));
 			}
 		});
-	}
-
-	@CheckLogin
-	private void login() {
-		LogUtil.i("=============login");
 	}
 }

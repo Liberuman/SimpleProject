@@ -14,9 +14,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.activity.BaseWebViewActivity;
-import com.sxu.basecomponent.annotation.CheckLogin;
-import com.sxu.basecomponent.annotation.CheckPermission;
-import com.sxu.basecomponent.aspect.LoginAspect;
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.EncodeUtil;
 import com.sxu.baselibrary.commonutils.EncryptUtil;
@@ -24,6 +21,8 @@ import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
+import com.sxu.commonbusiness.login.LoginAspect;
+import com.sxu.commonbusiness.permission.CheckPermission;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -88,9 +87,9 @@ public class MainActivity extends BaseActivity {
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//ARouter.getInstance().build("/base/home").navigation();
+				ARouter.getInstance().build("/base/home").navigation();
 				//BaseWebViewActivity.enter(context, null, "http://m.baidu.com");
-				login();
+				//login();
 			}
 		});
 		baseButton.setOnClickListener(new View.OnClickListener() {

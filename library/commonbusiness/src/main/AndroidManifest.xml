@@ -116,5 +116,7 @@
         <activity android:name=".share.activity.ShareActivity"
             android:theme="@style/cb_CommonDialog"/>
 
+        <activity android:name="com.sxu.commonbusiness.permission.PermissionActivity"
+                  android:theme="@style/cb_TransparentTheme"/>
     </application>
 </manifest>

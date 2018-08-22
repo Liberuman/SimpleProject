@@ -17,36 +17,23 @@ import com.google.gson.JsonObject;
 public interface PushListener {
 
 	/**
-	 * 小米推送
-	 */
-	int PUSH_TYPE_XIAOMI = 1;
-	/**
-	 * 华为推送
-	 */
-	int PUSH_TYPE_HUAWEI = 2;
-	/**
-	 * 极光推送
-	 */
-	int PUSH_TYPE_JPUSH = 3;
-
-	/**
 	 * 接收到透传消息时的回调
 	 * @param context
 	 * @param object
 	 */
-	void onReceiveMessage(Context context, Object object);
+	void onReceiveMessage(Context context, int pushChannel, Object object);
 
 	/**
 	 * 接收到通知时的回调
 	 * @param context
 	 * @param object
 	 */
-	void onReceiveNotification(Context context, Object object);
+	void onReceiveNotification(Context context, int pushChannel, Object object);
 
 	/**
 	 * 点击通知时的回调
 	 * @param context
 	 * @param object
 	 */
-	void onNotificationClicked(Context context, Object object);
+	void onNotificationClicked(Context context, int pushChannel, Object object);
 }

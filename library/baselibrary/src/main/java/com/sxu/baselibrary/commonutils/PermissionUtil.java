@@ -60,6 +60,11 @@ public class PermissionUtil {
         return true;
     }
 
+    /**
+     * 检查所需权限是否已获取
+     * @param context
+     * @param permission
+     */
     public static void checkPermission(Activity context, String[] permission) {
         if (permission == null || permission.length == 0) {
             return;
@@ -78,7 +83,6 @@ public class PermissionUtil {
         } else {
             if (requestListener != null) {
                 requestListener.onGranted();
-                requestListener = null;
                 context.finish();
             }
         }
@@ -98,15 +102,20 @@ public class PermissionUtil {
         }
         if (refusedPermissionIndex != -1) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(context, permissions[refusedPermissionIndex])) {
-                Toast.makeText(context, permissionDesc, Toast.LENGTH_LONG).show();
+                ToastUtil.show(permissionDesc);
+                if (requestListener != null) {
+                    requestListener.onCanceled();
+                }
                 context.finish();
             } else {
+                if (requestListener != null) {
+                    requestListener.onCanceled();
+                }
                 showSettingPermissionDialog(context);
             }
         } else {
             if (requestListener != null) {
                 requestListener.onGranted();
-                requestListener = null;
             }
             context.finish();
         }

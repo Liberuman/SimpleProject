@@ -3,7 +3,6 @@ package com.sxu.simpleproject;
 import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.sxu.basecomponent.aspect.LoginAspect;
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 

@@ -30,19 +30,19 @@ public class MiPushReceiver extends PushMessageReceiver {
 	// 接收服务器向客户端发送的透传消息
 	@Override
 	public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
-		PushManager.getInstance().getPushListener().onReceiveMessage(context, message);
+		PushManager.getInstance().getPushListener().onReceiveMessage(context, PushManager.PUSH_TYPE_XIAOMI, message);
 	}
 
 	// 服务器向客户端发送的通知消息的点击事件
 	@Override
 	public void onNotificationMessageClicked(Context context, MiPushMessage message) {
-		PushManager.getInstance().getPushListener().onNotificationClicked(context, message);
+		PushManager.getInstance().getPushListener().onNotificationClicked(context, PushManager.PUSH_TYPE_XIAOMI, message);
 	}
 
 	// 接收服务器向客户端发送的通知消息, 这个回调方法是在通知消息到达客户端时触发。
 	// 另外应用在前台时不弹出通知, 但仍会触发这个回调函数
 	@Override
 	public void onNotificationMessageArrived(Context context, MiPushMessage message) {
-		PushManager.getInstance().getPushListener().onReceiveNotification(context, message);
+		PushManager.getInstance().getPushListener().onReceiveNotification(context, PushManager.PUSH_TYPE_XIAOMI, message);
 	}
 }

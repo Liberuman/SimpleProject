@@ -57,15 +57,14 @@ dependencies {
     testImplementation "junit:junit:${JUNIT_VERSION}"
     androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
-
     kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
-
     implementation project(':basecomponent')
     if (isModule) {
         implementation project(':BaseLibraryDemo')
         implementation project(':BaseComponentDemo')
         implementation project(':CommonBusinessDemo')
     }
+    implementation project(':commonbusiness')
 }
 
 import org.aspectj.bridge.IMessage

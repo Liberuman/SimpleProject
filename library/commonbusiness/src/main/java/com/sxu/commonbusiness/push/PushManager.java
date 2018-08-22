@@ -25,6 +25,19 @@ import cn.jpush.android.api.JPushInterface;
 
 public class PushManager {
 
+	/**
+	 * 小米推送
+	 */
+	public final static int PUSH_TYPE_XIAOMI = 1;
+	/**
+	 * 华为推送
+	 */
+	public final static int PUSH_TYPE_HUAWEI = 2;
+	/**
+	 * 极光推送
+	 */
+	public final static int PUSH_TYPE_JPUSH = 3;
+
 	private PushListener mListener;
 
 	private PushManager() {
@@ -57,7 +70,7 @@ public class PushManager {
 	}
 
 	private void initHWPush(Context context) {
-		HuaweiApiClient client = new HuaweiApiClient.Builder(context.getApplicationContext()) //
+		HuaweiApiClient client = new HuaweiApiClient.Builder(context.getApplicationContext())
 				.addApi(HuaweiPush.PUSH_API)
 				.addConnectionCallbacks(new HuaweiApiClient.ConnectionCallbacks() {
 					@Override

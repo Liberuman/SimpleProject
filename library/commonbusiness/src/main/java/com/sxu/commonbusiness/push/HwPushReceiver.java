@@ -25,14 +25,14 @@ public class HwPushReceiver extends PushReceiver {
 
 	@Override
 	public boolean onPushMsg(Context context, byte[] msg, Bundle bundle) {
-		PushManager.getInstance().getPushListener().onNotificationClicked(context, msg);
+		PushManager.getInstance().getPushListener().onNotificationClicked(context, PushManager.PUSH_TYPE_HUAWEI, msg);
 		return false;
 	}
 
 	public void onEvent(Context context, Event event, Bundle extras) {
 		super.onEvent(context, event, extras);
 		if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {
-			PushManager.getInstance().getPushListener().onNotificationClicked(context, extras);
+			PushManager.getInstance().getPushListener().onNotificationClicked(context, PushManager.PUSH_TYPE_HUAWEI, extras);
 		}
 	}
 

@@ -1,17 +1,10 @@
-package com.sxu.basecomponent.aspect;
+package com.sxu.commonbusiness.login;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.sxu.basecomponent.annotation.CheckLogin;
-import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -29,14 +22,13 @@ public class LoginAspect {
 
 	private static OnLoginListener loginListener;
 
-	@Pointcut("execution(@com.sxu.basecomponent.annotation.CheckLogin * *(..))")
+	@Pointcut("execution(@com.sxu.commonbusiness.login.CheckLogin * *(..))")
 	public void executionCheckLogin() {
 
 	}
 
 	@Around("executionCheckLogin()")
 	public Object checkLogin(ProceedingJoinPoint joinPoint) throws Throwable {
-		Log.i("out", "=============onCheckLogin begin");
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		CheckLogin checkLogin = signature.getMethod().getAnnotation(CheckLogin.class);
 		if (checkLogin != null) {
@@ -46,7 +38,6 @@ public class LoginAspect {
 				joinPoint.proceed();
 			}
 		}
-		Log.i("out", "=============onCheckLogin end");
 
 		return null;
 	}

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="cb_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+    <style name="cb_TransparentTheme" parent="cb_AppTheme">
+        <item name="android:opacity">opaque</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="cb_CommonDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="windowNoTitle">true</item>
