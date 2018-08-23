@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="center"
+        android:text="为了提高推送率，推送模块采用了小米推送 + 华为推送 + 极光推送组合的方式，集成时需要在Application中初
+        始化，为了简化推送系统的实现，对这三个推送系
+        统提供了统一的接口，在使用时根据推送回调中的pushType进行区分即可"
+        android:lineSpacingMultiplier="1.2"/>
+
+</LinearLayout>

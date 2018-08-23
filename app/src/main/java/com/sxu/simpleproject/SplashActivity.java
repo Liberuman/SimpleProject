@@ -21,6 +21,7 @@ public class SplashActivity extends BaseActivity {
 	@Override
 	protected void pretreatment() {
 		super.pretreatment();
+		overridePendingTransition(0, 0);
 		setToolbarStyle(TOOL_BAR_STYLE_NONE);
 	}
 
@@ -60,5 +61,11 @@ public class SplashActivity extends BaseActivity {
 				finish();
 			}
 		});
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(0,  0);
 	}
 }

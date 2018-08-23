@@ -23,16 +23,31 @@
         android:text="分享组件"/>
 
     <Button
-        android:id="@+id/ali_pay_text"
+        android:id="@+id/login_button"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
-        android:text="支付宝支付"/>
+        android:text="登录验证"/>
 
     <Button
-        android:id="@+id/wx_pay_text"
+        android:id="@+id/pay_button"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
-        android:text="微信支付"/>
+        android:text="支付组件"/>
+
+    <Button
+        android:id="@+id/permission_button"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:text="权限验证"/>
+
+    <Button
+        android:id="@+id/push_button"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:text="推送模块"/>
+
 </LinearLayout>

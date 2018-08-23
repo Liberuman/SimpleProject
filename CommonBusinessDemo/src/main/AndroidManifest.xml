@@ -3,9 +3,15 @@
           package="com.sxu.commonbusinessdemo">
 
     <application>
-
         <activity android:name=".CommonBusinessHomeActivity"/>
-
+        <activity android:name=".PayActivity">
+        </activity>
+        <activity android:name=".LoginVerificationActivity">
+        </activity>
+        <activity android:name=".PushActivity">
+        </activity>
+        <activity android:name=".PermissionDemoActivity">
+        </activity>
     </application>
 
 </manifest>

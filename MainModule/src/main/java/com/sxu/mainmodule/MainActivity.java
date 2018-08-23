@@ -29,6 +29,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.Permission;
+import java.util.IllformedLocaleException;
 
 /*******************************************************************************
  * Description: 
@@ -147,5 +148,6 @@ public class MainActivity extends BaseActivity {
 	private void login() {
 		//LaunchUtil.openPhone(context, "18516295124");
 		LogUtil.i("===========测试loginAspect");
+		//throw new NullPointerException();
 	}
 }

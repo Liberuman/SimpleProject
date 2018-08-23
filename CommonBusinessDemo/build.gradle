@@ -18,7 +18,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
 
@@ -26,11 +26,11 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a'
         }
 
-        manifestPlaceholders =[
+        manifestPlaceholders = [
                 JPUSH_PKGNAME: "${applicationId}",
                 JPUSH_APPKEY : "appkey",
-                JPUSH_CHANNEL : "channel",
-                QQ_ID: "qq_id"
+                JPUSH_CHANNEL: "channel",
+                QQ_ID        : "qq_id"
         ]
     }
 
@@ -57,6 +57,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation "junit:junit:${JUNIT_VERSION}"
     androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
@@ -65,4 +66,45 @@ dependencies {
 
     implementation project(':basecomponent')
     implementation project(':commonbusiness')
+}
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+final def log = project.logger
+final def variants = project.android.libraryVariants
+variants.all { variant ->
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = ["-showWeaveInfo",
+                         "-1.8",
+                         "-inpath", javaCompile.destinationDir.toString(),
+                         "-aspectpath", javaCompile.classpath.asPath,
+                         "-d", javaCompile.destinationDir.toString(),
+                         "-classpath", javaCompile.classpath.asPath,
+                         "-bootclasspath", android.bootClasspath.join(File.pathSeparator)]
+        log.debug "ajc args: " + Arrays.toString(args)
+
+        MessageHandler handler = new MessageHandler(true)
+        new Main().run(args, handler)
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break
+                case IMessage.WARNING:
+                    log.warn message.message, message.thrown
+                    break
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.sxu.commonbusinessdemo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.pay.PayManager;
 import com.sxu.commonbusiness.pay.PayRequestBean;
-import com.sxu.commonbusiness.share.ShareManager;
+import com.sxu.commonbusiness.push.PushManager;
 import com.sxu.commonbusiness.share.activity.ShareActivity;
 
 @Route(path = "/business/Home")
@@ -21,8 +22,10 @@ public class CommonBusinessHomeActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_common_bussiness_home_layout);
 
 		Button shareButton = findViewById(R.id.share_button);
-		Button aliPayButton = findViewById(R.id.ali_pay_text);
-		Button wxPayButton = findViewById(R.id.wx_pay_text);
+		Button loginButton = findViewById(R.id.login_button);
+		Button payButton = findViewById(R.id.pay_button);
+		Button permissionButton = findViewById(R.id.permission_button);
+		Button pushButton = findViewById(R.id.push_button);
 
 		shareButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -33,30 +36,31 @@ public class CommonBusinessHomeActivity extends AppCompatActivity {
 			}
 		});
 
-		aliPayButton.setOnClickListener(new View.OnClickListener() {
+		loginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PayManager.getInstance(CommonBusinessHomeActivity.this).payByAliPay(
-						CommonBusinessHomeActivity.this, "", new PayManager.AliPayListener() {
-							@Override
-							public void onSuccess() {
-								ToastUtil.show("支付成功");
-							}
-
-							@Override
-							public void onFailure(Exception e) {
-								ToastUtil.show("支付失败" + e.getMessage());
-							}
-						}
-				);
+				startActivity(new Intent(CommonBusinessHomeActivity.this, LoginVerificationActivity.class));
 			}
 		});
 
-		wxPayButton.setOnClickListener(new View.OnClickListener() {
+		payButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PayManager.getInstance(CommonBusinessHomeActivity.this).payByWeChat(
-						new PayRequestBean(), "123");
+				startActivity(new Intent(CommonBusinessHomeActivity.this, PayActivity.class));
+			}
+		});
+
+		permissionButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(CommonBusinessHomeActivity.this, PermissionDemoActivity.class));
+			}
+		});
+
+		pushButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(CommonBusinessHomeActivity.this, PushActivity.class));
 			}
 		});
 	}
