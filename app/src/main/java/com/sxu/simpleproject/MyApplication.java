@@ -4,6 +4,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.utils.BaseApplication;
+import com.sxu.basecomponent.utils.ChannelUtil;
+import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,5 +29,6 @@ public class MyApplication extends BaseApplication {
 		ARouter.openDebug();
 		ARouter.openLog();
 		ARouter.init(this);
+		LogUtil.i("channel=====" + ChannelUtil.getChannel(this));
 	}
 }

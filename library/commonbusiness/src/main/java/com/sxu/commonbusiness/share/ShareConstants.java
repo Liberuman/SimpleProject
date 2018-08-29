@@ -21,10 +21,6 @@ public class ShareConstants {
 	public final static int SHARE_BY_QQ = 5;
 	public final static int SHARE_BY_QQ_ZONE = 6;
 
-
-	/** 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY */
-	public static String APP_WEIBO_KEY      = "appkey";
-
 	/**
 	 * 腾讯QQ_APP_KEY
 	 */
@@ -49,6 +45,10 @@ public class ShareConstants {
 	 * 微信app_secret
 	 */
 	public static String APP_WECHAT_SECRET = "secret";
+
+	/** 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY */
+	public static String APP_WEIBO_KEY      = "3515945022";
+
 	/**
 	 * 当前 DEMO 应用的回调页，第三方应用可以使用自己的回调页。
 	 *
@@ -58,8 +58,7 @@ public class ShareConstants {
 	 * 建议使用默认回调页：https://api.weibo.com/oauth2/default.html
 	 * </p>
 	 */
-	public static String REDIRECT_URL = "http://www.sina.com/";
-	//http://sns.whalecloud.com/sina2/callback
+	public static String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
 
 	/**
 	 * Scope 是 OAuth2.0 授权机制中 authorize 接口的一个参数。通过 Scope，平台将开放更多的微博

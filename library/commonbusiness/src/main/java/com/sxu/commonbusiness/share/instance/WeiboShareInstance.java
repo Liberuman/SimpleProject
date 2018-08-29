@@ -48,19 +48,23 @@ public class WeiboShareInstance extends ShareInstance {
 //		if (!ImageLoader.getInstance().isInited()) {
 //			ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
 //		}
- 		WbSdk.install(activity, new AuthInfo(activity, ShareConstants.APP_WEIBO_KEY, ShareConstants.REDIRECT_URL,
-				ShareConstants.SCOPE));
-		shareHandler = new WbShareHandler(activity);
-		shareHandler.registerApp();
-		accessToken = AccessTokenKeeper.readAccessToken(activity);
+		AuthInfo authInfo = new AuthInfo(activity, ShareConstants.APP_WEIBO_KEY, ShareConstants.REDIRECT_URL,
+				ShareConstants.SCOPE);
+ 		WbSdk.install(activity, authInfo);
+
+//		shareHandler = new WbShareHandler(activity);
+//		shareHandler.registerApp();
+//		accessToken = AccessTokenKeeper.readAccessToken(activity);
+		ssoHandler = new SsoHandler(activity);
+		ssoHandler.authorize(new AuthListener());
 	}
 
 	public void onShare(final String title, final String desc, final String iconUrl, final String url) {
-		if (accessToken == null || !accessToken.isSessionValid()) {
-			ssoHandler = new SsoHandler(activity);
-			ssoHandler.authorize(new AuthListener());
-			return;
-		}
+//		if (accessToken == null || !accessToken.isSessionValid()) {
+//			ssoHandler = new SsoHandler(activity);
+//			ssoHandler.authorize(new AuthListener());
+//			return;
+//		}
 
 		if (!TextUtils.isEmpty(iconUrl)) {
 //			ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
@@ -118,9 +122,6 @@ public class WeiboShareInstance extends ShareInstance {
 		if (ssoHandler != null) {
 			LogUtil.i("ssoHandle is not null");
 			ssoHandler.authorizeCallBack(requestCode, resultCode, intent);
-		} else {
-			LogUtil.i("ssoHandle is null");
-			shareHandler.doResultIntent(intent, this);
 		}
 	}
 
@@ -171,8 +172,8 @@ public class WeiboShareInstance extends ShareInstance {
 
 		@Override
 		public void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
-			LogUtil.i("微博授权失败" + wbConnectErrorMessage.getErrorMessage());
-			activity.finish();
+			LogUtil.i("微博授权失败" + wbConnectErrorMessage.getErrorCode());
+			//activity.finish();
 		}
 	}
 }

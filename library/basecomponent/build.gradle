@@ -49,6 +49,6 @@ dependencies {
     compile "org.greenrobot:eventbus:${EVENTBUS_VERSION}"
     // 侧滑关闭组件
     compile "me.imid.swipebacklayout.lib:library:${SWIPEBACK_VERSION}"
-
+    compile 'com.meituan.android.walle:library:1.1.6'
     compile project(path: ':baselibrary')
 }

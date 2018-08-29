@@ -20,12 +20,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--android
 -dontpreverify
 -repackageclasses ''
 -allowaccessmodification
 -optimizations !code/simplification/arithmetic
 -keepattributes *Annotation*
+-ignorewarnings
 
 -dontwarn android.support.**
 
