@@ -43,14 +43,14 @@ dependencies {
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     // 微博分享
     compile "com.sina.weibo.sdk:core:${WEIBO_VERSION}:openDefaultRelease@aar"
-
     // 极光推送
     compile "cn.jiguang.sdk:jpush:${JPUSH_VERSION}"
     compile "cn.jiguang.sdk:jcore:${JCORE_VERSION}"
     // 华为推送
     compile "com.huawei.android.hms:push:${HMS_PUSH_VERSION}"
     compile project(path: ':baselibrary')
-
+    // 图片操作库
+    implementation 'com.github.JuHonggang:ImageSet:v0.12'
     // AspectJ
     compile 'org.aspectj:aspectjrt:1.8.9'
 }

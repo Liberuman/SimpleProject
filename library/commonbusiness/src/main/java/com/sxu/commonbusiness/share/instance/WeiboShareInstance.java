@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.api.ImageObject;
+import com.sina.weibo.sdk.api.MultiImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -20,10 +23,17 @@ import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sxu.baselibrary.commonutils.BitmapUtil;
+import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
+import com.sxu.imageloader.FrescoInstance;
+import com.sxu.imageloader.ImageLoaderListener;
+import com.sxu.imageloader.ImageLoaderManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*******************************************************************************
  * Description: 微博分享的实现
@@ -40,62 +50,67 @@ public class WeiboShareInstance extends ShareInstance {
 	private SsoHandler ssoHandler;
 	private WbShareHandler shareHandler;
 	private Activity activity;
-	private final int SHARE_IMAGE_MAX_SIZE = 32 * 1024 * 8; // 分享的图片不能大于32K
 
 	public WeiboShareInstance(Activity activity) {
 		this.activity = activity;
-		// todo 检查图片加载库是否初始化
-//		if (!ImageLoader.getInstance().isInited()) {
-//			ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
-//		}
+		ImageLoaderManager.getInstance().init(activity.getApplicationContext(), new FrescoInstance());
 		AuthInfo authInfo = new AuthInfo(activity, ShareConstants.APP_WEIBO_KEY, ShareConstants.REDIRECT_URL,
 				ShareConstants.SCOPE);
  		WbSdk.install(activity, authInfo);
 
-//		shareHandler = new WbShareHandler(activity);
-//		shareHandler.registerApp();
-//		accessToken = AccessTokenKeeper.readAccessToken(activity);
-		ssoHandler = new SsoHandler(activity);
-		ssoHandler.authorize(new AuthListener());
+		shareHandler = new WbShareHandler(activity);
+		shareHandler.registerApp();
+		accessToken = AccessTokenKeeper.readAccessToken(activity);
 	}
 
 	public void onShare(final String title, final String desc, final String iconUrl, final String url) {
-//		if (accessToken == null || !accessToken.isSessionValid()) {
-//			ssoHandler = new SsoHandler(activity);
-//			ssoHandler.authorize(new AuthListener());
-//			return;
-//		}
+		if (accessToken == null || !accessToken.isSessionValid()) {
+			ssoHandler = new SsoHandler(activity);
+			ssoHandler.authorize(new AuthListener(title, desc, iconUrl, url));
+			return;
+		}
 
 		if (!TextUtils.isEmpty(iconUrl)) {
-//			ImageLoader.getInstance().loadImage(iconUrl, new SimpleImageLoadingListener() {
-//				@Override
-//				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//					super.onLoadingComplete(imageUri, view, loadedImage);
-//					shareMediaByWeibo(activity, title, desc, url, BitmapUtil.zoomBitmap(loadedImage, SHARE_IMAGE_MAX_SIZE));
-//				}
-//
-//				@Override
-//				public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//					super.onLoadingFailed(imageUri, view, failReason);
-//					shareMediaByWeibo(activity, title, desc, url, null);
-//				}
-//
-//				@Override
-//				public void onLoadingCancelled(String imageUri, View view) {
-//					super.onLoadingCancelled(imageUri, view);
-//					shareMediaByWeibo(activity, title, desc, url, null);
-//				}
-//			});
+			ImageLoaderManager.getInstance().downloadImage(activity, iconUrl, new ImageLoaderListener() {
+				@Override
+				public void onStart() {
+
+				}
+
+				@Override
+				public void onProcess(int i, int i1) {
+
+				}
+
+				@Override
+				public void onCompleted(Bitmap bitmap) {
+					shareMediaByWeibo(activity, desc, url, bitmap);
+				}
+
+				@Override
+				public void onFailure(Exception e) {
+					shareMediaByWeibo(activity, desc, url,
+							BitmapUtil.drawableToBitmap(activity.getResources().getDrawable(R.drawable.ic_launcher)));
+				}
+			});
 		} else {
-			shareMediaByWeibo(activity, title, desc, url, null);
+			shareMediaByWeibo(activity, desc, url,
+					BitmapUtil.drawableToBitmap(activity.getResources().getDrawable(R.drawable.ic_launcher)));
 		}
 	}
 
-	private void shareMediaByWeibo(Activity activity, String title, String desc, String url, Bitmap bitmap) {
+	/**
+	 * 普通分享，支持文字，链接，图片  注意：微博分享设置title无效，链接应追加在desc后面
+	 * @param activity
+	 * @param desc
+	 * @param url
+	 * @param bitmap
+	 */
+	private void shareMediaByWeibo(Activity activity, String desc, String url, Bitmap bitmap) {
 		WeiboMultiMessage multiMessage = new WeiboMultiMessage();
-		if (!TextUtils.isEmpty(title)) {
+		if (!TextUtils.isEmpty(desc)) {
 			TextObject textObject = new TextObject();
-			textObject.text = title;
+			textObject.text = new StringBuilder(desc).append(" ").append(url).toString();
 			multiMessage.textObject = textObject;
 		}
 		if (bitmap != null && !bitmap.isRecycled()) {
@@ -104,23 +119,35 @@ public class WeiboShareInstance extends ShareInstance {
 			multiMessage.imageObject = imageObject;
 		}
 
-		WebpageObject mediaObject = new WebpageObject();
-		mediaObject.identify = "123";
-		mediaObject.title = ""; // 拼接在textObject.text后面
-		mediaObject.description = desc; // 有什么用？
-		Bitmap  bitmap2 = BitmapFactory.decodeResource(activity.getResources(), R.drawable.cb_share_weibo_icon);
-		// 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-		mediaObject.setThumbImage(bitmap2); // 必须设置 否则分享失败
-		mediaObject.actionUrl = "";
-		mediaObject.defaultText = ""; // textObject.text和mediaObject.title都为空时显示
-		multiMessage.mediaObject = mediaObject;
+		shareHandler.shareMessage(multiMessage, false);
+	}
+
+	/**
+	 * 多图分享
+	 * @param activity
+	 * @param desc
+	 * @param url
+	 * @param imageList
+	 */
+	private void shareMediaByWeibo(Activity activity, String desc, String url, ArrayList<Uri> imageList) {
+		WeiboMultiMessage multiMessage = new WeiboMultiMessage();
+		if (!TextUtils.isEmpty(desc)) {
+			TextObject textObject = new TextObject();
+			textObject.text = new StringBuilder(desc).append(" ").append(url).toString();
+			multiMessage.textObject = textObject;
+		}
+		if (!CollectionUtil.isEmpty(imageList)) {
+			MultiImageObject multiImageObj = new MultiImageObject();
+			multiImageObj.setImageList(imageList);
+			multiMessage.multiImageObject = multiImageObj;
+		}
+
 		shareHandler.shareMessage(multiMessage, false);
 	}
 
 	@Override
 	public void handleResult(int requestCode, int resultCode, Intent intent) {
 		if (ssoHandler != null) {
-			LogUtil.i("ssoHandle is not null");
 			ssoHandler.authorizeCallBack(requestCode, resultCode, intent);
 		}
 	}
@@ -144,12 +171,19 @@ public class WeiboShareInstance extends ShareInstance {
 	}
 
 	/***
-	 * 实现WeiboAuthListener接口，返回授权结果
-	 * 通过access_token和expires_in获取accesstoken
-	 * @author Administrator
-	 *
+	 * 授权监听
 	 */
 	class AuthListener implements WbAuthListener {
+
+		private String desc;
+		private String url;
+		private String iconUrl;
+
+		public AuthListener(String title, String desc, String url, String iconUrl) {
+			this.desc = desc;
+			this.url = url;
+			this.iconUrl = iconUrl;
+		}
 
 		@Override
 		public void cancel() {
@@ -162,9 +196,8 @@ public class WeiboShareInstance extends ShareInstance {
 			accessToken = oauth2AccessToken;
 			LogUtil.i("微博授权完成" + accessToken);
 			if (accessToken.isSessionValid()) {
-				// 保存 Token 到 SharedPreferences
-				AccessTokenKeeper.writeAccessToken(activity, accessToken);
-				onShare("title", "desc", "", "http://m.Freeman.com");
+				AccessTokenKeeper.writeAccessToken(activity.getApplicationContext(), accessToken);
+				onShare(null, desc, url, iconUrl);
 			} else {
 				LogUtil.i("微博开发账号签名错误");
 			}
@@ -173,7 +206,7 @@ public class WeiboShareInstance extends ShareInstance {
 		@Override
 		public void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
 			LogUtil.i("微博授权失败" + wbConnectErrorMessage.getErrorCode());
-			//activity.finish();
+			activity.finish();
 		}
 	}
 }
