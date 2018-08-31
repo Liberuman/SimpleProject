@@ -9,3 +9,4 @@
 .externalNativeBuild
 /app/free/
 !/app/build/
+/.idea/

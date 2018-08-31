@@ -17,13 +17,18 @@ public class PayRequestBean {
 	public String timeStamp;
 	public String packageValue;
 	public String sign;
-	public String extData;
+	public String extraValue;
 
 	public PayRequestBean() {
 
 	}
 
 	public PayRequestBean(String appId, String partnerId, String prepayId, String nonceStr, String timeStamp, String packageValue, String sign) {
+		this(appId, partnerId, prepayId, nonceStr, timeStamp, packageValue, sign, null);
+	}
+
+	public PayRequestBean(String appId, String partnerId, String prepayId, String nonceStr, String timeStamp,
+	                      String packageValue, String sign, String extraValue) {
 		this.appId = appId;
 		this.partnerId = partnerId;
 		this.prepayId = prepayId;
@@ -31,5 +36,6 @@ public class PayRequestBean {
 		this.timeStamp = timeStamp;
 		this.packageValue = packageValue;
 		this.sign = sign;
+		this.extraValue = extraValue;
 	}
 }

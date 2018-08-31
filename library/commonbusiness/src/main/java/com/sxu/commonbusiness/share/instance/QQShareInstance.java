@@ -61,27 +61,23 @@ public class QQShareInstance extends ShareInstance {
 
 	@Override
 	public void handleResult(int requestCode, int resultCode, Intent intent) {
-		ToastUtil.show("handleResult");
 		tencent.onActivityResultData(requestCode, resultCode, intent, this);
 	}
 
 	@Override
 	public void shareSuccess() {
-		LogUtil.i("shareSuccess");
 		ToastUtil.show("分享成功");
 		activity.finish();
 	}
 
 	@Override
 	public void shareFailure(Exception e) {
-		LogUtil.i("shareFailure");
 		ToastUtil.show("分享失败");
 		activity.finish();
 	}
 
 	@Override
 	public void shareCancel() {
-		LogUtil.i("shareCancel");
 		ToastUtil.show("取消分享");
 		activity.finish();
 	}

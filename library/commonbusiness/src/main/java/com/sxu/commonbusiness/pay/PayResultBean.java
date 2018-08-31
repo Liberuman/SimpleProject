@@ -62,8 +62,7 @@ public class PayResultBean {
 
 	@Override
 	public String toString() {
-		return "resultStatus={" + resultStatus + "};memo={" + memo
-				+ "};result={" + result + "}";
+		return "resultStatus={" + resultStatus + "};memo={" + memo + "};result={" + result + "}";
 	}
 
 	private String gatValue(String content, String key) {
