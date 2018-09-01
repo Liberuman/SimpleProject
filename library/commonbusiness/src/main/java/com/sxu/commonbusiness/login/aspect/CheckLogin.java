@@ -1,4 +1,4 @@
-package com.sxu.commonbusiness.login;
+package com.sxu.commonbusiness.login.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

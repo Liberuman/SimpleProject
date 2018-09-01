@@ -1,11 +1,9 @@
 package com.sxu.mainmodule;
 
 import android.Manifest;
-import android.animation.IntEvaluator;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -13,23 +11,13 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
-import com.sxu.basecomponent.activity.BaseWebViewActivity;
 import com.sxu.basecomponent.utils.BaseApplication;
-import com.sxu.baselibrary.commonutils.EncodeUtil;
-import com.sxu.baselibrary.commonutils.EncryptUtil;
-import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
-import com.sxu.commonbusiness.login.LoginAspect;
+import com.sxu.commonbusiness.login.aspect.LoginAspect;
 import com.sxu.commonbusiness.permission.CheckPermission;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Permission;
-import java.util.IllformedLocaleException;
 
 /*******************************************************************************
  * Description: 

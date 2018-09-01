@@ -7,8 +7,8 @@ import android.widget.Button;
 
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.ToastUtil;
-import com.sxu.commonbusiness.login.CheckLogin;
-import com.sxu.commonbusiness.login.LoginAspect;
+import com.sxu.commonbusiness.login.aspect.CheckLogin;
+import com.sxu.commonbusiness.login.aspect.LoginAspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 

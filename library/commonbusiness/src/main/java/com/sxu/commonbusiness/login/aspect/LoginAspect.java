@@ -1,6 +1,4 @@
-package com.sxu.commonbusiness.login;
-
-import android.util.Log;
+package com.sxu.commonbusiness.login.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -22,7 +20,7 @@ public class LoginAspect {
 
 	private static OnLoginListener loginListener;
 
-	@Pointcut("execution(@com.sxu.commonbusiness.login.CheckLogin * *(..))")
+	@Pointcut("execution(@com.sxu.commonbusiness.login.aspect.CheckLogin * *(..))")
 	public void executionCheckLogin() {
 
 	}

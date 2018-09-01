@@ -1,3 +1,6 @@
+![image](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![image](	https://img.shields.io/packagist/l/doctrine/orm.svg)
+
 ### 项目结构
 
 ![image](https://user-gold-cdn.xitu.io/2018/7/10/16484144544bff7b?imageslim)
