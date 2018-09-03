@@ -2,6 +2,9 @@ package com.sxu.commonbusiness.login.listener;
 
 import android.os.Bundle;
 
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WbAuthListener;
+import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
@@ -13,11 +16,10 @@ import com.tencent.tauth.UiError;
  *
  * Date: 2018/8/31
  *******************************************************************************/
-public abstract class LoginListener implements IUiListener {
+public abstract class LoginListener implements WbAuthListener, IUiListener {
 
 	/**
 	 * QQ登录回调
-	 * @param o
 	 */
 	@Override
 	public final void onComplete(Object o) {
@@ -34,6 +36,24 @@ public abstract class LoginListener implements IUiListener {
 	@Override
 	public final void onCancel() {
 		loginCanceled();
+	}
+
+	/**
+	 * 微博登录回调
+	 */
+	@Override
+	public final void onSuccess(Oauth2AccessToken oauth2AccessToken) {
+		loginSucceed(oauth2AccessToken);
+	}
+
+	@Override
+	public final void cancel() {
+		loginCanceled();
+	}
+
+	@Override
+	public final void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
+		loginFailed(new Exception(wbConnectErrorMessage.getErrorMessage()));
 	}
 
 	/**

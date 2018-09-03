@@ -8,7 +8,6 @@ import android.widget.Button;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.pay.PayManager;
 import com.sxu.commonbusiness.pay.PayRequestBean;
-import com.sxu.commonbusiness.share.activity.ShareActivity;
 
 public class PayActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class PayActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				PayManager.getInstance(PayActivity.this).payByAliPay(
-						PayActivity.this, "", new PayManager.AliPayListener() {
+						PayActivity.this, "", new PayManager.PayListener() {
 							@Override
 							public void onSuccess() {
 								ToastUtil.show("支付成功");
@@ -43,7 +42,17 @@ public class PayActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				PayManager.getInstance(PayActivity.this).payByWeChat(
-						new PayRequestBean(), "123");
+						new PayRequestBean(), new PayManager.PayListener() {
+							@Override
+							public void onSuccess() {
+
+							}
+
+							@Override
+							public void onFailure(Exception e) {
+
+							}
+						});
 			}
 		});
 	}

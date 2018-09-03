@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sxu.commonbusiness.pay.PayManager;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -46,15 +47,12 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 
 	@Override
 	public void onResp(BaseResp baseResp) {
-		if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
-			/**
-			 * 支付成功的逻辑
-			 */
-		} else {
-			/**
-			 * 支付失败的逻辑
-			 */
-			finish();
+		if (PayManager.getPayListener() != null) {
+			if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
+				PayManager.getPayListener().onSuccess();
+			} else {
+				PayManager.getPayListener().onFailure(new Exception(baseResp.errStr));
+			}
 		}
 	}
 }

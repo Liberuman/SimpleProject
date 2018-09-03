@@ -43,5 +43,13 @@
 
 ## 小米推送 ##
 -keep class com.xiaomi.mipush.sdk.DemoMessageReceiver {*;}
-#可以防止一个误报的 warning 导致无法成功编译，如果编译使用的 Android 版本是 23。
+# 可以防止一个误报的 warning 导致无法成功编译，如果编译使用的 Android 版本是 23。
 -dontwarn com.xiaomi.push.**
+
+## 微信SDK ##
+-keep class com.tencent.mm.opensdk.** { *; }
+-keep class com.tencent.wxop.** { *; }
+-keep class com.tencent.mm.sdk.** { *; }
+
+## 微博SDK ##
+-keep class com.sina.weibo.sdk.** { *; }

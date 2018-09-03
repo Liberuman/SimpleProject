@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.sxu.baselibrary.commonutils.ToastUtil;
+import com.sxu.commonbusiness.login.instance.WXLoginInstance;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -17,6 +18,9 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI wxApi;
+
+    private final int WX_SDK_LOGIN = 1;
+    private final int WX_SDK_SHARE = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,17 +45,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     //app发送消息给微信，微信返回的消息回调函数,根据不同的返回码来判断操作是否成功
     @Override
     public void onResp(BaseResp resp) {
-        switch (resp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                ToastUtil.show("分享成功");
-                break;
-            case BaseResp.ErrCode.ERR_SENT_FAILED:
-                ToastUtil.show("分享失败");
-                finish();
-                break;
-            default:
-                finish();
-                break;
+        if (resp.getType() == WX_SDK_LOGIN) {
+            WXLoginInstance.onResp(this, resp);
+        } else if (resp.getType() == WX_SDK_SHARE) {
+
         }
     }
 }

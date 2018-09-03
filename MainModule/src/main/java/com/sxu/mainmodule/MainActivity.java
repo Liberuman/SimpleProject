@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.LogUtil;
+import com.sxu.baselibrary.datasource.http.impl.HttpManager;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 import com.sxu.commonbusiness.login.aspect.LoginAspect;
 import com.sxu.commonbusiness.permission.CheckPermission;
@@ -130,12 +131,8 @@ public class MainActivity extends BaseActivity {
 		});
 	}
 
-	@CheckPermission(permissions = {Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA,
-	Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION},
-			permissionDesc = "没权限搞不了", settingDesc = "快去设置中开启权限")
-	private void login() {
-		//LaunchUtil.openPhone(context, "18516295124");
-		LogUtil.i("===========测试loginAspect");
-		//throw new NullPointerException();
+	@CheckPermission(permissions = {Manifest.permission.CAMERA,}, permissionDesc = "没有权限无法使用相机", settingDesc = "快去设置中开启权限")
+	private void setUserIcon() {
+
 	}
 }

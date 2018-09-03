@@ -93,7 +93,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
 
-        <!-- QQ Share -->
+        <!-- QQ SDK -->
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -118,5 +118,6 @@
 
         <activity android:name="com.sxu.commonbusiness.permission.PermissionActivity"
                   android:theme="@style/cb_TransparentTheme"/>
+
     </application>
 </manifest>

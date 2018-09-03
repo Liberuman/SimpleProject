@@ -27,7 +27,8 @@ public class PayManager {
 	private volatile static PayManager instance;
 	private IWXAPI mWxApi;
 	private Handler mHandler;
-	private AliPayListener mListener;
+	private PayListener aliPayListener;
+	private static PayListener wxPayListener;
 
 	private final static int MSG_WHAT_ALI_PAY = 1001;
 	private final static String PAY_RESULT_SUCCESS = "9000";
@@ -55,8 +56,9 @@ public class PayManager {
 		return instance;
 	}
 
-	public boolean payByWeChat(PayRequestBean requestInfo, String orderId) {
-		if (requestInfo != null && !TextUtils.isEmpty(orderId)) {
+	public boolean payByWeChat(PayRequestBean requestInfo, PayListener listener) {
+		wxPayListener = listener;
+		if (requestInfo != null) {
 			PayReq req = new PayReq();
 			req.appId = requestInfo.appId;
 			req.nonceStr = requestInfo.nonceStr;
@@ -65,16 +67,20 @@ public class PayManager {
 			req.prepayId = requestInfo.prepayId;
 			req.sign = requestInfo.sign;
 			req.timeStamp = requestInfo.timeStamp;
-			req.extData = orderId;
+			req.extData = requestInfo.extraValue;
 			mWxApi.registerApp(requestInfo.appId);
 			return mWxApi.sendReq(req);
+		} else {
+			if (wxPayListener != null) {
+				wxPayListener.onFailure(new NullPointerException("requestInfo is null"));
+			}
 		}
 
 		return false;
 	}
 
-	public void payByAliPay(final Activity context, final String requestStr, AliPayListener listener) {
-		this.mListener = listener;
+	public void payByAliPay(final Activity context, final String requestStr, PayListener listener) {
+		this.aliPayListener = listener;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -90,13 +96,13 @@ public class PayManager {
 
 	public boolean handlePayMessage(Message msg) {
 		if (msg.what == MSG_WHAT_ALI_PAY) {
-			if (mListener != null) {
+			if (aliPayListener != null) {
 				PayResultBean payResultBean = new PayResultBean((Map<String, String>)msg.obj);
 				String resultStatus = payResultBean.getResultStatus();
 				if (TextUtils.equals(resultStatus, PAY_RESULT_SUCCESS)) {
-					mListener.onSuccess();
+					aliPayListener.onSuccess();
 				} else {
-					mListener.onFailure(new Exception(resultStatus));
+					aliPayListener.onFailure(new Exception(resultStatus));
 				}
 			}
 		}
@@ -104,7 +110,11 @@ public class PayManager {
 		return false;
 	}
 
-	public interface AliPayListener {
+	public static PayListener getPayListener() {
+		return wxPayListener;
+	}
+
+	public interface PayListener {
 		void onSuccess();
 		void onFailure(Exception e);
 	}

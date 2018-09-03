@@ -3,7 +3,7 @@ package com.sxu.commonbusiness.login;
 import android.content.Intent;
 
 /*******************************************************************************
- * Description: 处理分享的结果
+ * Description: 处理分享的结果, 需在onActivityResult中调用
  *
  * Author: Freeman
  *
