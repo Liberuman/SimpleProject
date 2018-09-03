@@ -2,6 +2,7 @@ package com.sxu.commonbusiness.share;
 
 import android.app.Activity;
 
+import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.share.instance.QQShareInstance;
 import com.sxu.commonbusiness.share.instance.ShareInstance;
 import com.sxu.commonbusiness.share.instance.WeChatShareInstance;
@@ -47,25 +48,25 @@ public class ShareManager {
 		this.url = url;
 	}
 
-	public void share(int flowId) {
+	public void share(int flowId, ShareListener listener) {
 		switch (flowId) {
 			case ShareConstants.SHARE_BY_WECAHT:
-				shareInstance = new WeChatShareInstance(activity, ShareConstants.SHARE_BY_WECAHT);
+				shareInstance = new WeChatShareInstance(activity, flowId, listener);
 				break;
 			case ShareConstants.SHARE_BY_WECHAT_MOMENT:
-				shareInstance = new WeChatShareInstance(activity, ShareConstants.SHARE_BY_WECHAT_MOMENT);
+				shareInstance = new WeChatShareInstance(activity, flowId, listener);
 				break;
 			case ShareConstants.SHARE_BY_MINI_PROGRAM:
-				shareInstance = new WeChatShareInstance(activity, ShareConstants.SHARE_BY_MINI_PROGRAM);
+				shareInstance = new WeChatShareInstance(activity, ShareConstants.SHARE_BY_MINI_PROGRAM, listener);
 				break;
 			case ShareConstants.SHARE_BY_WEIBO:
-				shareInstance = new WeiboShareInstance(activity);
+				shareInstance = new WeiboShareInstance(activity, listener);
 				break;
 			case ShareConstants.SHARE_BY_QQ:
-				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ);
+				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ, listener);
 				break;
 			case ShareConstants.SHARE_BY_QQ_ZONE:
-				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ_ZONE);
+				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ_ZONE, listener);
 				break;
 			default:
 				break;

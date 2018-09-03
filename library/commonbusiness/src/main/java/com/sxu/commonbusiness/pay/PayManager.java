@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -72,7 +73,7 @@ public class PayManager {
 			return mWxApi.sendReq(req);
 		} else {
 			if (wxPayListener != null) {
-				wxPayListener.onFailure(new NullPointerException("requestInfo is null"));
+				wxPayListener.onFailure(new Exception("requestInfo is null"));
 			}
 		}
 
@@ -108,6 +109,18 @@ public class PayManager {
 		}
 
 		return false;
+	}
+
+	public static void onResp(BaseResp resp) {
+		if (wxPayListener == null) {
+			return;
+		}
+
+		if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+			wxPayListener.onSuccess();
+		} else {
+			wxPayListener.onFailure(new Exception(resp.errStr));
+		}
 	}
 
 	public static PayListener getPayListener() {

@@ -28,6 +28,7 @@ import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
+import com.sxu.commonbusiness.share.ShareListener;
 import com.sxu.imageloader.FrescoInstance;
 import com.sxu.imageloader.ImageLoaderListener;
 import com.sxu.imageloader.ImageLoaderManager;
@@ -50,9 +51,11 @@ public class WeiboShareInstance extends ShareInstance {
 	private SsoHandler ssoHandler;
 	private WbShareHandler shareHandler;
 	private Activity activity;
+	private ShareListener listener;
 
-	public WeiboShareInstance(Activity activity) {
+	public WeiboShareInstance(Activity activity, ShareListener listener) {
 		this.activity = activity;
+		this.listener = listener;
 		ImageLoaderManager.getInstance().init(activity.getApplicationContext(), new FrescoInstance());
 		AuthInfo authInfo = new AuthInfo(activity, ShareConstants.APP_WEIBO_KEY, ShareConstants.REDIRECT_URL,
 				ShareConstants.SCOPE);
@@ -154,19 +157,25 @@ public class WeiboShareInstance extends ShareInstance {
 
 	@Override
 	public void shareSuccess() {
-		ToastUtil.show("分享成功");
+		if (listener != null) {
+			listener.onShareSucceed();
+		}
 		activity.finish();
 	}
 
 	@Override
 	public void shareFailure(Exception e) {
-		ToastUtil.show("分享失败");
+		if (listener != null) {
+			listener.onShareFailed(e);
+		}
 		activity.finish();
 	}
 
 	@Override
 	public void shareCancel() {
-		ToastUtil.show("取消分享");
+		if (listener != null) {
+			listener.onShareFailed(new Exception("Share is canceled"));
+		}
 		activity.finish();
 	}
 
@@ -200,6 +209,7 @@ public class WeiboShareInstance extends ShareInstance {
 				onShare(null, desc, url, iconUrl);
 			} else {
 				LogUtil.i("微博开发账号签名错误");
+				activity.finish();
 			}
 		}
 

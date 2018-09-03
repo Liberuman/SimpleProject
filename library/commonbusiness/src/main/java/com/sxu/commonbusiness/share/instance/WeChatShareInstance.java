@@ -13,9 +13,12 @@ import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
+import com.sxu.commonbusiness.share.ShareListener;
 import com.sxu.imageloader.FrescoInstance;
 import com.sxu.imageloader.ImageLoaderListener;
 import com.sxu.imageloader.ImageLoaderManager;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -40,21 +43,25 @@ public class WeChatShareInstance extends ShareInstance {
 	private Activity activity;
 	private IWXAPI wxApi;
 
-	public WeChatShareInstance(Activity activity, int flowId) {
+	private static ShareListener shareListener;
+
+	public WeChatShareInstance(Activity activity, int flowId, ShareListener listener) {
 		this.flowId = flowId;
 		this.activity = activity;
+		shareListener = listener;
 		ImageLoaderManager.getInstance().init(activity.getApplicationContext(), new FrescoInstance());
 		wxApi = WXAPIFactory.createWXAPI(activity, ShareConstants.APP_WECHAT_KEY, true);
-		boolean result = wxApi.registerApp(ShareConstants.APP_WECHAT_KEY);
+		wxApi.registerApp(ShareConstants.APP_WECHAT_KEY);
 	}
 
-	public void onShare(final String title, String desc, final String iconUrl, final String url) {
+	public void onShare(final String title, final String desc, final String iconUrl, final String url) {
 		if (!wxApi.isWXAppInstalled()) {
-			shareFailure(new Exception("您还没有安装微信客户端哦~"));
+			if (shareListener != null) {
+				shareListener.onShareFailed(new Exception("Please install Wechat APP~"));
+			}
 			return;
 		}
 
-		final String content = desc;
 		if (!TextUtils.isEmpty(iconUrl)) {
 			ImageLoaderManager.getInstance().downloadImage(activity, iconUrl, new ImageLoaderListener() {
 				@Override
@@ -69,17 +76,17 @@ public class WeChatShareInstance extends ShareInstance {
 
 				@Override
 				public void onCompleted(Bitmap bitmap) {
-					startShare(title, content, url, bitmap);
+					startShare(title, desc, url, bitmap);
 				}
 
 				@Override
 				public void onFailure(Exception e) {
-					startShare(title, content, url,
+					startShare(title, desc, url,
 							BitmapUtil.drawableToBitmap(ActivityCompat.getDrawable(activity, R.drawable.ic_launcher)));
 				}
 			});
 		} else {
-			startShare(title, content, url,
+			startShare(title, desc, url,
 					BitmapUtil.drawableToBitmap(ActivityCompat.getDrawable(activity, R.drawable.ic_launcher)));
 		}
 	}
@@ -158,27 +165,16 @@ public class WeChatShareInstance extends ShareInstance {
 		return TextUtils.isEmpty(type) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
 	}
 
-	/**
-	 * 微信分享的回调需要在包名.WXEntryActivity中统一处理，在其他页面不能监听回调。
-	 */
-	@Override
-	public void handleResult(int requestCode, int resultCode, Intent intent) {
+	public static void onResp(Activity activity, BaseResp resp) {
+		if (shareListener != null) {
+			if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+				shareListener.onShareSucceed();
+			} else {
+				shareListener.onShareFailed(new Exception(resp.errStr));
+			}
+		}
 
-	}
-
-	@Override
-	public void shareSuccess() {
-
-	}
-
-	@Override
-	public void shareFailure(Exception e) {
-
-	}
-
-	@Override
-	public void shareCancel() {
-
+		activity.finish();
 	}
 }
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.login.instance.WXLoginInstance;
 import com.sxu.commonbusiness.share.ShareConstants;
+import com.sxu.commonbusiness.share.instance.WeChatShareInstance;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -36,19 +37,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         wxApi.handleIntent(intent, this);
     }
 
-    // 微信发送消息给app，app接受并处理的回调函数
     @Override
     public void onReq(BaseReq req) {
 
     }
 
-    //app发送消息给微信，微信返回的消息回调函数,根据不同的返回码来判断操作是否成功
+    // 微信SDK的回调处理过程，包括分享，登录
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == WX_SDK_LOGIN) {
             WXLoginInstance.onResp(this, resp);
         } else if (resp.getType() == WX_SDK_SHARE) {
-
+            WeChatShareInstance.onResp(this, resp);
         }
     }
 }

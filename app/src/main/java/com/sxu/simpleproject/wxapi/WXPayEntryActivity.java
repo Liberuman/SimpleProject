@@ -47,12 +47,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 
 	@Override
 	public void onResp(BaseResp baseResp) {
-		if (PayManager.getPayListener() != null) {
-			if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
-				PayManager.getPayListener().onSuccess();
-			} else {
-				PayManager.getPayListener().onFailure(new Exception(baseResp.errStr));
-			}
-		}
+		PayManager.onResp(baseResp);
 	}
 }

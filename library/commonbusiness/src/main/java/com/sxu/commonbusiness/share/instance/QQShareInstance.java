@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.share.ShareConstants;
+import com.sxu.commonbusiness.share.ShareListener;
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.Tencent;
@@ -26,11 +27,13 @@ public class QQShareInstance extends ShareInstance {
 
 	private int flowId;
 	private Activity activity;
+	private ShareListener listener;
 	private Tencent tencent;
 
-	public QQShareInstance(Activity activity, int flowId) {
+	public QQShareInstance(Activity activity, int flowId, ShareListener listener) {
 		this.activity = activity;
 		this.flowId = flowId;
+		this.listener = listener;
 		tencent = Tencent.createInstance(ShareConstants.APP_QQ_KEY, activity);
 	}
 
@@ -66,19 +69,25 @@ public class QQShareInstance extends ShareInstance {
 
 	@Override
 	public void shareSuccess() {
-		ToastUtil.show("分享成功");
+		if (listener != null) {
+			listener.onShareSucceed();
+		}
 		activity.finish();
 	}
 
 	@Override
 	public void shareFailure(Exception e) {
-		ToastUtil.show("分享失败");
+		if (listener != null) {
+			listener.onShareFailed(e);
+		}
 		activity.finish();
 	}
 
 	@Override
 	public void shareCancel() {
-		ToastUtil.show("取消分享");
+		if (listener != null) {
+			listener.onShareFailed(new Exception("Share is canceled"));
+		}
 		activity.finish();
 	}
 }

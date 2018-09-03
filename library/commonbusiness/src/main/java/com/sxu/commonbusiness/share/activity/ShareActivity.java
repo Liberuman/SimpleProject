@@ -53,31 +53,31 @@ public class ShareActivity extends AppCompatActivity {
 		new ShareItemBean(R.drawable.cb_share_wechat_icon, "微信好友", new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareManager.share(ShareConstants.SHARE_BY_WECAHT);
+				shareManager.share(ShareConstants.SHARE_BY_WECAHT, null);
 			}
 		}),
 		new ShareItemBean(R.drawable.cb_share_wechat_mement_icon, "朋友圈", new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareManager.share(ShareConstants.SHARE_BY_WECHAT_MOMENT);
+				shareManager.share(ShareConstants.SHARE_BY_WECHAT_MOMENT, null);
 			}
 		}),
 			new ShareItemBean(R.drawable.cb_share_weibo_icon, "微博", new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					shareManager.share(ShareConstants.SHARE_BY_WEIBO);
+					shareManager.share(ShareConstants.SHARE_BY_WEIBO, null);
 				}
 			}),
 		new ShareItemBean(R.drawable.cb_share_qq_icon, "QQ", new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareManager.share(ShareConstants.SHARE_BY_QQ);
+				shareManager.share(ShareConstants.SHARE_BY_QQ, null);
 			}
 		}),
 		new ShareItemBean(R.drawable.cb_share_qq_zone_icon, "QQ空间", new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareManager.share(ShareConstants.SHARE_BY_QQ_ZONE);
+				shareManager.share(ShareConstants.SHARE_BY_QQ_ZONE, null);
 			}
 		}),
 		new ShareItemBean(R.drawable.cb_share_other_icon, "其他", new View.OnClickListener() {
