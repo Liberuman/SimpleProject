@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'AndResGuard'
 apply plugin: 'walle'
+apply plugin: 'android-aspectjx'
 
 android {
 
@@ -163,46 +164,6 @@ dependencies {
     implementation project(':commonbusiness')
     if (isModule) {
         implementation project(':MainModule')
-    }
-}
-
-import org.aspectj.bridge.IMessage
-import org.aspectj.bridge.MessageHandler
-import org.aspectj.tools.ajc.Main
-
-project.android.applicationVariants.all { variant ->
-    def log = project.logger
-    JavaCompile javaCompile = variant.javaCompiler
-
-    javaCompile.doLast {
-        String[] args = ["-showWeaveInfo",
-                         "-1.8",
-                         "-inpath", javaCompile.destinationDir.toString(),
-                         "-aspectpath", javaCompile.classpath.asPath,
-                         "-d", javaCompile.destinationDir.toString(),
-                         "-classpath", javaCompile.classpath.asPath,
-                         "-bootclasspath", project.android.bootClasspath.join(
-                File.pathSeparator)]
-
-        MessageHandler handler = new MessageHandler(true)
-        new Main().run(args, handler)
-
-        for (IMessage message : handler.getMessages(null, true)) {
-            switch (message.getKind()) {
-                case IMessage.ABORT:
-                case IMessage.ERROR:
-                case IMessage.FAIL:
-                    log.error message.message, message.thrown
-                    break
-                case IMessage.WARNING:
-                case IMessage.INFO:
-                    log.info message.message, message.thrown
-                    break
-                case IMessage.DEBUG:
-                    log.debug message.message, message.thrown
-                    break
-            }
-        }
     }
 }
 

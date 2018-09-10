@@ -2,8 +2,8 @@
           package="com.sxu.mainmodule">
 
     <application>
-
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
 
     </application>
 
