@@ -1,5 +1,8 @@
 package com.sxu.simpleproject;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -9,15 +12,21 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.utils.PreferenceTag;
+import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.LaunchUtil;
+import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.SpannableStringUtil;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
+
+import java.util.List;
 
 /**
  * 说明：新用户引导页通常都是几张图片，且一般都是大图，所以在显示时需要进行相应的优化，否则

@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NewUserGuideActivity"/>
+        <activity android:name=".NewUserGuideActivity"
+            android:taskAffinity=""/>
 
         <service android:name=".InitService"/>
 

@@ -157,9 +157,7 @@ dependencies {
     androidTestCompile 'com.android.support:support-annotations:26.1.0'
     androidTestImplementation "com.android.support.test:runner:${TEST_RUNNER_VERSION}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${TEST_ESPRESSO_CORE_VERSION}"
-
     kapt "com.alibaba:arouter-compiler:${AROUTER_COMPILER_VERSION}"
-
     implementation project(':basecomponent')
     implementation project(':commonbusiness')
     if (isModule) {

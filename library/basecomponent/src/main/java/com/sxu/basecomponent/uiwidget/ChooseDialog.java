@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.sxu.basecomponent.R;
 import com.sxu.basecomponent.adapter.CommonAdapter;
+import com.sxu.basecomponent.adapter.ViewHolder;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
@@ -197,10 +198,10 @@ public class ChooseDialog extends BaseDialog {
 	private BaseAdapter createSingleChooseAdapter() {
 		return new CommonAdapter<String>(getContext(), items, R.layout.dialog_item_single_choose_layout) {
 			@Override
-			public void convert(final ViewHolder holder, String paramT) {
+			public void convert(final ViewHolder holder, String paramT, final int position) {
 				holder.setText(R.id.item_text, paramT);
 				final RadioButton radioButton = holder.getView(R.id.radio_button);
-				if (checkedItemIndex == holder.getPosition()) {
+				if (checkedItemIndex == position) {
 					radioButton.setChecked(true);
 					selectedRadioButton = radioButton;
 				} else {
@@ -210,13 +211,13 @@ public class ChooseDialog extends BaseDialog {
 				View.OnClickListener listener = new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (holder.getPosition() != checkedItemIndex) {
+						if (position != checkedItemIndex) {
 							if (selectedRadioButton != null) {
 								selectedRadioButton.setChecked(false);
 							}
 							radioButton.setChecked(true);
 							selectedRadioButton = radioButton;
-							checkedItemIndex = holder.getPosition();
+							checkedItemIndex = position;
 						} else {
 							radioButton.setChecked(false);
 						}
@@ -231,10 +232,10 @@ public class ChooseDialog extends BaseDialog {
 	private BaseAdapter createMultiChooseDataAdapter() {
 		return new CommonAdapter<String>(getContext(), items, R.layout.dialog_item_multi_choose_layout) {
 			@Override
-			public void convert(final ViewHolder holder, String paramT) {
+			public void convert(final ViewHolder holder, String paramT, final int position) {
 				holder.setText(R.id.item_text, paramT);
 				final CheckBox checkBox = holder.getView(R.id.checkbox);
-				if (checkedIndexList.contains(holder.getPosition())) {
+				if (checkedIndexList.contains(position)) {
 					checkBox.setChecked(true);
 				} else {
 					checkBox.setChecked(false);
@@ -252,9 +253,9 @@ public class ChooseDialog extends BaseDialog {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if (isChecked) {
-							checkedIndexList.add(holder.getPosition());
+							checkedIndexList.add(position);
 						} else {
-							checkedIndexList.remove(holder.getPosition());
+							checkedIndexList.remove(position);
 						}
 					}
 				});

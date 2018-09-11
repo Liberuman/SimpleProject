@@ -1,17 +1,26 @@
 package com.sxu.simpleproject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.basecomponent.uiwidget.CommonDialog;
 import com.sxu.basecomponent.utils.PreferenceTag;
 import com.sxu.baselibrary.commonutils.LaunchUtil;
+import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.SpannableStringUtil;
+import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
+
+import static com.sxu.basecomponent.uiwidget.BaseDialog.DIALOG_STYLE_MATERIAL;
 
 public class SplashActivity extends BaseActivity {
 

@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name=".MainActivity"
+                  android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
