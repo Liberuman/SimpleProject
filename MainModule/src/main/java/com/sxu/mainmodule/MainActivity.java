@@ -4,7 +4,6 @@ import android.Manifest;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -12,18 +11,13 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
-import com.sxu.basecomponent.uiwidget.CommonDialog;
 import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
-import com.sxu.baselibrary.datasource.http.impl.HttpManager;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 import com.sxu.commonbusiness.login.aspect.LoginAspect;
-import com.sxu.commonbusiness.permission.CheckPermission;
+import com.sxu.permission.CheckPermission;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-
-import static com.sxu.basecomponent.uiwidget.BaseDialog.DIALOG_STYLE_MATERIAL;
 
 /*******************************************************************************
  * Description: 
@@ -85,6 +79,7 @@ public class MainActivity extends BaseActivity {
 				ARouter.getInstance().build("/base/home").navigation();
 				//BaseWebViewActivity.enter(context, null, "http://m.baidu.com");
 				//login();
+				//setUserIcon();
 
 			}
 		});

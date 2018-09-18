@@ -28,7 +28,9 @@ allprojects {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         maven { url 'https://jitpack.io' }
+        // 微博分享
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        // 华为推送
         maven { url 'http://developer.huawei.com/repo/' }
         google()
         jcenter()

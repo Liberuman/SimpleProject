@@ -49,7 +49,7 @@ dependencies {
     compile "com.huawei.android.hms:push:${HMS_PUSH_VERSION}"
     compile project(path: ':baselibrary')
     // 图片操作库
-    implementation 'com.github.JuHonggang:ImageSet:v0.12'
-    // AspectJ
-    compile 'org.aspectj:aspectjrt:1.8.9'
+    compile 'com.github.JuHonggang:ImageSet:v0.12'
+    // 权限管理
+    compile 'com.github.JuHonggang:PermissionManager:0.11'
 }
