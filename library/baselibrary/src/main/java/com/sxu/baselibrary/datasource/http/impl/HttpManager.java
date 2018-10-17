@@ -13,6 +13,7 @@ import com.sxu.baselibrary.datasource.http.impl.interceptor.HttpCacheInterceptor
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.WeakHashMap;
 
 import javax.net.ssl.HostnameVerifier;
@@ -23,6 +24,9 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cache;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -92,6 +96,17 @@ public class HttpManager {
 				.addNetworkInterceptor(new HttpCacheInterceptor(context))
 				.cache(new Cache(context.getCacheDir(), 20 * 1024 * 1024))
 				.sslSocketFactory(sslContext.getSocketFactory(), trustManager)
+				.cookieJar(new CookieJar() {
+					@Override
+					public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+
+					}
+
+					@Override
+					public List<Cookie> loadForRequest(HttpUrl url) {
+						return null;
+					}
+				})
 				.hostnameVerifier(new HostnameVerifier() {
 					@Override
 					public boolean verify(String hostname, SSLSession session) {

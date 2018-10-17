@@ -72,7 +72,7 @@ public abstract class BaseProgressActivity extends CommonActivity implements Req
      */
     protected abstract void requestData();
 
-    protected void notifyLoadFinish(int msg) {
+    public void notifyLoadFinish(int msg) {
         processor.notifyLoadFinish(msg);
     }
 

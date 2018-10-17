@@ -128,6 +128,11 @@ public class PreferencesManager {
         return preferences.getStringSet(key, null);
     }
 
+    public static void removeKey(String key) {
+        editor.remove(key);
+        editor.apply();
+    }
+
     public static void commit() {
         editor.apply();
     }

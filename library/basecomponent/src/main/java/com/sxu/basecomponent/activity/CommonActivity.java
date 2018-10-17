@@ -24,13 +24,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
+import com.sxu.basecomponent.mvp.BaseView;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyleImpl;
 import com.sxu.basecomponent.uiwidget.NavigationBar;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
+import com.sxu.basecomponent.utils.Event;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.InputMethodUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -66,7 +70,6 @@ public abstract class CommonActivity extends SwipeBackActivity implements Contai
 //			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 //		}
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		// 设置Activity的切换动画
 		overridePendingTransition(R.anim.anim_translate_right_in_300, R.anim.anim_translate_left_out_300);
@@ -79,6 +82,11 @@ public abstract class CommonActivity extends SwipeBackActivity implements Contai
 		initLayout(toolbarStyle);
 		if (containerLayout != null) {
 			setContentView(containerLayout);
+		}
+
+		// 注册EventBus
+		if (needEventBus()) {
+			Event.register(this);
 		}
 	}
 
@@ -124,9 +132,16 @@ public abstract class CommonActivity extends SwipeBackActivity implements Contai
 
 	}
 
+	protected boolean needEventBus() {
+		return false;
+	}
+
 	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	protected void onDestroy() {
+		super.onDestroy();
+		if (needEventBus()) {
+			Event.unregister(this);
+		}
 	}
 
 	@Override

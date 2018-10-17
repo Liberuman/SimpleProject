@@ -1,25 +1,7 @@
 package com.sxu.basecomponent.activity;
 
-import android.app.Activity;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
-
-import com.sxu.basecomponent.uiwidget.NavigationBar;
-import com.sxu.basecomponent.uiwidget.ToolbarEx;
-import com.sxu.baselibrary.commonutils.InputMethodUtil;
-
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /*******************************************************************************
  * Description: 启动时不进行网络操作的Activity的基类

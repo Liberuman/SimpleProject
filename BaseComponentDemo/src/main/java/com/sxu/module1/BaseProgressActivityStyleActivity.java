@@ -7,7 +7,9 @@ import android.os.Handler;
 import com.sxu.basecomponent.activity.BaseProgressActivity;
 import com.sxu.basecomponent.processor.RequestProcessor;
 
-public class BaseProgressActivityStyleActivity extends BaseProgressActivity {
+public class BaseProgressActivityStyleActivity extends BaseProgressActivity implements TestContract.TestView {
+
+	private TestContract.TestPresenter presenter;
 
 	@Override
 	protected int getLayoutResId() {
@@ -26,12 +28,15 @@ public class BaseProgressActivityStyleActivity extends BaseProgressActivity {
 
 	@Override
 	protected void requestData() {
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				notifyLoadFinish(RequestProcessor.MSG_LOAD_EMPTY);
-			}
-		}, 2000);
+		if (presenter == null) {
+			presenter = new BaseProgressActivityStylePresenter(this);
+		}
+		presenter.requestData();
+	}
+
+	@Override
+	public void requestComplete(int msg) {
+		notifyLoadFinish(msg);
 	}
 
 	@Override
