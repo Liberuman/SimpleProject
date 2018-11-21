@@ -7,7 +7,11 @@ import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.basecomponent.manager.SingletonManager;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
+import com.sxu.baselibrary.commonutils.LogUtil;
+
+import java.io.Serializable;
 
 @Route(path = "/component/home")
 public class BaseHomeActivity extends BaseActivity {
@@ -98,5 +102,28 @@ public class BaseHomeActivity extends BaseActivity {
 	@Override
 	protected void initActivity() {
 		toolbar.setTitle("基础业务层");
+//		LogUtil.i("isLogin====" + UserManager.getInstance().isLogin());
+//		UserManager.getInstance().setUserInfo(new UserInfo());
+//		LogUtil.i("isLogin====" + UserManager.getInstance().isLogin() + " userInfo=" + UserManager.getInstance().getUserInfo().toString());
+//		UserInfo userInfo = new UserInfo();
+//		userInfo.userName = "Znm";
+//		UserManager.getInstance().setUserInfo(userInfo);
+//		LogUtil.i("userInfo====" + UserManager.getInstance().getUserInfo().toString());
+//		UserManager.getInstance().clearUserInfo();
+//		LogUtil.i("isLogin====" + UserManager.getInstance().isLogin());
+
+		for (int i = 0; i < 10; i++) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					TestContract userInfo = SingletonManager.getInstance(TestContract.class);
+					LogUtil.i("========userInfo" + userInfo.toString());
+				}
+			}).start();
+			TestContract userInfo = SingletonManager.getInstance(TestContract.class);
+			LogUtil.i("********userInfo" + userInfo.toString());
+		}
+
+		SingletonManager.removeInstance(TestContract.class);
 	}
 }

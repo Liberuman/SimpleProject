@@ -67,38 +67,25 @@ public class CookieManager {
 	}
 
 	private void updateCookieMap(URI uri, CookieAdapter cookie) {
-		String token = getCookieToken(cookie);
 		if (!cookie.isExpires()) {
 			if (!cookieMap.containsKey(uri.getHost())) {
 				cookieMap.put(uri.getHost(), new ConcurrentHashMap<String, CookieAdapter>());
 			}
 
 			if (cookieMap.get(uri.getHost()) != null) {
-				cookieMap.get(uri.getHost()).put(token, cookie);
+				cookieMap.get(uri.getHost()).put(cookie.getName(), cookie);
 			}
 			hostSet.add(uri.getHost());
 		} else {
 			if (cookieMap.containsKey(uri.getHost())) {
-				cookieMap.get(uri.getHost()).remove(token);
+				cookieMap.get(uri.getHost()).remove(cookie.getName());
 			}
 			hostSet.remove(uri.getHost());
 		}
 	}
 
-	private String getCookieToken(CookieAdapter cookie) {
-		return cookie.getName() + cookie.getDomain();
-	}
-
-	public List<CookieAdapter> getCookie(URI uri) {
-		List<CookieAdapter> cookieList = null;
-		if (cookieMap.get(uri.getHost()) != null) {
-			cookieList = new ArrayList<>();
-			for (String key : cookieMap.get(uri.getHost()).keySet()) {
-				cookieList.addAll(cookieMap.get(key).values());
-			}
-		}
-
-		return cookieList;
+	public Map<String, CookieAdapter> getCookie(URI uri) {
+		return cookieMap.get(uri.getHost());
 	}
 
 	public void removeCookie(URI uri) {

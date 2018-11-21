@@ -7,12 +7,15 @@ import android.animation.PropertyValuesHolder;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.utils.BaseApplication;
+import com.sxu.baselibrary.commonutils.LaunchUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
+import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 import com.sxu.commonbusiness.login.aspect.LoginAspect;
 import com.sxu.permission.CheckPermission;
@@ -45,6 +48,8 @@ public class MainActivity extends BaseActivity {
 			R.drawable.home_unselected_icon, R.drawable.home_unselected_icon,
 			R.drawable.home_unselected_icon, R.drawable.home_unselected_icon
 	};
+
+	private long currentTime = 0;
 
 	@Override
 	protected void pretreatment() {
@@ -126,7 +131,6 @@ public class MainActivity extends BaseActivity {
 					}
 				} else {
 					LogUtil.i("===========跳转登录");
-					// 跳转到登录页面，登录成功后调用joinPoint.proceed();
 				}
 			}
 		});
@@ -135,5 +139,35 @@ public class MainActivity extends BaseActivity {
 	@CheckPermission(permissions = {Manifest.permission.CAMERA,}, permissionDesc = "没有权限无法使用相机", settingDesc = "快去设置中开启权限")
 	private void setUserIcon() {
 
+	}
+
+	/**
+	 * 2s内连续两次点击返回键退出
+	 */
+	private void realExit() {
+		if (System.currentTimeMillis() - currentTime < 2000) {
+			super.onBackPressed();
+		} else {
+			currentTime = System.currentTimeMillis();
+			ToastUtil.show("再次点击返回键退出~");
+		}
+	}
+
+	/**
+	 * 点击返回键时只是回到了桌面，并未直接退出
+	 */
+	private void pretendExit() {
+		LaunchUtil.backToLauncher(this);
+	}
+
+	@Override
+	public void onBackPressed() {
+		pretendExit();
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(0,  0);
 	}
 }

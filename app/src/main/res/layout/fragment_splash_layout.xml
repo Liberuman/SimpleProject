@@ -24,11 +24,4 @@
         android:layout_marginTop="18dp"
         android:text="将启动页的主题背景设置成和主题页相同的背景，即可解决黑白屏问题，具体可参考："/>
 
-    <Button
-        android:id="@+id/entry_button"
-        android:layout_width="150dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
-        android:text="进入主页"/>
-
 </LinearLayout>

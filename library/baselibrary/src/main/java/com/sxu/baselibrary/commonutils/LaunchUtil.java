@@ -104,10 +104,26 @@ public class LaunchUtil {
 		}
 	}
 
+	/**
+	 * 打开应用的设置界面
+	 * @param context
+	 */
 	public static void openAppSetting(Context context) {
 		Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
 		if (intent.resolveActivity(context.getPackageManager()) != null) {
 			intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+			context.startActivity(intent);
+		}
+	}
+
+	/**
+	 * 回到桌面
+	 * @param context
+	 */
+	public static void backToLauncher(Context context) {
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		if (intent.resolveActivity(context.getPackageManager()) != null) {
 			context.startActivity(intent);
 		}
 	}

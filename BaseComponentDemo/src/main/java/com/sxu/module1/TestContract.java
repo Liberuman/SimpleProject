@@ -12,8 +12,12 @@ import com.sxu.basecomponent.mvp.BaseView;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public interface TestContract {
+public class TestContract {
 
+	private static boolean flag = false;
+	private TestContract() {
+
+	}
 	interface TestView extends BaseView {
 
 	}
