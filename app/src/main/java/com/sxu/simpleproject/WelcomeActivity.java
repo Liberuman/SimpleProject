@@ -1,32 +1,19 @@
 package com.sxu.simpleproject;
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.utils.PreferenceTag;
-import com.sxu.baselibrary.commonutils.DisplayUtil;
-import com.sxu.baselibrary.commonutils.LaunchUtil;
-import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.SpannableStringUtil;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
-
-import java.util.List;
 
 /**
  * 说明：新用户引导页通常都是几张图片，且一般都是大图，所以在显示时需要进行相应的优化，否则
@@ -46,13 +33,16 @@ import java.util.List;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class NewUserGuideActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity {
 
 	private Button entryButton;
 	private ViewPager guidePager;
 
-	private static String[] items = new String[] {
-			"Page1", "Page2", "Page3", "Page4"
+	private static int[] items = new int[] {
+			R.drawable.guide_one_image,
+			R.drawable.guide_two_image,
+			R.drawable.guide_three_image,
+			R.drawable.guide_four_image,
 	};
 
 	@Override
@@ -87,16 +77,24 @@ public class NewUserGuideActivity extends BaseActivity {
 		guidePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+				if (positionOffset > 0 && positionOffset < 1) {
+					entryButton.setVisibility(View.GONE);
+				} else {
+					if (position == items.length - 1) {
+						entryButton.setVisibility(View.VISIBLE);
+					} else {
+						entryButton.setVisibility(View.GONE);
+					}
+				}
 			}
 
 			@Override
 			public void onPageSelected(int position) {
-				if (position == items.length - 1) {
-					entryButton.setVisibility(View.VISIBLE);
-				} else {
-					entryButton.setVisibility(View.GONE);
-				}
+//				if (position == items.length - 1) {
+//					entryButton.setVisibility(View.VISIBLE);
+//				} else {
+//					entryButton.setVisibility(View.GONE);
+//				}
 			}
 
 			@Override
@@ -121,11 +119,10 @@ public class NewUserGuideActivity extends BaseActivity {
 		@NonNull
 		@Override
 		public Object instantiateItem(@NonNull ViewGroup container, int position) {
-			TextView textView = new TextView(container.getContext());
-			textView.setGravity(Gravity.CENTER);
-			textView.setText(items[position]);
-			container.addView(textView);
-			return textView;
+			ImageView imageView = new ImageView(container.getContext());
+			imageView.setImageResource(items[position]);
+			container.addView(imageView);
+			return imageView;
 		}
 
 		@Override

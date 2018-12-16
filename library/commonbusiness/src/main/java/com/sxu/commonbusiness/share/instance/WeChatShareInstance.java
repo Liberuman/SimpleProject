@@ -167,6 +167,7 @@ public class WeChatShareInstance extends ShareInstance {
 
 	public static void onResp(Activity activity, BaseResp resp) {
 		if (shareListener != null) {
+			// 微信新版本已不能根据errCode来判断是否分享成功了，取消分享时也返回ERR_OK
 			if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
 				shareListener.onShareSucceed();
 			} else {

@@ -20,9 +20,10 @@
         android:id="@+id/entry_button"
         android:layout_width="150dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:visibility="gone"
         android:text="点击进入"
+        android:textSize="@dimen/fs_16"
         android:layout_gravity="bottom|center_horizontal"
         android:background="@android:color/transparent"/>
 </FrameLayout>

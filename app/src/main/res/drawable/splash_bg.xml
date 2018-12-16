@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/splash_bg_image"/>
+    <item android:top="180dp">
+        <bitmap android:src="@drawable/slogan"
+            android:gravity="center_horizontal|top"/>
+    </item>
+</layer-list>

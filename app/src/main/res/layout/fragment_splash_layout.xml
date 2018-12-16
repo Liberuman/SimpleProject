@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    <com.sxu.imageloader.WrapImageView
+        android:id="@+id/ad_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"/>
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/name_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="@drawable/app_white_name_icon"/>
+        <TextView
+            android:id="@+id/right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="—— 网易公司版权所有 ©2018 ——"
+            android:textSize="10dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/fs_17"
-        android:text="这是启动页"
-        android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/desc_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="将启动页的主题背景设置成和主题页相同的背景，即可解决黑白屏问题，具体可参考："/>
-
-</LinearLayout>
+</FrameLayout>

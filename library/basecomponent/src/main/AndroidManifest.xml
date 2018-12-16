@@ -8,6 +8,9 @@
 
     <application>
         <activity android:name=".activity.BaseWebViewActivity"
-                  android:process=":web_process"/>
+            android:process=":web_process"/>
+        <activity android:name=".uiwidget.MagicDialog"
+            android:launchMode="singleTop"
+            android:theme="@style/TransparentTheme"/>
     </application>
 </manifest>

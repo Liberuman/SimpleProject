@@ -30,18 +30,22 @@ public abstract class CommonAdapter<T extends Object> extends BaseAdapter {
 
 	private Context mContext;
 	private List<T> mData;
-	private int mResId;
+	private @LayoutRes int[] mResId;
 
 	public CommonAdapter(Context context, List<T> data, @LayoutRes int resId) {
+		this.mContext = context;
+		this.mData = data;
+		this.mResId = new int[] {resId};
+	}
+
+	public CommonAdapter(Context context, List<T> data, @LayoutRes int[] resId) {
 		this.mContext = context;
 		this.mData = data;
 		this.mResId = resId;
 	}
 
 	public CommonAdapter(Context context, T[] data, @LayoutRes int resId) {
-		this.mContext = context;
-		this.mData = Arrays.asList(data);
-		this.mResId = resId;
+		this(context, Arrays.asList(data), resId);
 	}
 
 	@Override
@@ -59,11 +63,22 @@ public abstract class CommonAdapter<T extends Object> extends BaseAdapter {
 		return i;
 	}
 
+	/**
+	 * 对于需要多种View的Adapter重写此方法，并返回与resId中布局对应的Index值，
+	 * 在convert中设置值时也需要根据此值进行区分，避免NullPointException
+	 * @param position
+	 * @return
+	 */
+	@Override
+	public int getItemViewType(int position) {
+		return 0;
+	}
+
 	@Override
 	public View getView(int i, View view, ViewGroup viewGroup) {
 		ViewHolder holder = null;
 		if (view == null) {
-			view = LayoutInflater.from(mContext).inflate(mResId, viewGroup, false);
+			view = LayoutInflater.from(mContext).inflate(mResId[getItemViewType(i)], viewGroup, false);
 			holder = ViewHolder.getInstance(view);
 			view.setTag(holder);
 		} else {

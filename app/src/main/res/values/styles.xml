@@ -13,7 +13,7 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/t1</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
     <style name="TransparentTheme" parent="AppTheme">

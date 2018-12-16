@@ -112,6 +112,7 @@ public class BaseHomeActivity extends BaseActivity {
 //		UserManager.getInstance().clearUserInfo();
 //		LogUtil.i("isLogin====" + UserManager.getInstance().isLogin());
 
+		startService(new Intent(this, ShowMagicDialogTestService.class));
 		for (int i = 0; i < 10; i++) {
 			new Thread(new Runnable() {
 				@Override

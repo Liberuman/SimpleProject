@@ -2,20 +2,20 @@ package com.sxu.simpleproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import com.sxu.basecomponent.activity.BaseActivity;
 import com.sxu.basecomponent.fragment.BaseFragment;
 import com.sxu.basecomponent.utils.PreferenceTag;
-import com.sxu.baselibrary.commonutils.LaunchUtil;
-import com.sxu.baselibrary.commonutils.SpannableStringUtil;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
-
-import java.util.logging.Handler;
+import com.sxu.imageloader.ImageLoaderListener;
+import com.sxu.imageloader.ImageLoaderManager;
+import com.sxu.imageloader.WrapImageView;
 
 /**
  * 启动页的主要逻辑包括：
@@ -36,7 +36,12 @@ import java.util.logging.Handler;
  *******************************************************************************/
 public class SplashFragment extends BaseFragment {
 
-	private TextView descText;
+	private ImageView nameIcon;
+	private TextView rightText;
+	private View bottomLayout;
+	private WrapImageView adImage;
+
+	private Handler handler = new Handler();
 
 	@Override
 	protected int getLayoutResId() {
@@ -45,34 +50,52 @@ public class SplashFragment extends BaseFragment {
 
 	@Override
 	protected void getViews() {
-		descText = contentView.findViewById(R.id.desc_text);
+		adImage = contentView.findViewById(R.id.ad_image);
+		nameIcon = contentView.findViewById(R.id.name_icon);
+		rightText = contentView.findViewById(R.id.right_text);
+		bottomLayout = contentView.findViewById(R.id.bottom_layout);
 	}
 
 	@Override
 	protected void initFragment() {
-		String desc = "将启动页的主题背景设置成和启动页相同的背景，即可解决黑白屏问题，具体可参考：";
-		String urlDesc = "Android开发细节";
-		SpannableStringUtil.setText(descText, desc + urlDesc, SpannableStringUtil.SPAN_TYPE_TEXT_COLOR,
-				Color.BLUE, desc.length(), urlDesc.length());
-
-		descText.setOnClickListener(new View.OnClickListener() {
+		ImageLoaderManager.getInstance().displayImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544963782112&di=88042f9c65595a79866c0d2576279de1&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D890c50c9db00baa1ae214ff82f79d367%2Fcc11728b4710b912decd6bdbc9fdfc0392452282.jpg", adImage, new ImageLoaderListener() {
 			@Override
-			public void onClick(View v) {
-				LaunchUtil.openBrowse(context,
-						"https://juejin.im/post/5b3e14f8e51d45190570afae");
+			public void onStart() {
+
+			}
+
+			@Override
+			public void onProcess(int i, int i1) {
+
+			}
+
+			@Override
+			public void onCompleted(Bitmap bitmap) {
+				updateView();
+			}
+
+			@Override
+			public void onFailure(Exception e) {
+				updateView();
 			}
 		});
 
-		new android.os.Handler().postDelayed(new Runnable() {
+		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				if (PreferencesManager.getBoolean(PreferenceTag.KEY_IS_NEW_USER, true)) {
-					context.startActivity(new Intent(context, NewUserGuideActivity.class));
+					context.startActivity(new Intent(context, WelcomeActivity.class));
 				} else {
 					ARouter.getInstance().build("/main/home").navigation();
 				}
 				((Activity)context).finish();
 			}
 		}, 3000);
+	}
+
+	private void updateView() {
+		nameIcon.setImageResource(R.drawable.app_black_name_icon);
+		rightText.setTextColor(Color.GRAY);
+		bottomLayout.setBackgroundColor(Color.WHITE);
 	}
 }

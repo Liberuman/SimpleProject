@@ -9,6 +9,8 @@ import com.sxu.basecomponent.utils.BaseApplication;
 import com.sxu.basecomponent.utils.ChannelUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
+import com.sxu.imageloader.FrescoInstance;
+import com.sxu.imageloader.ImageLoaderManager;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -31,6 +33,7 @@ public class MyApplication extends BaseApplication {
 		ARouter.openDebug();
 		ARouter.openLog();
 		ARouter.init(this);
+		ImageLoaderManager.getInstance().init(this, new FrescoInstance());
 		LogUtil.i("channel=====" + ChannelUtil.getChannel(this));
 	}
 

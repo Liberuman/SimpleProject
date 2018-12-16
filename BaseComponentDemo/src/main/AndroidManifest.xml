@@ -17,5 +17,6 @@
 
         <activity android:name="com.sxu.module1.BaseProgressFragmentStyleActivity"/>
 
+        <service android:name=".ShowMagicDialogTestService"/>
     </application>
 </manifest>
