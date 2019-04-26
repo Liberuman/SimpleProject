@@ -45,7 +45,7 @@ public class WrapTypeAdapters {
 				try {
 					in.skipValue();
 				} catch (Exception e1) {
-
+					e.printStackTrace(System.out);
 				}
 			}
 

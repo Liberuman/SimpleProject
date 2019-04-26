@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
+import com.sxu.baselibrary.commonutils.ThreadPoolManager;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -82,7 +83,7 @@ public class PayManager {
 
 	public void payByAliPay(final Activity context, final String requestStr, PayListener listener) {
 		this.aliPayListener = listener;
-		new Thread(new Runnable() {
+		ThreadPoolManager.executeTask(new Runnable() {
 			@Override
 			public void run() {
 				PayTask aliPay = new PayTask(context);
@@ -92,12 +93,12 @@ public class PayManager {
 				msg.obj = result;
 				mHandler.sendMessage(msg);
 			}
-		}).start();
+		});
 	}
 
 	public boolean handlePayMessage(Message msg) {
 		if (msg.what == MSG_WHAT_ALI_PAY) {
-			if (aliPayListener != null) {
+			if (aliPayListener != null && msg.obj instanceof Map) {
 				PayResultBean payResultBean = new PayResultBean((Map<String, String>)msg.obj);
 				String resultStatus = payResultBean.getResultStatus();
 				if (TextUtils.equals(resultStatus, PAY_RESULT_SUCCESS)) {
@@ -128,7 +129,15 @@ public class PayManager {
 	}
 
 	public interface PayListener {
+		/**
+		 * 支付成功
+		 */
 		void onSuccess();
+
+		/**
+		 * 支付失败
+		 * @param e
+		 */
 		void onFailure(Exception e);
 	}
 }

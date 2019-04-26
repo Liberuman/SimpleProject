@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 public class SpannableStringUtil {
 
+	private SpannableStringUtil() {
+
+	}
+
 	/**
 	 * 设置文字大小
 	 */

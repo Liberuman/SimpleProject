@@ -32,17 +32,17 @@ public class ThreadPoolManager {
         init(coreThreadCount, threadPriority);
     }
 
-    public static void init(int _coreThreadCount) {
-       init(_coreThreadCount, threadPriority);
+    public static void init(int threadCount) {
+       init(threadCount, threadPriority);
     }
 
-    public static void init(int _coreThreadCount, int _threadPriority) {
+    public static void init(int threadCount, int priority) {
         if (executor == null) {
-            if (_coreThreadCount < 0 || _coreThreadCount > Integer.MAX_VALUE) {
+            if (threadCount < 0) {
                 throw new IllegalStateException();
             }
-            coreThreadCount = _coreThreadCount;
-            threadPriority = _threadPriority;
+            coreThreadCount = threadCount;
+            threadPriority = priority;
             LinkedBlockingQueue<Runnable> workQueue = new LinkedBlockingQueue(DEFAULT_QUEUE_SIZE);
             executor = new ThreadPoolExecutor(coreThreadCount, maxThreadCount, 30L, TimeUnit.SECONDS,
                     workQueue, new DefaultThreadFactory(threadPriority));

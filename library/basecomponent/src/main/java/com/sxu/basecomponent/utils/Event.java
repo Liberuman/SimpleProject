@@ -1,7 +1,5 @@
 package com.sxu.basecomponent.utils;
 
-import android.content.Context;
-
 import org.greenrobot.eventbus.EventBus;
 
 /*******************************************************************************

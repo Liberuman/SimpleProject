@@ -14,17 +14,27 @@ import com.sxu.baselibrary.datasource.http.bean.ResponseBean;
  *******************************************************************************/
 
 public class ResponseProcessor {
-	
-	// 请求成功
+
+	/**
+	 * 请求成功
+	 */
 	public final static int RESPONSE_CODE_SUCCESS = 1;
-	// 数据为空
+	/**
+	 * 数据为空
+	 */
 	public final static int RESPONSE_CODE_EMPTY = 0;
-	// 未登录
+	/**
+	 * 未登录
+	 */
 	public final static int RESPONSE_CODE_NO_LOGIN = -1;
-	// 默认错误 -> 请求失败或解析错误
+	/**
+	 * 默认错误 -> 请求失败或解析错误
+	 */
 	public final static int RESPONSE_CODE_DEFAULT = 10001;
-	
-	// 错误提示消息
+
+	/**
+	 * 错误提示消息
+	 */
 	public final static String ERROR_MSG_NETWORK_ERROR = "网络异常或解析错误";
 
 
@@ -33,14 +43,17 @@ public class ResponseProcessor {
 			return;
 		}
 
-		if (listener instanceof RequestListener.SimpleRequestListener) {
-			simpleRequestProcess(response, (RequestListener.SimpleRequestListener) listener);
+		if (listener instanceof RequestListener.BaseSimpleRequestListener) {
+			simpleRequestProcess(response, (RequestListener.BaseSimpleRequestListener) listener);
 		} else {
-			requestProcess(response, (RequestListener.RequestListenerEx) listener);
+			requestProcess(response, (RequestListener.BaseRequestListenerEx) listener);
 		}
 	}
 
-	private static void simpleRequestProcess(ResponseBean response, RequestListener.SimpleRequestListener listener) {
+	private static void simpleRequestProcess(ResponseBean response, RequestListener.BaseSimpleRequestListener listener) {
+		if (listener == null) {
+			return;
+		}
 		if (response != null) {
 			if (response.code == RESPONSE_CODE_SUCCESS) {
 				listener.onSuccess(response.data);
@@ -52,7 +65,7 @@ public class ResponseProcessor {
 		}
 	}
 
-	private static void requestProcess(ResponseBean response, RequestListener.RequestListenerEx listener) {
+	private static void requestProcess(ResponseBean response, RequestListener.BaseRequestListenerEx listener) {
 		if (response != null) {
 			if (response.code == RESPONSE_CODE_SUCCESS) {
 				listener.onSuccess(response.data, response.msg);

@@ -1,8 +1,6 @@
 package com.sxu.commonbusiness.push;
 
-import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.huawei.hms.support.api.push.PushReceiver;
@@ -29,6 +27,7 @@ public class HwPushReceiver extends PushReceiver {
 		return false;
 	}
 
+	@Override
 	public void onEvent(Context context, Event event, Bundle extras) {
 		super.onEvent(context, event, extras);
 		if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {

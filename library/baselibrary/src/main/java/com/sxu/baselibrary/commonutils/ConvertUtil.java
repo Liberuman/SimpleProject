@@ -15,6 +15,11 @@ import static java.lang.Double.parseDouble;
  *******************************************************************************/
 public class ConvertUtil {
 
+    private ConvertUtil() {
+
+    }
+
+    private final static String FLOATING_SEPARATOR = ".";
     /**
      * 字符串转整型
      * @param value
@@ -23,7 +28,7 @@ public class ConvertUtil {
     public static int stringToInt(String value) {
         if (!TextUtils.isEmpty(value)) {
             try {
-                if(value.contains(".")){
+                if(value.contains(FLOATING_SEPARATOR)){
                     return  (int)Double.parseDouble(value);
                 }else {
                     return Integer.parseInt(value);
@@ -39,7 +44,7 @@ public class ConvertUtil {
     public static int stringToInt(String value,int defaultValue) {
         if (!TextUtils.isEmpty(value)) {
             try {
-                if(value.contains(".")){
+                if(value.contains(FLOATING_SEPARATOR)){
                     return  (int)Double.parseDouble(value);
                 }else {
                     return Integer.parseInt(value);

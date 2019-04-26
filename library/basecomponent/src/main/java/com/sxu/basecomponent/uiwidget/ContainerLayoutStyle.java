@@ -1,7 +1,5 @@
 package com.sxu.basecomponent.uiwidget;
 
-import android.view.ViewGroup;
-
 /*******************************************************************************
  * Description: Activity/Fragment的页面的基本样式
  *

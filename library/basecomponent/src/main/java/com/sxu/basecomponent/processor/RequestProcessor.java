@@ -14,15 +14,25 @@ import android.view.View;
 
 public interface RequestProcessor {
 
-	// 数据请求成功
+	/**
+	 * 数据请求成功
+	 */
 	int MSG_LOAD_FINISH = 0x100;
-	// 网络请求失败
+	/**
+	 * 网络请求失败
+	 */
 	int MSG_LOAD_FAILURE  = 0x101;
-	// 数据为空
+	/**
+	 * 数据为空
+	 */
 	int MSG_LOAD_EMPTY = 0x102;
-	// 没有更多数据
+	/**
+	 * 没有更多数据
+	 */
 	int MSG_NO_MORE = 0x104;
-	// 未登录
+	/**
+	 * 未登录
+	 */
 	int MSG_LOAD_NO_LOGIN = 0x105;
 
 

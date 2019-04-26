@@ -45,6 +45,10 @@ public class LoginAspect {
 	}
 
 	public interface OnLoginListener {
+		/**
+		 * 登录回调
+		 * @param joinPoint
+		 */
 		void onLogin(ProceedingJoinPoint joinPoint);
 	}
 }

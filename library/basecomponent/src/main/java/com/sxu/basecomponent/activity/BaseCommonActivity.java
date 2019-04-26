@@ -1,40 +1,23 @@
 package com.sxu.basecomponent.activity;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
-import com.sxu.basecomponent.mvp.BaseView;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyleImpl;
-import com.sxu.basecomponent.uiwidget.NavigationBar;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
 import com.sxu.basecomponent.utils.Event;
-import com.sxu.baselibrary.commonutils.DisplayUtil;
+import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.InputMethodUtil;
-import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.List;
 
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -48,7 +31,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
-public abstract class CommonActivity extends SwipeBackActivity implements ContainerLayoutStyle {
+public abstract class BaseCommonActivity extends SwipeBackActivity implements ContainerLayoutStyle {
 
 	protected ToolbarEx toolbar;
 	protected ViewGroup containerLayout;
@@ -64,16 +47,16 @@ public abstract class CommonActivity extends SwipeBackActivity implements Contai
 		super.onCreate(savedInstanceState);
 		context = this;
 		fragmentManager = getSupportFragmentManager();
-
 		// 设置沉浸式状态栏
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		}
 
 		// 设置Activity的切换动画
 		overridePendingTransition(R.anim.anim_translate_right_in_300, R.anim.anim_translate_left_out_300);
 		if (savedInstanceState != null) {
+			restoreFragment(savedInstanceState);
 			recreateActivity(savedInstanceState);
 		}
 
@@ -134,6 +117,38 @@ public abstract class CommonActivity extends SwipeBackActivity implements Contai
 
 	protected boolean needEventBus() {
 		return false;
+	}
+
+	/**
+	 * 当Activity重建时恢复Fragment
+	 * @param savedInstanceState
+	 */
+	public void restoreFragment(Bundle savedInstanceState) {
+		FragmentManager fm = getSupportFragmentManager();
+		List<Fragment> fragmentList = fm != null ? fm.getFragments() : null;
+		if (CollectionUtil.isEmpty(fragmentList)) {
+			return;
+		}
+
+		for (Fragment fragment : fragmentList) {
+			fragment.onAttach((Context)context);
+			restoreChildFragment(fragment);
+		}
+	}
+
+	/**
+	 * 恢复嵌套的Fragment
+	 */
+	public void restoreChildFragment(Fragment currentFragment) {
+		FragmentManager fm = currentFragment.getFragmentManager();
+		List<Fragment> fragmentList = fm != null ? fm.getFragments() : null;
+		if (CollectionUtil.isEmpty(fragmentList)) {
+			return;
+		}
+
+		for (Fragment fragment : fragmentList) {
+			fragment.onAttach((Context)context);
+		}
 	}
 
 	@Override

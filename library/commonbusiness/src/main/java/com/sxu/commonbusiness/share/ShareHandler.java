@@ -13,5 +13,11 @@ import android.content.Intent;
  *******************************************************************************/
 public interface ShareHandler {
 
+	/**
+	 * 分享结果回调 需在onActivityResult中调用，已回传分享结果
+	 * @param requestCode
+	 * @param resultCode
+	 * @param intent
+	 */
 	void handleResult(int requestCode, int resultCode, Intent intent);
 }

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.sxu.commonbusiness.share.ShareListener;
 import com.tencent.connect.share.QQShare;
@@ -23,14 +21,14 @@ import java.util.ArrayList;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class QQShareInstance extends ShareInstance {
+public class QQBaseShareInstance extends BaseShareInstance {
 
 	private int flowId;
 	private Activity activity;
 	private ShareListener listener;
 	private Tencent tencent;
 
-	public QQShareInstance(Activity activity, int flowId, ShareListener listener) {
+	public QQBaseShareInstance(Activity activity, int flowId, ShareListener listener) {
 		this.activity = activity;
 		this.flowId = flowId;
 		this.listener = listener;
@@ -64,7 +62,7 @@ public class QQShareInstance extends ShareInstance {
 
 	@Override
 	public void handleResult(int requestCode, int resultCode, Intent intent) {
-		tencent.onActivityResultData(requestCode, resultCode, intent, this);
+		Tencent.onActivityResultData(requestCode, resultCode, intent, this);
 	}
 
 	@Override

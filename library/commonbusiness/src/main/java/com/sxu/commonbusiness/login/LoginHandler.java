@@ -13,5 +13,11 @@ import android.content.Intent;
  *******************************************************************************/
 public interface LoginHandler {
 
+	/**
+	 * 登录结果回调
+	 * @param requestCode
+	 * @param resultCode
+	 * @param intent
+	 */
 	void handleResult(int requestCode, int resultCode, Intent intent);
 }

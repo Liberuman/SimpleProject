@@ -1,14 +1,11 @@
 package com.sxu.commonbusiness.share.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,18 +15,13 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.sxu.commonbusiness.share.ShareManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Copyright (c) 2017. Freeman Inc. All rights reserved.
@@ -46,14 +38,13 @@ public class ShareActivity extends AppCompatActivity {
 
 	private TextView cancelText;
 	private GridView shareGrid;
-	private LinearLayout rootLayout;
 
 	private ShareManager shareManager;
 	private ShareItemBean[] shareData = {
 		new ShareItemBean(R.drawable.cb_share_wechat_icon, "微信好友", new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				shareManager.share(ShareConstants.SHARE_BY_WECAHT, null);
+				shareManager.share(ShareConstants.SHARE_BY_WECHAT, null);
 			}
 		}),
 		new ShareItemBean(R.drawable.cb_share_wechat_mement_icon, "朋友圈", new View.OnClickListener() {
@@ -113,14 +104,9 @@ public class ShareActivity extends AppCompatActivity {
 	protected void getViews() {
 		cancelText = findViewById(R.id.cb_cancel_text);
 		shareGrid = findViewById(R.id.cb_share_grid);
-		rootLayout = findViewById(R.id.cb_root_layout);
 	}
 
 	protected void initActivity() {
-//		ViewGroup.LayoutParams params = rootLayout.getLayoutParams();
-//		params.width = (DisplayUtil.getScreenWidth() - DisplayUtil.dpToPx(60));
-//		rootLayout.setLayoutParams(params);
-//		ViewBgUtil.setShapeBg(rootLayout, GradientDrawable.RECTANGLE, Color.WHITE, DisplayUtil.dpToPx(4));
 		ViewBgUtil.setSelectorBg(cancelText, android.R.attr.state_pressed, GradientDrawable.RECTANGLE,
 				new int[] {Color.WHITE, Color.parseColor("#eeeeee")}, 0);
 		shareGrid.setNumColumns(shareData.length % 3 == 0 ? 3 : 4);
@@ -135,9 +121,11 @@ public class ShareActivity extends AppCompatActivity {
 	}
 
 	public static void enter(Context context, String title, String desc, String url, String iconUrl) {
+		// 分享文字的最大长度
+		int textMaxLen = 140;
 		Intent intent = new Intent(context, ShareActivity.class);
-		if (desc != null && desc.length() > 140) {
-			desc = desc.substring(0, 140);
+		if (desc != null && desc.length() > textMaxLen) {
+			desc = desc.substring(0, textMaxLen);
 		}
 		intent.putExtra("title", title);
 		intent.putExtra("desc", desc);

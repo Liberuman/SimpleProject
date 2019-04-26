@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.uiwidget.TabLayout;
 import com.sxu.commonbusiness.login.aspect.LoginAspect;
+import com.sxu.mainmodule.setting.SettingActivity;
 import com.sxu.permission.CheckPermission;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity {
 		publicButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//startActivity(new Intent(context, SettingActivity.class));
 				ARouter.getInstance().build("/base/home").navigation();
 				//BaseWebViewActivity.enter(context, null, "http://m.baidu.com");
 				//login();

@@ -3,6 +3,7 @@ package com.sxu.baselibrary.datasource.http.bean;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 
 /*******************************************************************************
  * Description: APP相关的信息
@@ -27,15 +28,19 @@ public abstract class BaseBean implements Serializable {
 		return null;
 	}
 
-	public static <T extends BaseBean> T fromJson(String jsonStr,
-	                                              Class<? extends BaseBean> subClass) {
-		BaseBean newObj = new Gson().fromJson(jsonStr,
-				subClass);
+	public static <T extends BaseBean> T fromJson(String jsonStr, Type subClass) {
+		try {
+			BaseBean newObj = new Gson().fromJson(jsonStr,
+					subClass);
+			return (T) newObj;
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
 
-		return (T) newObj;
-
+		return null;
 	}
 
+	@Override
 	public String toString() {
 		return toJson();
 	}

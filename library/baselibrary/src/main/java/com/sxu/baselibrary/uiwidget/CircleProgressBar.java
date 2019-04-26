@@ -52,8 +52,11 @@ public class CircleProgressBar extends View {
 
     private int progress;
 
-    private final int TEXT_STYLE_NORMAL = 0;
-    private final int TEXT_STYLE_BOLD = 1;
+    /**
+     * 进度的最大值
+     */
+    private final int PROGRESS_MAX_VALUE = 100;
+
     public CircleProgressBar(Context context) {
         super(context);
     }
@@ -75,7 +78,7 @@ public class CircleProgressBar extends View {
         mProgressText = arrays.getString(R.styleable.bl_CircleProgressBar_bl_progressText);
         mProgressTextSize = arrays.getDimensionPixelOffset(R.styleable.bl_CircleProgressBar_bl_progressTextSize, 0);
         mProgressTextColor = arrays.getColor(R.styleable.bl_CircleProgressBar_bl_progressTextColor, Color.WHITE);
-        mProgressTextStyle = arrays.getInt(R.styleable.bl_CircleProgressBar_bl_progressTextStyle, TEXT_STYLE_NORMAL);
+        mProgressTextStyle = arrays.getInt(R.styleable.bl_CircleProgressBar_bl_progressTextStyle, 0);
         mLineGap = arrays.getDimensionPixelOffset(R.styleable.bl_CircleProgressBar_bl_lineGap, 60);
         arrays.recycle();
 
@@ -158,7 +161,8 @@ public class CircleProgressBar extends View {
             if (!TextUtils.isEmpty(mProgressText)) {
                 textPaint.setTextSize(mProgressTextSize);
                 textPaint.setColor(mProgressTextColor);
-                if (mProgressTextStyle == TEXT_STYLE_BOLD) {
+                int textStyleBold = 1;
+                if (mProgressTextStyle == textStyleBold) {
                     textPaint.setTypeface(Typeface.DEFAULT_BOLD);
                 }
                 canvas.drawText(mProgressText, centerX, baseLine, textPaint);
@@ -166,14 +170,13 @@ public class CircleProgressBar extends View {
             if (!TextUtils.isEmpty(mDescText)) {
                 textPaint.setTextSize(mDescTextSize);
                 textPaint.setColor(mDescTextColor);
-                //canvas.drawText(mDescText, centerX, y + mLineGap, textPaint);
                 canvas.drawText(mDescText, centerX, centerY + mLineGap/2, textPaint);
             }
         }
     }
 
     public void setProgress(int progress) {
-        if (progress >=0 && progress <= 100) {
+        if (progress >=0 && progress <= PROGRESS_MAX_VALUE) {
             this.progress = progress;
             this.mProgressText = progress + "%";
             invalidate();
@@ -181,7 +184,7 @@ public class CircleProgressBar extends View {
     }
 
     public void setProgress(int progress, int textColor) {
-        if (progress >=0 && progress <= 100) {
+        if (progress >=0 && progress <= PROGRESS_MAX_VALUE) {
             this.progress = progress;
             this.mProgressText = progress + "%";
             this.mProgressTextColor = textColor;

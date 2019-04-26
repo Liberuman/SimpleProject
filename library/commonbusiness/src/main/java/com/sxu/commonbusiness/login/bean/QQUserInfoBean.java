@@ -26,12 +26,25 @@ public class QQUserInfoBean implements Serializable {
 	public String nickname;
 	public String gender;
 	public String year;
+
 	/**
-	 * 用户头像
+	 * 用户头像 size=30x30
 	 */
-	public String figureurl;	    // 30 * 30
-	public String figureurl_1;	    // 50 * 50
-	public String figureurl_2;	    // 100 * 100
-	public String figureurl_qq_1;	// 40 * 40
-	public String figureurl_qq_2;	// 100 * 100
+	public String figureurl;
+	/**
+	 * 用户头像 size=50x50
+	 */
+	public String figureurl_1;
+	/**
+	 * 用户头像 size=100x100
+	 */
+	public String figureurl_2;
+	/**
+	 * 用户头像 size=40x40
+	 */
+	public String figureurl_qq_1;
+	/**
+	 * 用户头像 size=100x100
+	 */
+	public String figureurl_qq_2;
 }

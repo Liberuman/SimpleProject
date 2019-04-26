@@ -3,9 +3,14 @@ package com.sxu.baselibrary.commonutils;
 import android.content.Context;
 import android.os.Environment;
 
+import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /*******************************************************************************
  * Description: 文件相关的操作
@@ -18,11 +23,20 @@ import java.io.FileOutputStream;
  *******************************************************************************/
 public class FileUtil {
 
+	private FileUtil() {
+
+	}
+
+	/**
+	 * 默认的字符编码
+	 */
+	private final static String DEFAULT_CHARSET_NAME = "UTF-8";
+
 	/**
 	 * SD卡是否有效
 	 * @return
 	 */
-	public static boolean SDCardIsValid() {
+	public static boolean sdcardIsValid() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
 
@@ -32,11 +46,9 @@ public class FileUtil {
 	 * @return
 	 */
 	public static boolean fileIsExist(String filePath) {
-		if (SDCardIsValid()) {
+		if (sdcardIsValid()) {
 			File file = new File(filePath);
-			if (file.exists()) {
-				return true;
-			}
+			return file.exists();
 		}
 
 		return false;
@@ -72,26 +84,33 @@ public class FileUtil {
 	 * @param content
 	 */
 	public static void saveFile(String directoryPath, String fileName, String content) {
-		if (SDCardIsValid()) {
-			File directory = new File(directoryPath);
-			if (!directory.exists()) {
-				directory.mkdirs();
+		if (!sdcardIsValid()) {
+			return;
+		}
+
+		File directory = new File(directoryPath);
+		boolean directoryCreated = directory.exists();
+		if (!directoryCreated) {
+			directoryCreated = directory.mkdirs();
+			if (!directoryCreated) {
+				return;
 			}
-			File file = new File(directoryPath, fileName);
-			FileOutputStream outputStream = null;
-			try {
-				outputStream = new FileOutputStream(file);
-				outputStream.write(content.getBytes());
-				outputStream.flush();
-			} catch (Exception e) {
-				e.printStackTrace(System.out);
-			} finally {
-				if (outputStream != null) {
-					try {
-						outputStream.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.out);
-					}
+		}
+
+		File file = new File(directoryPath, fileName);
+		FileOutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(file);
+			outputStream.write(content.getBytes(DEFAULT_CHARSET_NAME));
+			outputStream.flush();
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		} finally {
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -111,11 +130,13 @@ public class FileUtil {
 	 * @param filePath
 	 */
 	public static void deleteFile(String filePath) {
-		if (SDCardIsValid()) {
-			File file = new File(filePath);
-			if (file.exists()) {
-				file.delete();
-			}
+		if (sdcardIsValid()) {
+			return;
+		}
+
+		File file = new File(filePath);
+		if (file.exists()) {
+			file.delete();
 		}
 	}
 
@@ -135,32 +156,56 @@ public class FileUtil {
 	 * @return
 	 */
 	public static String readFile(String filePath) {
-		String content = null;
-		if (SDCardIsValid()) {
-			File file = new File(filePath);
-			if (file.exists()) {
-				FileInputStream inputStream = null;
-				try {
-					inputStream = new FileInputStream(file);
-					int len = inputStream.available();
-					byte[] buffer = new byte[len];
-					inputStream.read(buffer);
-					content = buffer.toString();
-				} catch (Exception e) {
-					if (inputStream != null) {
-						try {
-							inputStream.close();
-						} catch (Exception e1) {
-							e1.printStackTrace(System.out);
-						}
-					}
-				}
-
-			}
-
+		if (!sdcardIsValid()) {
+			return null;
 		}
 
-		return content;
+		File file = new File(filePath);
+		if (!file.exists()) {
+			return null;
+		}
+
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(file);
+			int len = inputStream.available();
+			byte[] buffer = new byte[len];
+			inputStream.read(buffer);
+			inputStream.close();
+			return Arrays.toString(buffer);
+		} catch (Exception e) {
+			quietClose(inputStream);
+		}
+
+		return null;
+	}
+
+	/**
+	 * 读取Asset中的文件
+	 * @param fileName
+	 * @return
+	 */
+	public static String readAssetFile(Context context, String fileName) {
+		InputStream inputStream = null;
+		BufferedReader reader = null;
+		try {
+			inputStream = context.getAssets().open(fileName);
+			reader = new BufferedReader(new InputStreamReader(inputStream, DEFAULT_CHARSET_NAME));
+			String lineStr;
+			StringBuilder builder = new StringBuilder();
+			while ((lineStr = reader.readLine()) != null) {
+				builder.append(lineStr);
+			}
+			inputStream.close();
+			return builder.toString();
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		} finally {
+			quietClose(reader);
+			quietClose(inputStream);
+		}
+
+		return null;
 	}
 
 	/**
@@ -169,7 +214,7 @@ public class FileUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public static int getFileSize(String directoryPath, String fileName) {
+	public static long getFileSize(String directoryPath, String fileName) {
 		return getFileSize(directoryPath + File.separator + fileName);
 	}
 
@@ -178,14 +223,26 @@ public class FileUtil {
 	 * @param filePath
 	 * @return
 	 */
-	public static int getFileSize(String filePath) {
-		if (SDCardIsValid()) {
+	public static long getFileSize(String filePath) {
+		if (sdcardIsValid()) {
 			File file = new File(filePath);
 			if (file.exists()) {
-				file.getTotalSpace();
+				return file.getTotalSpace();
 			}
 		}
 
 		return 0;
+	}
+
+	public static void quietClose(Closeable obj) {
+		if (obj == null) {
+			return;
+		}
+
+		try {
+			obj.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

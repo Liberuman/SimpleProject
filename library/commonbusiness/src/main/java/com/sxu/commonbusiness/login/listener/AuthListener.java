@@ -9,7 +9,15 @@ package com.sxu.commonbusiness.login.listener;
  *******************************************************************************/
 public interface AuthListener {
 
+	/**
+	 * 授权成功
+	 * @param openId
+	 */
 	void onAuthSucceed(String openId);
 
+	/**
+	 * 授权失败
+	 * @param e
+	 */
 	void onAuthFailed(Exception e);
 }

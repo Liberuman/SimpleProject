@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/content_edit"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:padding="16dp"
+        android:gravity="top"
+        android:textSize="@dimen/fs_14"
+        android:textColor="@color/b1"
+        android:maxLength="200"
+        android:lineSpacingMultiplier="1.15"
+        android:hint="请输入您的宝贵意见（200字以内）"
+        android:background="@color/white"/>
+    <EditText
+        android:id="@+id/phone_edit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:padding="16dp"
+        android:gravity="top"
+        android:textSize="@dimen/fs_14"
+        android:textColor="@color/b1"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:hint="请输入您的联系方式（非必填）"
+        android:background="@color/white"/>
+</LinearLayout>

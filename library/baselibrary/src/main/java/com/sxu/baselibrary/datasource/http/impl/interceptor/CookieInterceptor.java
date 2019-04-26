@@ -17,7 +17,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/* *****************************************************************************
+/******************************************************************************
  * Description: Cookie拦截器, 负责Cookie的管理
  *
  * Author: Freeman
@@ -28,13 +28,14 @@ import okhttp3.Response;
  *******************************************************************************/
 public class CookieInterceptor implements Interceptor {
 
-	private final String COOKIE_KEY = "COOKIE";
 	private static Map<String, String> cookieMap;
 
 	@Override
 	public Response intercept(Chain chain) throws IOException {
-		if (CollectionUtil.isEmpty(cookieMap)) { // 避免每次都从SharePreference读取数据
-			String persistCookie = PreferencesManager.getString(COOKIE_KEY);
+		// 使用CookieMap保存，避免每次都从SharePreference读取数据
+		String cookieKey = "KEY_COOKIE";
+		if (CollectionUtil.isEmpty(cookieMap)) {
+			String persistCookie = PreferencesManager.getString(cookieKey);
 			if (!TextUtils.isEmpty(persistCookie)) {
 				cookieMap = new Gson().fromJson(persistCookie, new TypeToken<Map<String, String>>() {
 				}.getType());
@@ -59,7 +60,7 @@ public class CookieInterceptor implements Interceptor {
 				for (Cookie cookie : cookieList) {
 					cookieMap.put(cookie.name(), cookie.value());
 				}
-				PreferencesManager.putString(COOKIE_KEY, new Gson().toJson(cookieMap));
+				PreferencesManager.putString(cookieKey, new Gson().toJson(cookieMap));
 			}
 		}
 

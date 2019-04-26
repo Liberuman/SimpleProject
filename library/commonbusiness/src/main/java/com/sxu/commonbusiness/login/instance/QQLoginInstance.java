@@ -17,7 +17,7 @@ import org.json.JSONObject;
  *
  * Date: 2018/8/31
  *******************************************************************************/
-public class QQLoginInstance extends LoginInstance {
+public class QQLoginInstance extends BaseLoginInstance {
 
 	private Activity activity;
 	private Tencent tencent;

@@ -1,16 +1,11 @@
 package com.sxu.commonbusiness.share.instance;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-import android.view.View;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sxu.baselibrary.commonutils.BitmapUtil;
-import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.sxu.commonbusiness.share.ShareListener;
@@ -18,7 +13,6 @@ import com.sxu.imageloader.FrescoInstance;
 import com.sxu.imageloader.ImageLoaderListener;
 import com.sxu.imageloader.ImageLoaderManager;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -37,7 +31,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class WeChatShareInstance extends ShareInstance {
+public class WeChatBaseShareInstance extends BaseShareInstance {
 
 	private int flowId;
 	private Activity activity;
@@ -45,7 +39,7 @@ public class WeChatShareInstance extends ShareInstance {
 
 	private static ShareListener shareListener;
 
-	public WeChatShareInstance(Activity activity, int flowId, ShareListener listener) {
+	public WeChatBaseShareInstance(Activity activity, int flowId, ShareListener listener) {
 		this.flowId = flowId;
 		this.activity = activity;
 		shareListener = listener;
@@ -54,6 +48,7 @@ public class WeChatShareInstance extends ShareInstance {
 		wxApi.registerApp(ShareConstants.APP_WECHAT_KEY);
 	}
 
+	@Override
 	public void onShare(final String title, final String desc, final String iconUrl, final String url) {
 		if (!wxApi.isWXAppInstalled()) {
 			if (shareListener != null) {

@@ -1,11 +1,8 @@
 package com.sxu.commonbusiness.login.listener;
 
-import android.os.Bundle;
-
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WbAuthListener;
 import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
-import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
@@ -16,7 +13,7 @@ import com.tencent.tauth.UiError;
  *
  * Date: 2018/8/31
  *******************************************************************************/
-public abstract class LoginListener implements WbAuthListener, IUiListener {
+public abstract class BaseLoginListener implements WbAuthListener, IUiListener {
 
 	/**
 	 * QQ登录回调
@@ -28,9 +25,8 @@ public abstract class LoginListener implements WbAuthListener, IUiListener {
 
 	@Override
 	public final void onError(UiError uiError) {
-		loginFailed(new Exception(new StringBuilder("errorCode:").append(uiError.errorCode)
-				.append(" errorMsg:").append(uiError.errorMessage)
-				.append(" detailMsg:").append(uiError.errorDetail).toString()));
+		loginFailed(new Exception("errorCode:" + uiError.errorCode + " errorMsg:" + uiError.errorMessage
+				+ " detailMsg:" + uiError.errorDetail));
 	}
 
 	@Override
@@ -57,11 +53,19 @@ public abstract class LoginListener implements WbAuthListener, IUiListener {
 	}
 
 	/**
-	 * 由于不同的平台的分享回调不同，所以添加以下三个方法便于统一回调结果的通知
+	 * 登录成功(由于不同的平台的分享回调不同，所以添加以下三个方法便于统一回调结果的通知)
+	 * @param response
 	 */
 	public abstract void loginSucceed(Object response);
 
+	/**
+	 * 登录失败
+	 * @param e
+	 */
 	public abstract void loginFailed(Exception e);
 
+	/**
+	 * 取消登录
+	 */
 	public abstract void loginCanceled();
 }

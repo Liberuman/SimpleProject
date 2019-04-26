@@ -1,25 +1,17 @@
 package com.sxu.basecomponent.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-import com.sxu.basecomponent.R;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyle;
 import com.sxu.basecomponent.uiwidget.ContainerLayoutStyleImpl;
 import com.sxu.basecomponent.uiwidget.ToolbarEx;
-import com.sxu.baselibrary.commonutils.DisplayUtil;
-import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 /*******************************************************************************
  * Description: 通用Fragment基类
@@ -31,7 +23,7 @@ import com.sxu.baselibrary.commonutils.ViewBgUtil;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
-public abstract class CommonFragment extends Fragment implements ContainerLayoutStyle {
+public abstract class BaseCommonFragment extends Fragment implements ContainerLayoutStyle {
 
 	protected ToolbarEx toolbar;
 	protected View contentView;
@@ -56,10 +48,20 @@ public abstract class CommonFragment extends Fragment implements ContainerLayout
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
+	/**
+	 * 返回需要加载的布局ID
+	 * @return
+	 */
 	protected abstract int getLayoutResId();
 
+	/**
+	 * 获取布局中的View，设置布局样式
+	 */
 	protected abstract void getViews();
 
+	/**
+	 * 关联Fragment中的View与Data
+	 */
 	protected abstract void initFragment();
 
 	/**
@@ -73,6 +75,7 @@ public abstract class CommonFragment extends Fragment implements ContainerLayout
 		this.toolbarStyle = style;
 	}
 
+	@Override
 	public void initLayout(int toolbarStyle) {
 		layoutStyle.initLayout(toolbarStyle);
 		toolbar = layoutStyle.getToolbar();

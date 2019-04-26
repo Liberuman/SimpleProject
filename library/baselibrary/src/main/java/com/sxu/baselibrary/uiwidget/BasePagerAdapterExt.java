@@ -15,11 +15,16 @@ import android.view.View;
  *
  * Date: 16/8/4
  *******************************************************************************/
-public abstract class PagerAdapterExt extends FragmentPagerAdapter {
+public abstract class BasePagerAdapterExt extends FragmentPagerAdapter {
 
-	public PagerAdapterExt(FragmentManager fm) {
+	public BasePagerAdapterExt(FragmentManager fm) {
 		super(fm);
 	}
 
+	/**
+	 * 自定义每一项的View
+	 * @param position
+	 * @return
+	 */
 	public abstract View getTabView(int position);
 }

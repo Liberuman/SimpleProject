@@ -1,10 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sxu.mainmodule">
 
-    <application>
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".setting.SettingActivity"/>
+        <activity android:name=".setting.FeedbackActivity"/>
+        <activity android:name=".setting.OpenSourceLicenceActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -29,9 +29,6 @@ public class ObjectTypeAdapter2<T> extends TypeAdapter<List<T>> {
 			case BEGIN_ARRAY:
 				List<T> list = new ArrayList<>();
 				in.beginArray();
-				while (in.hasNext()) {
-					//list.add(in.next);
-				}
 				in.endArray();
 				return list.size() > 0 ? list : null;
 			default:
@@ -43,7 +40,6 @@ public class ObjectTypeAdapter2<T> extends TypeAdapter<List<T>> {
 	public void write(JsonWriter out, List<T> value) throws IOException {
 		if (value == null) {
 			out.nullValue();
-			return;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.sxu.basecomponent.uiwidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +44,7 @@ public class StatisticsEditText extends FrameLayout {
 		initView();
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	private void initView() {
 		contentView = View.inflate(getContext(), R.layout.view_statistics_edit_text_layout, this);
 		editText = contentView.findViewById(R.id.edit_text);
@@ -63,10 +65,11 @@ public class StatisticsEditText extends FrameLayout {
 			public void afterTextChanged(Editable s) {
 				builder.setLength(0);
 				if (minCount != 0) {
+					boolean showNormalTips = s.length() == 0 || (s.length() >= minCount && s.length() < maxCount);
 					if (s.length() > 0 && s.length() < minCount) {
 						countTipsText.setText(builder.append("少于 ").append(minCount).append(" 字"));
 						countTipsText.setTextColor(ContextCompat.getColor(getContext(), R.color.t3));
-					} else if (s.length() == 0 || (s.length() >= minCount && s.length() < maxCount)){
+					} else if (showNormalTips){
 						countTipsText.setText(builder.append("不少于 ").append(minCount)
 								.append(" 字，不超过 ").append(maxCount).append(" 字"));
 						countTipsText.setTextColor(ContextCompat.getColor(getContext(), R.color.g2));
@@ -101,6 +104,8 @@ public class StatisticsEditText extends FrameLayout {
 						case MotionEvent.ACTION_UP:
 						case MotionEvent.ACTION_CANCEL:
 							v.getParent().requestDisallowInterceptTouchEvent(false);
+							break;
+						default:
 							break;
 					}
 				}
@@ -163,6 +168,10 @@ public class StatisticsEditText extends FrameLayout {
 	}
 
 	public interface OnTextChangedListener {
+		/**
+		 * 监听EditText中内容的变化
+		 * @param value
+		 */
 		void onTextChanged(String value);
 	}
 }

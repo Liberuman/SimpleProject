@@ -15,7 +15,7 @@ import com.sxu.commonbusiness.share.ShareHandler;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class ShareInstance extends InnerShareListener implements ShareHandler {
+public abstract class BaseShareInstance extends BaseInnerShareListener implements ShareHandler {
 
 	/**
 	 * 分享多媒体，包括文字，图片，视频，URL等

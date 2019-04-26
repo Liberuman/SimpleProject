@@ -14,7 +14,9 @@ import android.support.multidex.MultiDexApplication;
  *******************************************************************************/
 public class BaseApplication extends MultiDexApplication {
 
-	// 是否已登录
+	/**
+	 * 是否已登录
+	 */
 	public static boolean isLogin;
 	public static Context context;
 

@@ -6,13 +6,11 @@ import android.util.Base64;
 import java.math.BigInteger;
 import java.security.Key;
 import java.security.KeyFactory;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
@@ -29,11 +27,29 @@ import javax.crypto.spec.SecretKeySpec;
  *******************************************************************************/
 public class EncryptUtil {
 
+    private EncryptUtil() {
+
+    }
+
     private static final int KEY_LEN_DES = 8;
     private static final int KEY_LEN_3DES_16 = 16;
     private static final int KEY_LEN_3DES_24 = 24;
     private static final int KEY_LEN_AES_16 = 16;
     private static final int KEY_LEN_AES_24 = 24;
+
+    /**
+     * 默认的字符编码
+     */
+    private final static String DEFAULT_CHARSET_NAME = "UTF-8";
+
+    /**
+     * 邮件名中的明文长度
+     */
+    private final static int EMAIL_SHOWN_TEXT_LEN = 3;
+    /**
+     * 证件中的明文长度
+     */
+    private final static int CARD_SHOWN_TEXT_LEN = 4;
 
     /**
      * 加密手机号码(隐藏中间4位)
@@ -55,8 +71,8 @@ public class EncryptUtil {
         if (VerificationUtil.isValidEmailAddress(email)) {
             String[] subEmail = email.split("@");
             String nickName = subEmail[0];
-            if (nickName.length() > 3) {
-                return nickName.substring(0, 3) + "******" + "@" + subEmail[1];
+            if (nickName.length() > EMAIL_SHOWN_TEXT_LEN) {
+                return nickName.substring(0, EMAIL_SHOWN_TEXT_LEN) + "******" + "@" + subEmail[1];
             }
         }
 
@@ -83,10 +99,10 @@ public class EncryptUtil {
     public static String encryptOtherCard(String cardNumber) {
         if (!TextUtils.isEmpty(cardNumber)) {
             int len = cardNumber.length();
-            if (len > 4) {
-                int startLen = (len - 4) / 2;
-                int startOffset = (len - 4) % 2;
-                int endPos = startLen + startOffset + 4;
+            if (len > CARD_SHOWN_TEXT_LEN) {
+                int startLen = (len - CARD_SHOWN_TEXT_LEN) / 2;
+                int startOffset = (len - CARD_SHOWN_TEXT_LEN) % 2;
+                int endPos = startLen + startOffset + CARD_SHOWN_TEXT_LEN;
                 if (endPos < len) {
                     return cardNumber.substring(0, startLen + startOffset) + "****" + cardNumber.substring(endPos);
                 } else {
@@ -136,7 +152,7 @@ public class EncryptUtil {
         if (!TextUtils.isEmpty(content) && !TextUtils.isEmpty(algorithm)) {
             try {
                 MessageDigest digest = MessageDigest.getInstance(algorithm.toUpperCase());
-                byte[] md5 = digest.digest(content.getBytes());
+                byte[] md5 = digest.digest(content.getBytes(DEFAULT_CHARSET_NAME));
                 BigInteger bigInteger = new BigInteger(1, md5);
                 return bigInteger.toString(16);
             } catch (Exception e) {
@@ -257,9 +273,9 @@ public class EncryptUtil {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, key, new SecureRandom());
-            byte[] result = cipher.doFinal(content.getBytes());
+            byte[] result = cipher.doFinal(content.getBytes(DEFAULT_CHARSET_NAME));
             BigInteger bigInteger = new BigInteger(1, result);
-            return new String(Base64.encode(result, Base64.DEFAULT));
+            return new String(Base64.encode(result, Base64.DEFAULT), DEFAULT_CHARSET_NAME);
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
@@ -281,7 +297,7 @@ public class EncryptUtil {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, key, new SecureRandom());
-            return new String(cipher.doFinal(content.getBytes()));
+            return new String(cipher.doFinal(content.getBytes(DEFAULT_CHARSET_NAME)), DEFAULT_CHARSET_NAME);
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
@@ -303,11 +319,11 @@ public class EncryptUtil {
         }
 
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), algorithm);
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(DEFAULT_CHARSET_NAME), algorithm);
             Cipher cipher = Cipher.getInstance(transformation);
             cipher.init(Cipher.ENCRYPT_MODE, keySpec);
-            byte[] result = cipher.doFinal(content.getBytes());
-            return new String(Base64.encode(result, Base64.DEFAULT));
+            byte[] result = cipher.doFinal(content.getBytes(DEFAULT_CHARSET_NAME));
+            return new String(Base64.encode(result, Base64.DEFAULT), DEFAULT_CHARSET_NAME);
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
@@ -329,10 +345,11 @@ public class EncryptUtil {
         }
 
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), algorithm);
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(DEFAULT_CHARSET_NAME), algorithm);
             Cipher cipher = Cipher.getInstance(transformation);
             cipher.init(Cipher.DECRYPT_MODE, keySpec);
-            return new String(cipher.doFinal(Base64.decode(content.getBytes(), Base64.DEFAULT)));
+            return new String(cipher.doFinal(Base64.decode(content.getBytes(DEFAULT_CHARSET_NAME),
+                    Base64.DEFAULT)), DEFAULT_CHARSET_NAME);
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }

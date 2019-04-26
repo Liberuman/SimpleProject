@@ -1,8 +1,6 @@
 package com.sxu.baselibrary.datasource.http.bean;
 
-import java.io.Serializable;
-
-/* *****************************************************************************
+/******************************************************************************
  * Description: 网络请求数据协议
  *
  * Author: Freeman

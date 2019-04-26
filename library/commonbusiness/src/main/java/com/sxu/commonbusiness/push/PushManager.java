@@ -3,12 +3,10 @@ package com.sxu.commonbusiness.push;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.google.gson.JsonObject;
 import com.huawei.hms.api.ConnectionResult;
 import com.huawei.hms.api.HuaweiApiClient;
 import com.huawei.hms.support.api.push.HuaweiPush;
 import com.sxu.baselibrary.commonutils.RomUtil;
-import com.sxu.baselibrary.datasource.http.impl.HttpManager;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import cn.jpush.android.api.JPushInterface;
@@ -45,7 +43,7 @@ public class PushManager {
 	}
 
 	public static PushManager getInstance() {
-		return SingletonHolder.instance;
+		return SingletonHolder.INSTANCE;
 	}
 
 	/**
@@ -104,6 +102,6 @@ public class PushManager {
 	}
 
 	public static class SingletonHolder {
-		private final static PushManager instance = new PushManager();
+		private final static PushManager INSTANCE = new PushManager();
 	}
 }

@@ -3,17 +3,13 @@ package com.sxu.commonbusiness.share.instance;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.MultiImageObject;
 import com.sina.weibo.sdk.api.TextObject;
-import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.AuthInfo;
@@ -25,7 +21,6 @@ import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sxu.baselibrary.commonutils.BitmapUtil;
 import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.LogUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.R;
 import com.sxu.commonbusiness.share.ShareConstants;
 import com.sxu.commonbusiness.share.ShareListener;
@@ -34,7 +29,6 @@ import com.sxu.imageloader.ImageLoaderListener;
 import com.sxu.imageloader.ImageLoaderManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /*******************************************************************************
  * Description: 微博分享的实现
@@ -45,7 +39,7 @@ import java.util.List;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public class WeiboShareInstance extends ShareInstance {
+public class WeiboBaseShareInstance extends BaseShareInstance {
 
 	private Oauth2AccessToken accessToken;
 	private SsoHandler ssoHandler;
@@ -53,7 +47,7 @@ public class WeiboShareInstance extends ShareInstance {
 	private Activity activity;
 	private ShareListener listener;
 
-	public WeiboShareInstance(Activity activity, ShareListener listener) {
+	public WeiboBaseShareInstance(Activity activity, ShareListener listener) {
 		this.activity = activity;
 		this.listener = listener;
 		ImageLoaderManager.getInstance().init(activity.getApplicationContext(), new FrescoInstance());
@@ -66,6 +60,7 @@ public class WeiboShareInstance extends ShareInstance {
 		accessToken = AccessTokenKeeper.readAccessToken(activity);
 	}
 
+	@Override
 	public void onShare(final String title, final String desc, final String iconUrl, final String url) {
 		if (accessToken == null || !accessToken.isSessionValid()) {
 			ssoHandler = new SsoHandler(activity);
@@ -113,7 +108,7 @@ public class WeiboShareInstance extends ShareInstance {
 		WeiboMultiMessage multiMessage = new WeiboMultiMessage();
 		if (!TextUtils.isEmpty(desc)) {
 			TextObject textObject = new TextObject();
-			textObject.text = new StringBuilder(desc).append(" ").append(url).toString();
+			textObject.text = desc + " " + url;
 			multiMessage.textObject = textObject;
 		}
 		if (bitmap != null && !bitmap.isRecycled()) {
@@ -136,7 +131,7 @@ public class WeiboShareInstance extends ShareInstance {
 		WeiboMultiMessage multiMessage = new WeiboMultiMessage();
 		if (!TextUtils.isEmpty(desc)) {
 			TextObject textObject = new TextObject();
-			textObject.text = new StringBuilder(desc).append(" ").append(url).toString();
+			textObject.text = desc + " " + url;
 			multiMessage.textObject = textObject;
 		}
 		if (!CollectionUtil.isEmpty(imageList)) {

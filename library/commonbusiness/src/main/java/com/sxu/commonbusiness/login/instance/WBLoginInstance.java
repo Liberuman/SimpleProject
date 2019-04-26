@@ -17,7 +17,7 @@ import com.sxu.commonbusiness.login.listener.AuthListener;
  *
  * Date: 2018/9/1
  *******************************************************************************/
-public class WBLoginInstance extends LoginInstance {
+public class WBLoginInstance extends BaseLoginInstance {
 
 	private AuthListener listener;
 	private SsoHandler ssoHandler;
@@ -49,8 +49,8 @@ public class WBLoginInstance extends LoginInstance {
 			if (response == null) {
 				listener.onAuthFailed(new NullPointerException("Auth information is null"));
 			}
-
-			listener.onAuthSucceed(((Oauth2AccessToken) response).getUid());
+			Oauth2AccessToken accessToken = response instanceof Oauth2AccessToken ? (Oauth2AccessToken) response : null;
+			listener.onAuthSucceed(accessToken != null ? accessToken.getUid() : "");
 		}
 	}
 

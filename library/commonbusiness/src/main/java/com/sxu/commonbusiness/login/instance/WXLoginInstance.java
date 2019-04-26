@@ -28,7 +28,7 @@ import okhttp3.Response;
  *
  * Date: 2018/9/1
  *******************************************************************************/
-public class WXLoginInstance extends LoginInstance {
+public class WXLoginInstance extends BaseLoginInstance {
 
 	private IWXAPI wxApi;
 	private Context context;
@@ -77,12 +77,12 @@ public class WXLoginInstance extends LoginInstance {
 
 	private static void getToken(final Activity activity, String code) {
 		OkHttpClient httpClient = new OkHttpClient();
-		StringBuilder urlBuilder = new StringBuilder("https://api.weixin.qq.com/sns/oauth2/access_token")
-				.append("?appid=").append(LoginConstants.APP_WECHAT_KEY)
-				.append("&secret=").append(LoginConstants.APP_WECHAT_SECRET)
-				.append("&code=").append(code)
-				.append("&grant_type=authorization_code");
-		Request request = new Request.Builder().url(urlBuilder.toString()).build();
+		String url = "https://api.weixin.qq.com/sns/oauth2/access_token"
+				+ "?appid=" + LoginConstants.APP_WECHAT_KEY
+				+ "&secret=" + LoginConstants.APP_WECHAT_SECRET
+				+ "&code=" + code
+				+ "&grant_type=authorization_code";
+		Request request = new Request.Builder().url(url).build();
 		httpClient.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
@@ -92,7 +92,7 @@ public class WXLoginInstance extends LoginInstance {
 
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
-				if (response != null && response.isSuccessful()) {
+				if (response.isSuccessful()) {
 					try {
 						JSONObject result = new JSONObject(response.body().string());
 						authListener.onAuthSucceed(result.getString("openid"));

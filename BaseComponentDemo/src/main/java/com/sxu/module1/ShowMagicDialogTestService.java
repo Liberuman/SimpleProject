@@ -33,7 +33,7 @@ public class ShowMagicDialogTestService extends Service {
 			textView.setMinimumHeight(DisplayUtil.dpToPx(100));
 			textView.setText("测试全局弹框");
 			MagicDialog.show(ShowMagicDialogTestService.this, textView, false);
-			handler.sendEmptyMessageDelayed(0, 4000);
+			//handler.sendEmptyMessageDelayed(0, 4000);
 		}
 	};
 

@@ -5,13 +5,10 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -27,7 +24,7 @@ import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 
-/* *****************************************************************************
+/******************************************************************************
  * Description: 自定义TabLayout
  *
  * Author: Freeman
@@ -175,7 +172,15 @@ public class TabLayout extends LinearLayout {
 	}
 
 	public interface OnItemStateListener {
+		/**
+		 * Item被选中时调用
+		 * @param position
+		 */
 		void onItemSelected(int position);
+
+		/**
+		 * Item从选中状态变成未选中状态时调用
+		 */
 		void onItemUnSelected();
 	}
 

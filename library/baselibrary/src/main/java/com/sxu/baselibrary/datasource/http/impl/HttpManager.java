@@ -11,17 +11,12 @@ import com.sxu.baselibrary.datasource.http.impl.interceptor.BaseInterceptor;
 import com.sxu.baselibrary.datasource.http.impl.interceptor.CookieInterceptor;
 import com.sxu.baselibrary.datasource.http.impl.interceptor.HttpCacheInterceptor;
 
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.WeakHashMap;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cache;
 import okhttp3.Cookie;
@@ -36,7 +31,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/* *****************************************************************************
+/******************************************************************************
  * Description: 网络组件的封装
  *
  * Author: Freeman
@@ -47,55 +42,27 @@ import rx.schedulers.Schedulers;
  *******************************************************************************/
 public class HttpManager {
 
-	private static String baseUrl;
-	private static Context context;
+	private static String mBaseUrl;
+	private static Context mContext;
 	private Retrofit retrofit;
 	private WeakHashMap<Integer, Subscription> subscriptionHashMap = new WeakHashMap<>();
 
-	public static void init(String _baseUrl) {
-		context = BaseContentProvider.context;
-		baseUrl = _baseUrl;
+	public static void init(String baseUrl) {
+		mContext = BaseContentProvider.context;
+		mBaseUrl = baseUrl;
 	}
 
-	public static void init(Context _context, String _baseUrl) {
-		context = _context.getApplicationContext();
-		baseUrl = _baseUrl;
+	public static void init(Context context, String baseUrl) {
+		mContext = context.getApplicationContext();
+		mBaseUrl = baseUrl;
 	}
 
 	private HttpManager() {
-		final X509TrustManager trustManager = new X509TrustManager() {
-			@Override
-			public void checkClientTrusted(
-					X509Certificate[] chain,
-					String authType) throws CertificateException {
-			}
-
-			@Override
-			public void checkServerTrusted(
-					X509Certificate[] chain,
-					String authType) throws CertificateException {
-			}
-
-			@Override
-			public X509Certificate[] getAcceptedIssuers() {
-				return new X509Certificate[0];
-			}
-		};
-
-		SSLContext sslContext = null;
-		try {
-			sslContext = SSLContext.getInstance("SSL");
-			sslContext.init(null, new TrustManager[]{trustManager}, new java.security.SecureRandom());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-		}
-
 		OkHttpClient httpClient = new OkHttpClient.Builder()
-				.addInterceptor(new BaseInterceptor(context))
+				.addInterceptor(new BaseInterceptor(mContext))
 				.addInterceptor(new CookieInterceptor())
-				.addNetworkInterceptor(new HttpCacheInterceptor(context))
-				.cache(new Cache(context.getCacheDir(), 20 * 1024 * 1024))
-				.sslSocketFactory(sslContext.getSocketFactory(), trustManager)
+				.addNetworkInterceptor(new HttpCacheInterceptor(mContext))
+				.cache(new Cache(mContext.getCacheDir(), 20 * 1024 * 1024))
 				.cookieJar(new CookieJar() {
 					@Override
 					public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
@@ -110,7 +77,7 @@ public class HttpManager {
 				.hostnameVerifier(new HostnameVerifier() {
 					@Override
 					public boolean verify(String hostname, SSLSession session) {
-						if (!TextUtils.isEmpty(baseUrl) && baseUrl.contains(hostname)) {
+						if (!TextUtils.isEmpty(mBaseUrl) && mBaseUrl.contains(hostname)) {
 							return true;
 						} else {
 							HostnameVerifier hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
@@ -128,7 +95,7 @@ public class HttpManager {
 			.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 			.addConverterFactory(GsonConverterFactory.create(gson))
 			.client(httpClient)
-			.baseUrl(baseUrl)
+			.baseUrl(mBaseUrl)
 			.build();
 	}
 
@@ -183,10 +150,10 @@ public class HttpManager {
 	}
 
 	public static HttpManager getInstance() {
-		return SingletonHolder.instance;
+		return SingletonHolder.INSTANCE;
 	}
 
 	public static class SingletonHolder {
-		public final static HttpManager instance = new HttpManager();
+		public final static HttpManager INSTANCE = new HttpManager();
 	}
 }

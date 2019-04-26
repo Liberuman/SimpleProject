@@ -13,7 +13,7 @@ import com.tencent.tauth.UiError;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-abstract class InnerShareListener implements WbShareCallback, IUiListener {
+abstract class BaseInnerShareListener implements WbShareCallback, IUiListener {
 
 	/**
 	 * 微博分享回调
@@ -44,9 +44,10 @@ abstract class InnerShareListener implements WbShareCallback, IUiListener {
 
 	@Override
 	public void onError(UiError uiError) {
-		shareFailure(new Exception(new StringBuilder("errorCode:").append(uiError.errorCode)
-				.append(" errorMsg:").append(uiError.errorMessage)
-				.append(" detailMsg:").append(uiError.errorDetail).toString()));
+		shareFailure(new Exception("errorCode:" + uiError.errorCode + " errorMsg:" + uiError.errorMessage
+				+ " detailMsg:" + uiError.errorDetail));
+
+
 	}
 
 	@Override
@@ -59,7 +60,14 @@ abstract class InnerShareListener implements WbShareCallback, IUiListener {
 	 */
 	public abstract void shareSuccess();
 
+	/**
+	 * 分享失败
+	 * @param e
+	 */
 	public abstract void shareFailure(Exception e);
 
+	/**
+	 * 取消分享
+	 */
 	public abstract void shareCancel();
 }

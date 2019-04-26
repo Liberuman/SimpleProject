@@ -3,7 +3,7 @@ package com.sxu.commonbusiness.login.instance;
 import android.content.Intent;
 
 import com.sxu.commonbusiness.login.LoginHandler;
-import com.sxu.commonbusiness.login.listener.LoginListener;
+import com.sxu.commonbusiness.login.listener.BaseLoginListener;
 
 /*******************************************************************************
  * Description: 登录统一接口
@@ -12,8 +12,11 @@ import com.sxu.commonbusiness.login.listener.LoginListener;
  *
  * Date: 2018/8/31
  *******************************************************************************/
-public abstract class LoginInstance extends LoginListener implements LoginHandler {
+public abstract class BaseLoginInstance extends BaseLoginListener implements LoginHandler {
 
+	/**
+	 * 登录逻辑的实现过程
+	 */
 	public abstract void onLogin();
 
 	@Override

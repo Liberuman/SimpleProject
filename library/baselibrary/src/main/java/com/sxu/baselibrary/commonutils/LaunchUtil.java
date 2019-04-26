@@ -1,5 +1,6 @@
 package com.sxu.baselibrary.commonutils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,10 @@ import java.io.File;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class LaunchUtil {
+
+	private LaunchUtil() {
+
+	}
 
 	/**
 	 * 打开浏览器
@@ -81,6 +86,7 @@ public class LaunchUtil {
 	 * @param context
 	 * @param telNumber
 	 */
+	@SuppressLint("MissingPermission")
 	public static void openPhone(Context context, String telNumber) {
 		Uri uri = Uri.parse("tel:" + telNumber);
 		Intent intent = new Intent(Intent.ACTION_CALL, uri);

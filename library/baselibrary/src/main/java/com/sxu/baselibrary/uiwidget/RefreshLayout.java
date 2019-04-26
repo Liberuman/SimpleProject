@@ -1,5 +1,6 @@
 package com.sxu.baselibrary.uiwidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -41,11 +42,17 @@ public class RefreshLayout extends LinearLayout {
 	private int mRefreshStatus;
 	private int mScreenHeight;
 	private int mDefaultScrollDistance;
-	private int mLoadMoreOffset; // 触底加载后页面的偏移量
+	/**
+	 * 触底加载后页面的偏移量
+	 */
+	private int mLoadMoreOffset;
 	private float mScrollY;
 	private float mStartX;
 	private float mStartY;
-	private float mViscosity = 0.35f; // 粘性系统，控制下拉或上拉时的阻力，取值(0, 1]
+	/**
+	 * 粘性系数，控制下拉或上拉时的阻力，取值(0, 1]
+	 */
+	private float mViscosity = 0.35f;
 	private boolean mSupportedTouchBottomLoad;
 
 	protected View mHeaderView;
@@ -58,10 +65,7 @@ public class RefreshLayout extends LinearLayout {
 	private final int REFRESH_STATUS_REFRESH = 1;
 	private final int REFRESH_STATUS_LOAD_MORE = 2;
 
-	private final int SPRING_BACK_DURATION = 1000;
 	private final int DEFAULT_SCROLL_DURATION = 600;
-	private final int DELAY_RESUME_DURATION = 500;
-	private final int DEFAULT_OFFSET_DURATION = 500;
 
 	private Mode mMode = Mode.MODE_BOTH;
 
@@ -180,7 +184,9 @@ public class RefreshLayout extends LinearLayout {
 	}
 
 	public void setTouchBottomLoadEnabled() {
-		if (getChildCount() == 1 && mSupportedTouchBottomLoad && (mMode == Mode.MODE_LOAD_MORE || mMode == Mode.MODE_BOTH)) {
+		boolean bottomLoadEnabled = getChildCount() == 1 && mSupportedTouchBottomLoad
+				&& (mMode == Mode.MODE_LOAD_MORE || mMode == Mode.MODE_BOTH);
+		if (bottomLoadEnabled) {
 			if (getChildAt(0) instanceof AbsListView) {
 				((AbsListView) getChildAt(0)).setOnScrollListener(new AbsListView.OnScrollListener() {
 					@Override
@@ -206,7 +212,7 @@ public class RefreshLayout extends LinearLayout {
 						}
 					});
 				} else {
-					((RecyclerView) getChildAt(0)).setOnScrollListener(new RecyclerView.OnScrollListener() {
+					((RecyclerView) getChildAt(0)).addOnScrollListener(new RecyclerView.OnScrollListener() {
 						@Override
 						public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 							super.onScrollStateChanged(recyclerView, newState);
@@ -253,21 +259,22 @@ public class RefreshLayout extends LinearLayout {
 				mStartY = ev.getY();
 				break;
 			case MotionEvent.ACTION_MOVE:
-				if (Math.abs(ev.getY() - mStartY) > Math.abs(ev.getX() - mStartX)
-						&& ((mMode == Mode.MODE_REFRESH && ev.getY() > mStartY && ScrollStateUtil.reachTop(getChildAt(1)))
-						|| (mMode == Mode.MODE_LOAD_MORE && ev.getY() < mStartY && ScrollStateUtil.reachBottom(getChildAt(1))
-						|| (mMode == Mode.MODE_BOTH && ((ev.getY() > mStartY && ScrollStateUtil.reachTop(getChildAt(1)))
-						|| (ev.getY() < mStartY && ScrollStateUtil.reachBottom(getChildAt(1)))))))) {
-					return true;
-				}
-				break;
+				boolean isVerticalMove = Math.abs(ev.getY() - mStartY) > Math.abs(ev.getX() - mStartX);
+				boolean canRefresh = (mMode == Mode.MODE_BOTH || mMode == Mode.MODE_REFRESH)
+						&& ev.getY() > mStartY && ScrollStateUtil.reachTop(getChildAt(1)) ;
+				boolean canLoad = (mMode == Mode.MODE_BOTH || mMode == Mode.MODE_LOAD_MORE)
+						&& ev.getY() < mStartY && ScrollStateUtil.reachBottom(getChildAt(1)) ;
+				return isVerticalMove && (canRefresh || canLoad);
 			case MotionEvent.ACTION_UP:
+				break;
+			default:
 				break;
 		}
 
 		return super.onInterceptTouchEvent(ev);
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		mVelocityTracker.addMovement(event);
@@ -290,66 +297,7 @@ public class RefreshLayout extends LinearLayout {
 			case MotionEvent.ACTION_UP:
 				mVelocityTracker.computeCurrentVelocity(1000);
 				int yVelocity = (int) mVelocityTracker.getYVelocity();
-				LogUtil.i("currentTouchY== " + currentTouchY + " startY==" + mStartY);
-				if (currentTouchY > mStartY) { // 下拉刷新
-					if (yVelocity > mMinVelocity) {
-						if (getScrollY() < 0) {
-							if (mListener != null) {
-								mListener.onRefresh(mHeaderView);
-							}
-							showRefreshingLayout();
-							mRefreshStatus = REFRESH_STATUS_REFRESH;
-							mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
-									0, 0, -mHeaderViewHeight);
-						} else {
-							mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
-									0, 0, mHeaderViewHeight);
-						}
-					} else {
-						if (getScrollY() < 0) {
-							if (mListener != null) {
-								mListener.onRefresh(mHeaderView);
-							}
-							showRefreshingLayout();
-							mRefreshStatus = REFRESH_STATUS_REFRESH;
-							mScroller.startScroll(0, getScrollY(), 0, Math.abs(getScrollY()), SPRING_BACK_DURATION);
-						} else {
-							mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight - getScrollY(), SPRING_BACK_DURATION);
-						}
-					}
-				} else { // 上拉加载
-					LogUtil.i("====yVelocity=" + yVelocity + " getScrollY==" + getScrollY() + " end=" + (mDefaultScrollDistance + mFooterViewHeight));
-					if (Math.abs(yVelocity) > mMinVelocity) {
-						if (getScrollY() - mDefaultScrollDistance >= mFooterViewHeight) {
-							if (mListener != null) {
-								mListener.onLoad(mFooterView);
-							}
-							showLoadingLayout();
-							mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
-							mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
-									0, mDefaultScrollDistance, mDefaultScrollDistance + mFooterViewHeight);
-						} else {//todo 连续上拉有bug
-//							mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
-//									0, 0, -mDefaultScrollDistance);
-						}
-					} else {
-						if (getScrollY() - mDefaultScrollDistance < mFooterViewHeight) {
-							mScroller.startScroll(0, getScrollY(), 0,
-									mDefaultScrollDistance - getScrollY(), SPRING_BACK_DURATION);
-						} else {
-							if (mListener != null) {
-								mListener.onLoad(mFooterView);
-							}
-							showLoadingLayout();
-							mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
-							LogUtil.i(" startY==" + getScrollY() + " dy==" + (mFooterViewHeight + mDefaultScrollDistance - getScrollY()));
-							mScroller.startScroll(0, getScrollY(), 0,
-									 mFooterViewHeight + mDefaultScrollDistance - getScrollY(), SPRING_BACK_DURATION);
-						}
-					}
-				}
-
-				invalidate();
+				doRefreshOrLoad(mScrollY, currentTouchY, yVelocity);
 				mVelocityTracker.clear();
 				mScrollY = 0;
 				break;
@@ -363,6 +311,69 @@ public class RefreshLayout extends LinearLayout {
 		}
 
 		return true;
+	}
+
+	private void doRefreshOrLoad(float startScrollY, float currentScrollY, int yVelocity) {
+		// 回弹时间
+		int springBackDuration = 1000;
+		// 下拉刷新
+		if (currentScrollY > startScrollY) {
+			if (yVelocity > mMinVelocity) {
+				if (getScrollY() < 0) {
+					if (mListener != null) {
+						mListener.onRefresh(mHeaderView);
+					}
+					showRefreshingLayout();
+					mRefreshStatus = REFRESH_STATUS_REFRESH;
+					mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
+							0, 0, -mHeaderViewHeight);
+				} else {
+					mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
+							0, 0, mHeaderViewHeight);
+				}
+			} else {
+				if (getScrollY() < 0) {
+					if (mListener != null) {
+						mListener.onRefresh(mHeaderView);
+					}
+					showRefreshingLayout();
+					mRefreshStatus = REFRESH_STATUS_REFRESH;
+					mScroller.startScroll(0, getScrollY(), 0, Math.abs(getScrollY()), springBackDuration);
+				} else {
+					mScroller.startScroll(0, getScrollY(), 0, mHeaderViewHeight - getScrollY(), springBackDuration);
+				}
+			}
+		} else { // 上拉加载
+			if (Math.abs(yVelocity) > mMinVelocity) {
+				if (getScrollY() - mDefaultScrollDistance >= mFooterViewHeight) {
+					if (mListener != null) {
+						mListener.onLoad(mFooterView);
+					}
+					showLoadingLayout();
+					mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
+					mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
+							0, mDefaultScrollDistance, mDefaultScrollDistance + mFooterViewHeight);
+				} else {//todo 连续上拉有bug
+//							mScroller.fling(0, getScrollY(), 0, yVelocity, 0,
+//									0, 0, -mDefaultScrollDistance);
+				}
+			} else {
+				if (getScrollY() - mDefaultScrollDistance < mFooterViewHeight) {
+					mScroller.startScroll(0, getScrollY(), 0,
+							mDefaultScrollDistance - getScrollY(), springBackDuration);
+				} else {
+					if (mListener != null) {
+						mListener.onLoad(mFooterView);
+					}
+					showLoadingLayout();
+					mRefreshStatus = REFRESH_STATUS_LOAD_MORE;
+					LogUtil.i(" startY==" + getScrollY() + " dy==" + (mFooterViewHeight + mDefaultScrollDistance - getScrollY()));
+					mScroller.startScroll(0, getScrollY(), 0,
+							mFooterViewHeight + mDefaultScrollDistance - getScrollY(), springBackDuration);
+				}
+			}
+		}
+		invalidate();
 	}
 
 	public void setOnRefreshListener(OnRefreshListener listener) {
@@ -416,8 +427,9 @@ public class RefreshLayout extends LinearLayout {
 	 * 手动调用刷新数据
 	 */
 	public void startRefresh() {
-		if ((mMode == Mode.MODE_BOTH || mMode == Mode.MODE_REFRESH)
-			&& mRefreshStatus == REFRESH_STATUS_NONE) {
+		boolean canRefresh = (mMode == Mode.MODE_BOTH || mMode == Mode.MODE_REFRESH)
+				&& mRefreshStatus == REFRESH_STATUS_NONE;
+		if (canRefresh) {
 			if (mListener != null) {
 				mListener.onRefresh(mHeaderView);
 			}
@@ -428,6 +440,10 @@ public class RefreshLayout extends LinearLayout {
 	}
 
 	public void refreshComplete() {
+		// View恢复的延迟时间
+		int delayResumeDuration = 500;
+		// 默认的恢复时间
+		int defaultOffsetDuration = 500;
 		Log.i("out", "======status==" + mRefreshStatus + " getScrollY==" + getScrollY()
 				+ " headerHeight==" + mHeaderViewHeight + " footHeight==" + mFooterViewHeight);
 		if (mRefreshStatus == REFRESH_STATUS_REFRESH) {
@@ -439,7 +455,7 @@ public class RefreshLayout extends LinearLayout {
 				public void run() {
 					resetRefreshLayout();
 				}
-			}, DELAY_RESUME_DURATION);
+			}, delayResumeDuration);
 		}
 
 		if (mRefreshStatus == REFRESH_STATUS_LOAD_MORE) {
@@ -451,7 +467,7 @@ public class RefreshLayout extends LinearLayout {
 				if (mLoadMoreOffset != 0) {
 					View childView = getChildAt(1);
 					if (childView instanceof AbsListView) {
-						((AbsListView) childView).smoothScrollBy(mLoadMoreOffset, DEFAULT_OFFSET_DURATION);
+						((AbsListView) childView).smoothScrollBy(mLoadMoreOffset, defaultOffsetDuration);
 					} else if (childView instanceof RecyclerView) {
 						((RecyclerView) childView).smoothScrollBy(0, mLoadMoreOffset);
 					} else if (childView instanceof ScrollView) {
@@ -465,7 +481,7 @@ public class RefreshLayout extends LinearLayout {
 				public void run() {
 					resetLoadMoreLayout();
 				}
-			}, DELAY_RESUME_DURATION);
+			}, delayResumeDuration);
 		}
 
 		mRefreshStatus = REFRESH_STATUS_NONE;
@@ -514,8 +530,16 @@ public class RefreshLayout extends LinearLayout {
 
 	public interface OnRefreshListener {
 
+		/**
+		 * 下拉刷新时被调用
+		 * @param headerView
+		 */
 		void onRefresh(View headerView);
 
+		/**
+		 * 上拉加载时被调用
+		 * @param footerView
+		 */
 		void onLoad(View footerView);
 	}
 }

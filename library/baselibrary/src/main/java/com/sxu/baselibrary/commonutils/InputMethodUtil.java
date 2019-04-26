@@ -20,6 +20,10 @@ import android.widget.ScrollView;
 
 public class InputMethodUtil {
 
+	private InputMethodUtil() {
+
+	}
+
 	/**
 	 * 键盘的最小高度
 	 */
@@ -32,7 +36,9 @@ public class InputMethodUtil {
 	 */
 	public static void toggleKeyboard(Context context) {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(0, 0);
+		if (imm != null) {
+			imm.toggleSoftInput(0, 0);
+		}
 	}
 
 	/**
@@ -42,7 +48,7 @@ public class InputMethodUtil {
 	public static void hideKeyboard(Activity context) {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		View view = context.getCurrentFocus();
-		if (view != null) {
+		if (view != null && imm != null) {
 			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
 	}
@@ -54,7 +60,7 @@ public class InputMethodUtil {
 	public static void showKeyboard(Activity context) {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		View view = context.getCurrentFocus();
-		if (view != null) {
+		if (view != null && imm != null) {
 			imm.showSoftInput(view, 0);
 		}
 	}
@@ -66,7 +72,9 @@ public class InputMethodUtil {
 	 */
 	public static void showKeyboard(Context context, View view) {
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(view, 0);
+		if (imm != null) {
+			imm.showSoftInput(view, 0);
+		}
 	}
 
 	/**

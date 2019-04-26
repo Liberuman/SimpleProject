@@ -12,7 +12,18 @@ package com.sxu.baselibrary.commonutils;
 
 public class DistanceUtil {
 
+	private DistanceUtil() {
+
+	}
+
+	/**
+	 * 地球半径
+	 */
 	private static final double EARTH_RADIUS = 6378137.0;
+	/**
+	 * 米与千米的进制
+	 */
+	private static final double METER_PER_KM = 1000;
 
 	/**
 	 * 根据经纬度获取距离
@@ -24,12 +35,12 @@ public class DistanceUtil {
 	 */
 	public static double getDistance(double longitude1, double latitude1,
 	                                 double longitude2, double latitude2) {
-		double Lat1 = rad(latitude1);
-		double Lat2 = rad(latitude2);
-		double a = Lat1 - Lat2;
+		double lat = rad(latitude1);
+		double lat2 = rad(latitude2);
+		double a = lat - lat2;
 		double b = rad(longitude1) - rad(longitude2);
 		double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
-				+ Math.cos(Lat1) * Math.cos(Lat2)
+				+ Math.cos(lat) * Math.cos(lat2)
 				* Math.pow(Math.sin(b / 2), 2)));
 		s = s * EARTH_RADIUS;
 		s = Math.round(s * 10000) / 10000;
@@ -52,10 +63,10 @@ public class DistanceUtil {
 	                                       double longitude2, double latitude2){
 		String distanceStr;
 		double distance = getDistance(longitude1, latitude1, longitude2, latitude2);
-		if(distance < 1000){
+		if(distance < METER_PER_KM){
 			distanceStr = "距离" + (int)distance + "米";
 		}else{
-			distanceStr = "距离" + (int)(distance/1000) + "公里";
+			distanceStr = "距离" + (int)(distance / METER_PER_KM) + "公里";
 		}
 
 		return  distanceStr;

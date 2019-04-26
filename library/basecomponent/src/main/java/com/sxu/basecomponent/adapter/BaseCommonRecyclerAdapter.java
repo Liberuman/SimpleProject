@@ -5,11 +5,8 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -22,13 +19,13 @@ import java.util.List;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class CommonRecyclerAdapter<T extends Object>
-		extends RecyclerView.Adapter<CommonRecyclerAdapter.RecyclerViewHolder> {
+public abstract class BaseCommonRecyclerAdapter<T>
+		extends RecyclerView.Adapter<BaseCommonRecyclerAdapter.RecyclerViewHolder> {
 
 	private List<T> data;
 	private int layoutId;
 
-	public CommonRecyclerAdapter(List<T> data, @LayoutRes int layoutId) {
+	public BaseCommonRecyclerAdapter(List<T> data, @LayoutRes int layoutId) {
 		this.data = data;
 		this.layoutId = layoutId;
 	}
@@ -69,6 +66,12 @@ public abstract class CommonRecyclerAdapter<T extends Object>
 		notifyItemChanged(position);
 	}
 
+	/**
+	 *  Adapter中数据的填充过程
+	 * @param viewHolder
+	 * @param itemData
+	 * @param position
+	 */
 	public abstract void convert(RecyclerViewHolder viewHolder, T itemData, int position);
 
 	public static class RecyclerViewHolder extends RecyclerView.ViewHolder {

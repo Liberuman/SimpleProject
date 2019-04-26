@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.sxu.basecomponent.activity.BaseActivity;
+import com.sxu.basecomponent.manager.FragmentHandlerManager;
 
 public class SplashActivity extends BaseActivity {
 

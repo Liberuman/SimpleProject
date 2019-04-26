@@ -16,7 +16,7 @@ import com.sxu.baselibrary.R;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-/* *****************************************************************************
+/******************************************************************************
  * Description: 让TabPageIndicator扩展性更强，可自定义指示器的布局
  *
  * Author: Freeman
@@ -36,7 +36,6 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 	private ViewPager viewPager;
 	private LinearLayout itemLayout;
 	private LinearLayout tabLayout;
-	private PagerAdapterExt pagerAdapter;
 	private ViewPager.OnPageChangeListener listener;
 
 	private int currentItem = -1;
@@ -73,7 +72,7 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 
 	public void setViewPager(ViewPager view) {
 		if (view != null) {
-			pagerAdapter = (PagerAdapterExt) view.getAdapter();
+			BasePagerAdapterExt pagerAdapter = (BasePagerAdapterExt) view.getAdapter();
 			if (pagerAdapter == null) {
 				throw new IllegalStateException("ViewPager does not have adapter instance.");
 			}
@@ -158,6 +157,7 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 			removeCallbacks(tabSelectorRunnable);
 		}
 		tabSelectorRunnable = new Runnable() {
+			@Override
 			public void run() {
 				final int scrollPos = tabView.getRight() - getWidth();
 				smoothScrollTo(scrollPos, 0);
@@ -168,13 +168,10 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 	}
 
 	private void setSelected(int position) {
-//		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) indicatorText.getLayoutParams();
-//		params.leftMargin = indicatorLeft;
-//		indicatorText.setLayoutParams(params);
 		if (position < itemLayout.getChildCount()) {
 			View child = itemLayout.getChildAt(position);
 			View oldSelectedChild = itemLayout.getChildAt(currentItem);
-			if (child != null && child instanceof ViewGroup && ((ViewGroup)child).getChildCount() > 0) {
+			if (child instanceof ViewGroup && ((ViewGroup)child).getChildCount() > 0) {
 				for (int i = 0, childCount = ((ViewGroup)child).getChildCount(); i < childCount; i++) {
 					((ViewGroup)child).getChildAt(i).setSelected(true);
 					if (position != currentItem && oldSelectedChild != null) {
@@ -185,7 +182,7 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 		}
 	}
 
-	public void notifyDataSetChanged(PagerAdapterExt pagerAdapterEx) {
+	public void notifyDataSetChanged(BasePagerAdapterExt pagerAdapterEx) {
 		if (itemLayout.getChildCount() > 0) {
 			itemLayout.removeAllViews();
 			tabLayout.removeAllViews();
@@ -230,6 +227,10 @@ public class TabPageIndicatorEx extends HorizontalScrollView implements ViewPage
 	}
 
 	public interface OnItemClickListener {
+		/**
+		 * PagerIndicator被点击时被调用
+		 * @param position
+		 */
 		void onItemClick(int position);
 	}
 }

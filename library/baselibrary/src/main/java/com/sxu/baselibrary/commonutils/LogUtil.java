@@ -14,69 +14,73 @@ import com.sxu.baselibrary.BuildConfig;
  *******************************************************************************/
 public class LogUtil {
 
-	public static String TAG = "DEFAULT";
+	private LogUtil() {
+
+	}
+
+	public final static String TAG = "DEFAULT";
 
 	/**
 	 * 是否需要开启Log
 	 */
-	private static boolean needLog = BuildConfig.DEBUG;
+	private final static boolean NEED_LOG = BuildConfig.DEBUG;
 
 	public static void i(String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.i(TAG, getLogPrefix() + content);
 		}
 	}
 
 	public static void i(String tag, String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.i(tag, getLogPrefix() + content);
 		}
 	}
 
 	public static void d(String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.d(TAG, getLogPrefix() + content);
 		}
 	}
 
 	public static void d(String tag, String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.d(tag, getLogPrefix() + content);
 		}
 	}
 
 	public static void e(String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.e(TAG, getLogPrefix() + content);
 		}
 	}
 
 	public static void e(String tag, String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.e(tag, getLogPrefix() + content);
 		}
 	}
 
 	public static void v(String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.v(TAG, getLogPrefix() + content);
 		}
 	}
 
 	public static void v(String tag, String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.v(tag, getLogPrefix() + content);
 		}
 	}
 
 	public static void w(String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.w(TAG, getLogPrefix() + content);
 		}
 	}
 
 	public static void w(String tag, String content) {
-		if (needLog) {
+		if (NEED_LOG) {
 			Log.w(tag, getLogPrefix() + content);
 		}
 	}

@@ -92,14 +92,21 @@ public class ToolbarEx extends Toolbar {
 	private void initTitleText(boolean isDefaultStyle) {
 		if (titleText == null) {
 			titleText = new TextView(getContext());
-			//titleText.setPadding(titlePadding, 0, titlePadding, 0);
 			titleText.setGravity(Gravity.CENTER);
 			if (isDefaultStyle) {
-				titleText.setTextAppearance(getContext(), R.style.NavigationTitleAppearance);
+				setTextStyle(titleText, R.style.NavigationTitleAppearance);
 			}
 			Toolbar.LayoutParams params = generateDefaultLayoutParams();
 			params.gravity = Gravity.LEFT ;
 			addView(titleText, params);
+		}
+	}
+
+	private void setTextStyle(TextView textView, int styleId) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			textView.setTextAppearance(styleId);
+		} else {
+			textView.setTextAppearance(getContext(),styleId);
 		}
 	}
 
@@ -137,7 +144,7 @@ public class ToolbarEx extends Toolbar {
 	 */
 	public ToolbarEx setTitleTextAppearance(@StyleRes int styleId) {
 		initTitleText(false);
-		titleText.setTextAppearance(getContext(), styleId);
+		setTextStyle(titleText, styleId);
 		return this;
 	}
 
@@ -160,7 +167,7 @@ public class ToolbarEx extends Toolbar {
 			leftText.setPadding(itemPadding, 0, itemPadding, 0);
 			leftText.setGravity(Gravity.CENTER);
 			if (isDefaultStyle) {
-				leftText.setTextAppearance(getContext(), R.style.NavigationLeftTextAppearance);
+				setTextStyle(leftText, R.style.NavigationLeftTextAppearance);
 			}
 			Toolbar.LayoutParams params = generateDefaultLayoutParams();
 			//params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -202,8 +209,7 @@ public class ToolbarEx extends Toolbar {
 	 */
 	public ToolbarEx setLeftTextAppearance(@StyleRes int styleId) {
 		initLeftText(false);
-		leftText.setTextAppearance(getContext(), styleId);
-
+		setTextStyle(leftText, styleId);
 		return this;
 	}
 
@@ -225,7 +231,7 @@ public class ToolbarEx extends Toolbar {
 			rightText.setPadding(itemPadding, 0, itemPadding, 0);
 			rightText.setGravity(Gravity.CENTER);
 			if (isDefaultStyle) {
-				rightText.setTextAppearance(getContext(), R.style.NavigationRightTextAppearance);
+				setTextStyle(rightText, R.style.NavigationRightTextAppearance);
 			}
 			Toolbar.LayoutParams params = generateDefaultLayoutParams();
 			params.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
@@ -264,8 +270,7 @@ public class ToolbarEx extends Toolbar {
 	 */
 	public ToolbarEx setRightTextAppearance(@StyleRes int styleId) {
 		initRightText(false);
-		rightText.setTextAppearance(getContext(), styleId);
-
+		setTextStyle(rightText, styleId);
 		return this;
 	}
 
@@ -391,11 +396,9 @@ public class ToolbarEx extends Toolbar {
 	 * @return
 	 */
 	public boolean isDarkColor(int color) {
+		// 颜色掉的临界值
+		double darknessThreshold = 0.5;
 		double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
-		if (darkness < 0.5) {
-			return false;
-		} else {
-			return true;
-		}
+		return darkness < darknessThreshold;
 	}
 }

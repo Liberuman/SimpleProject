@@ -1,5 +1,6 @@
 package com.sxu.baselibrary.uiwidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -43,8 +44,12 @@ public class SlidingDeleteLayout extends LinearLayout {
 	private int maxScrollDistance;
 	private OnEventListener mEventListener;
 
-	public final static int STATUS_CLOSED = 0;
-	public final static int STATUS_OPENED = 1;
+	/**
+	 * 侧滑删除空间的打开状态
+	 */
+	private final static int STATUS_CLOSED = 0;
+	private final static int STATUS_OPENED = 1;
+
 	private int mStatus = STATUS_CLOSED;
 
 	public SlidingDeleteLayout(Context context) {
@@ -125,6 +130,8 @@ public class SlidingDeleteLayout extends LinearLayout {
 					return true;
 				}
 				break;
+			default:
+				break;
 		}
 
 		return super.onInterceptTouchEvent(event);
@@ -139,18 +146,22 @@ public class SlidingDeleteLayout extends LinearLayout {
 					getParent().requestDisallowInterceptTouchEvent(true);
 				}
 				break;
+			default:
+				break;
 		}
 
 		return super.dispatchTouchEvent(ev);
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_MOVE:
 				if (getScrollX() <= maxScrollDistance) {
 					float gap = mStartX - event.getX();
-					if (event.getX() < mStartX) { // 向左滑动
+					// 向左滑动
+					if (event.getX() < mStartX) {
 						scrollToRight = false;
 						if (getScrollX() + gap >= maxScrollDistance) {
 							gap = maxScrollDistance - getScrollX();
@@ -199,6 +210,8 @@ public class SlidingDeleteLayout extends LinearLayout {
 					mEventListener.onUp(mStatus);
 				}
 				getParent().requestDisallowInterceptTouchEvent(false);
+				break;
+			default:
 				break;
 		}
 
@@ -316,20 +329,32 @@ public class SlidingDeleteLayout extends LinearLayout {
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		super.onLayout(changed, l, t, r, b);
-		if (getChildCount() == 2) {
+		int childCount = 2;
+		if (getChildCount() == childCount) {
 			maxScrollDistance = getChildAt(1).getMeasuredWidth();
 		}
 	}
 
 	public interface OnMenuItemClickListener {
+		/**
+		 * 侧滑删除菜单被点击时被调用
+		 * @param index 侧滑菜单项的索引
+		 * @param childView 被点击的侧滑菜单对应的View
+		 */
 		void onItemClick(int index, View childView);
 	}
 
 	public interface OnEventListener {
+
+		/**
+		 * 侧滑菜单手指按下时被调用
+		 */
 		void onDown();
+
+		/**
+		 * 侧滑菜单手指抬起时被调用
+		 * @param status
+		 */
 		void onUp(int status);
 	}
-
-
-
 }

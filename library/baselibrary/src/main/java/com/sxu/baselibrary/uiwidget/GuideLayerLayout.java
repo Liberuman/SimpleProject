@@ -93,7 +93,7 @@ public class GuideLayerLayout extends FrameLayout {
 	}
 
 	public void show() {
-		rootLayout = (FrameLayout) ((Activity)getContext()).getWindow().findViewById(android.R.id.content);
+		rootLayout = ((Activity)getContext()).getWindow().findViewById(android.R.id.content);
 		rootLayout.addView(GuideLayerLayout.this, 1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 	}
@@ -103,7 +103,7 @@ public class GuideLayerLayout extends FrameLayout {
 			@Override
 			public void run() {
 				if (getContext() != null) {
-					rootLayout = (FrameLayout) ((Activity) getContext()).getWindow().findViewById(android.R.id.content);
+					rootLayout = ((Activity) getContext()).getWindow().findViewById(android.R.id.content);
 					rootLayout.addView(GuideLayerLayout.this, 1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 							ViewGroup.LayoutParams.MATCH_PARENT));
 				}

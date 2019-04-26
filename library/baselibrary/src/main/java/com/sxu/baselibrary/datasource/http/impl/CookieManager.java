@@ -1,14 +1,10 @@
 package com.sxu.baselibrary.datasource.http.impl;
 
-import android.content.SharedPreferences;
-import android.text.TextUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sxu.baselibrary.datasource.preference.PreferencesManager;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,13 +35,17 @@ public class CookieManager {
 		}
 		Gson gson = new Gson();
 		for (String key : hostSet) {
-			cookieMap.put(key, (ConcurrentHashMap<String, CookieAdapter>) gson.fromJson(
-					PreferencesManager.getString(key), new TypeToken<Map<String, CookieAdapter>>(){}.getType()));
+			try {
+				cookieMap.put(key, (ConcurrentHashMap<String, CookieAdapter>) gson.fromJson(
+						PreferencesManager.getString(key), new TypeToken<Map<String, CookieAdapter>>(){}.getType()));
+			} catch (Exception e) {
+				e.printStackTrace(System.out);
+			}
 		}
 	}
 
 	public static CookieManager getInstance() {
-		return Singleton.instance;
+		return Singleton.INSTANCE;
 	}
 
 	public void addCookie(URI uri, CookieAdapter cookie) {
@@ -69,7 +69,7 @@ public class CookieManager {
 	private void updateCookieMap(URI uri, CookieAdapter cookie) {
 		if (!cookie.isExpires()) {
 			if (!cookieMap.containsKey(uri.getHost())) {
-				cookieMap.put(uri.getHost(), new ConcurrentHashMap<String, CookieAdapter>());
+				cookieMap.put(uri.getHost(), new ConcurrentHashMap<String, CookieAdapter>(8));
 			}
 
 			if (cookieMap.get(uri.getHost()) != null) {
@@ -105,6 +105,6 @@ public class CookieManager {
 	}
 
 	private final static class Singleton {
-		private final static CookieManager instance = new CookieManager();
+		private final static CookieManager INSTANCE = new CookieManager();
 	}
 }

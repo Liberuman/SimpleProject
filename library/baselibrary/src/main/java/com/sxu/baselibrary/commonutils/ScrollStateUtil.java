@@ -3,7 +3,6 @@ package com.sxu.baselibrary.commonutils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
@@ -18,6 +17,10 @@ import android.widget.ScrollView;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class ScrollStateUtil {
+
+	private ScrollStateUtil() {
+
+	}
 
 	/**
 	 * 是否滑动到顶部
@@ -92,7 +95,7 @@ public class ScrollStateUtil {
 		if (layoutManager instanceof LinearLayoutManager
 				&& ((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL) {
 			return position == 0 && firstItemTop == 0;
-		} else if (layoutManager instanceof GridLayoutManager || layoutManager instanceof StaggeredGridLayoutManager) {
+		} else if (layoutManager instanceof GridLayoutManager) {
 			return position < ((GridLayoutManager)layoutManager).getSpanCount() && firstItemTop == 0;
 		} else {
 			/**
@@ -112,9 +115,8 @@ public class ScrollStateUtil {
 		if (listView.getChildCount() > 0) {
 			int lastItemBottom = listView.getChildAt(listView.getChildCount() - 1).getBottom();
 			int listHeight = listView.getBottom() - listView.getTop();
-			if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1  && lastItemBottom <= listHeight) {
-				return true;
-			}
+			return listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1
+					&& lastItemBottom <= listHeight;
 		}
 
 		return false;

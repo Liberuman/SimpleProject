@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Setting页面的Item样式-->
+    <style name="SettingItemStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/fs_14</item>
+        <item name="android:textColor">@color/b1</item>
+        <item name="android:background">@drawable/common_white_0_bg</item>
+    </style>
+    <!-- Setting页面的Text样式-->
+    <style name="SettingItemTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/fs_14</item>
+        <item name="android:textColor">@color/b1</item>
+    </style>
+
+    <!-- Setting页面的块样式-->
+    <style name="SettingLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:divider">@drawable/common_divider_24dp</item>
+        <item name="android:showDividers">middle</item>
+    </style>
+
+</resources>

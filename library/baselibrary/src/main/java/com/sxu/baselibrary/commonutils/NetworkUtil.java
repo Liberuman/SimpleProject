@@ -1,5 +1,6 @@
 package com.sxu.baselibrary.commonutils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,16 +18,47 @@ import android.text.TextUtils;
  *******************************************************************************/
 public class NetworkUtil {
 
+	private NetworkUtil() {
+
+	}
+
 	public final static String NETWORK_TYPE_2G = "2G";
 	public final static String NETWORK_TYPE_3G = "3G";
 	public final static String NETWORK_TYPE_4G = "4G";
 	public final static String NETWORK_TYPE_WIFI = "Wifi";
 	public final static String NETWORK_TYPE_NONE = "unknown";
 
-	public final static String CARRIER_TYPE_CMCC = "CMCC"; // 中国移动
-	public final static String CARRIER_TYPE_CUCC = "CUCC"; // 中国联通
-	public final static String CARRIER_TYPE_CTCC = "CTCC"; // 中国电信
+	/**
+	 * 中国移动
+	 */
+	public final static String CARRIER_TYPE_CMCC = "CMCC";
+	/**
+	 * 中国联通
+	 */
+	public final static String CARRIER_TYPE_CUCC = "CUCC";
+	/**
+	 * 中国电信
+	 */
+	public final static String CARRIER_TYPE_CTCC = "CTCC";
+	/**
+	 * 未知的运行商
+	 */
 	public final static String CARRIER_TYPE_UNKNOWN = "UNKNOWN";
+
+	/**
+	 * 中国移动网络编号
+	 */
+	private final static String CARRIER_TYPE_CMCC_CODE_46000 = "46000";
+	private final static String CARRIER_TYPE_CMCC_CODE_46002 = "46002";
+	private final static String CARRIER_TYPE_CMCC_CODE_46007 = "46007";
+	/**
+	 * 中国联通网络编号
+	 */
+	private final static String CARRIER_TYPE_CUCC_CODE_46001 = "46001";
+	/**
+	 * 中国电信网络编号
+	 */
+	private final static String CARRIER_TYPE_CTCC_CODE_46003 = "46003";
 
 	/**
 	 * 网络是否连接
@@ -40,12 +72,9 @@ public class NetworkUtil {
 		}
 
 		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected() && (networkInfo.getType() == ConnectivityManager.TYPE_WIFI
-				|| networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)) {
-			return true;
-		}
-
-		return false;
+		return (networkInfo != null && networkInfo.isConnected()
+				&& (networkInfo.getType() == ConnectivityManager.TYPE_WIFI
+					|| networkInfo.getType() == ConnectivityManager.TYPE_MOBILE));
 	}
 
 	/**
@@ -74,9 +103,7 @@ public class NetworkUtil {
 		} else if (type == ConnectivityManager.TYPE_WIFI) {
 			networkType = NETWORK_TYPE_WIFI;
 		} else {
-			/**
-			 * Nothing
-			 */
+
 		}
 
 		return networkType;
@@ -88,7 +115,7 @@ public class NetworkUtil {
 	 * @return
 	 */
 	private static String getMobileNetworkType(int networkType) {
-		String networkTypeStr = NETWORK_TYPE_NONE;
+		String networkTypeStr;
 		switch (networkType) {
 			case TelephonyManager.NETWORK_TYPE_GPRS:
 			case TelephonyManager.NETWORK_TYPE_CDMA:
@@ -111,6 +138,8 @@ public class NetworkUtil {
 			case TelephonyManager.NETWORK_TYPE_LTE:
 				networkTypeStr = NETWORK_TYPE_4G;
 				break;
+			default:
+				networkTypeStr = NETWORK_TYPE_NONE;
 		}
 
 		return networkTypeStr;
@@ -121,21 +150,24 @@ public class NetworkUtil {
 	 * @param context
 	 * @return
 	 */
+	@SuppressLint("MissingPermission")
 	public static String getCarrier(Context context) {
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		if (tm == null) {
 			return CARRIER_TYPE_UNKNOWN;
 		}
-		String subscriberId = tm.getSubscriberId();
-		if (subscriberId == null || subscriberId.equals("")) {
+		 String subscriberId = tm.getSubscriberId();
+		if (TextUtils.isEmpty(subscriberId)) {
 			return CARRIER_TYPE_UNKNOWN;
 		}
 
-		if (subscriberId.startsWith("46000") || subscriberId.startsWith("46002") || subscriberId.startsWith("46007")) {
+		if (subscriberId.startsWith(CARRIER_TYPE_CMCC_CODE_46000)
+				|| subscriberId.startsWith(CARRIER_TYPE_CMCC_CODE_46002)
+				|| subscriberId.startsWith(CARRIER_TYPE_CMCC_CODE_46007)) {
 			return CARRIER_TYPE_CMCC;
-		} else if (subscriberId.startsWith("46001")) {
+		} else if (subscriberId.startsWith(CARRIER_TYPE_CUCC_CODE_46001)) {
 			return CARRIER_TYPE_CUCC;
-		} else if (subscriberId.startsWith("46003")) {
+		} else if (subscriberId.startsWith(CARRIER_TYPE_CTCC_CODE_46003)) {
 			return CARRIER_TYPE_CTCC;
 		}
 

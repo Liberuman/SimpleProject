@@ -17,7 +17,6 @@
 package com.sxu.baselibrary.commonutils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,10 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.sxu.baselibrary.R;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*******************************************************************************
@@ -44,6 +40,10 @@ import java.util.List;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class PermissionUtil {
+
+    private PermissionUtil() {
+
+    }
 
     private final static int PERMISSION_REQUEST_CODE = 1000;
     private static String permissionDesc;
@@ -71,9 +71,9 @@ public class PermissionUtil {
         }
 
         List<String> refusedPermission = new ArrayList<>();
-        for (int i = 0; i < permission.length; i++) {
-            if (ContextCompat.checkSelfPermission(context, permission[i]) != PackageManager.PERMISSION_GRANTED) {
-                refusedPermission.add(permission[i]);
+        for (String item : permission) {
+            if (ContextCompat.checkSelfPermission(context, item) != PackageManager.PERMISSION_GRANTED) {
+                refusedPermission.add(item);
             }
         }
         int refusedPermissionSize = refusedPermission.size();
@@ -88,7 +88,7 @@ public class PermissionUtil {
         }
     }
 
-    public static void requestCallback(final Activity context, int requestCode, String permissions[], int[] grantResults) {
+    public static void requestCallback(final Activity context, int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode != PERMISSION_REQUEST_CODE) {
             return;
         }
@@ -152,13 +152,20 @@ public class PermissionUtil {
     }
 
     public interface OnPermissionRequestListener {
-        // 权限已获取
+
+        /**
+         * 权限获得时被调用
+         */
         void onGranted();
 
-        // 权限被取消
+        /**
+         * 权限被拒绝时调用
+         */
         void onCanceled();
 
-        // 权限别拒绝
+        /**
+         * 权限被调用且勾选不再提示时调用
+         */
         void onDenied();
     }
 }

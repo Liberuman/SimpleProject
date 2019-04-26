@@ -5,13 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -21,7 +17,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.AndroidException;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -31,11 +26,7 @@ import android.widget.LinearLayout;
 
 import com.sxu.baselibrary.R;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
-import com.sxu.baselibrary.commonutils.InputMethodUtil;
-import com.sxu.baselibrary.commonutils.LogUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
-
-import static android.graphics.Typeface.BOLD;
 
 /*******************************************************************************
  * Description: 验证码输入框
@@ -100,7 +91,10 @@ public class VerificationCodeLayout extends LinearLayout {
 		setShowDividers(SHOW_DIVIDER_MIDDLE);
 		Drawable divider = createDivider();
 		setDividerDrawable(divider);
+		addItemLayout();
+	}
 
+	private void addItemLayout() {
 		Drawable itemBg = null;
 		if (itemGap == 0) {
 			ViewBgUtil.setShapeBg(this, itemBgColor, itemBorderColor, itemBorderWidth, itemRadius);
@@ -254,6 +248,10 @@ public class VerificationCodeLayout extends LinearLayout {
 	}
 
 	public interface OnInputListener {
+
+		/**
+		 * 验证码被输入完成时被调用
+		 */
 		void onInputComplete();
 	}
 
@@ -277,6 +275,10 @@ public class VerificationCodeLayout extends LinearLayout {
 		public boolean onTextContextMenuItem(int id) {
 			if (id == android.R.id.paste) {
 				ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+				if (cm == null) {
+					return super.onTextContextMenuItem(id);
+				}
+
 				ClipData clipData = cm.getPrimaryClip();
 				if (clipData != null && clipData.getItemCount() > 0) {
 					String content =  clipData.getItemAt(0).coerceToText(getContext()).toString();
@@ -304,6 +306,11 @@ public class VerificationCodeLayout extends LinearLayout {
 		}
 
 		public interface OnPasteListener {
+
+			/**
+			 * 验证码被复制时被调用
+			 * @param content
+			 */
 			void onPaste(String content);
 		}
 	}

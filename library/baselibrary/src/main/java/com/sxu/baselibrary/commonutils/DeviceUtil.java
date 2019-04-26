@@ -1,12 +1,12 @@
 package com.sxu.baselibrary.commonutils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.ViewConfiguration;
@@ -28,11 +28,25 @@ import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
 public class DeviceUtil {
 
+	private DeviceUtil() {
+
+	}
+
+	/**
+	 * 空的DeviceId
+	 */
+	private final static String EMPTY_DEVICE_ID = "0";
+	/**
+	 * 是否有虚拟按键
+	 */
+	private final static String NAV_BAR_STATUS = "0";
+
 	/**
 	 * 获取手机的Mac地址
 	 * @param context
 	 * @return
 	 */
+	@SuppressLint("MissingPermission")
 	public static String getMacAddress(Context context) {
 		String macAddress = "";
 		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -53,10 +67,15 @@ public class DeviceUtil {
 	 * @param context
 	 * @return
 	 */
+	@SuppressLint("MissingPermission")
 	public static String getDeviceId(Context context) {
 		TelephonyManager phoneManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		if (phoneManager != null) {
-			return phoneManager.getDeviceId();
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+				return phoneManager.getImei();
+			} else {
+				return phoneManager.getDeviceId();
+			}
 		}
 
 		return "";
@@ -69,17 +88,13 @@ public class DeviceUtil {
 	 */
 	public static String getDeviceToken(Context context) {
 		String deviceId = getDeviceId(context);
-		if (TextUtils.isEmpty(deviceId) || deviceId.equals("0")) {
+		if (TextUtils.isEmpty(deviceId) || EMPTY_DEVICE_ID.equals(deviceId)) {
 			String macAddress = getMacAddress(context);
 			if (!TextUtils.isEmpty(macAddress)) {
 				deviceId = macAddress;
 			} else {
 				UUID uuid = UUID.randomUUID();
-				if (uuid != null) {
-					deviceId = uuid.toString();
-				} else {
-					deviceId = "unknown device";
-				}
+				deviceId = uuid.toString();
 			}
 		}
 
@@ -115,7 +130,7 @@ public class DeviceUtil {
 	 * @return
 	 */
 	public static boolean checkDeviceHasVisualKey(Context context) {
-		boolean hasVisualKey = false;
+		boolean hasVisualKey;
 		Resources rs = Resources.getSystem();
 		int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
 		if (id > 0) {
@@ -124,13 +139,9 @@ public class DeviceUtil {
 				Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
 				Method m = systemPropertiesClass.getMethod("get", String.class);
 				String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
-				if ("1".equals(navBarOverride)) {
-					hasVisualKey = false;
-				} else if ("0".equals(navBarOverride)) {
-					hasVisualKey = true;
-				}
+				hasVisualKey = NAV_BAR_STATUS.equals(navBarOverride);
 			} catch (Exception e) {
-
+				e.printStackTrace(System.out);
 			}
 		} else {
 			hasVisualKey = !ViewConfiguration.get(context).hasPermanentMenuKey();

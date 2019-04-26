@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.processor.RequestProcessor;
 import com.sxu.basecomponent.processor.RequestProcessorImpl;
-import com.sxu.basecomponent.uiwidget.ToolbarEx;
 
 
 /*******************************************************************************
@@ -22,7 +21,7 @@ import com.sxu.basecomponent.uiwidget.ToolbarEx;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class BaseProgressFragment extends CommonFragment implements RequestProcessor {
+public abstract class BaseProgressFragment extends BaseCommonFragment implements RequestProcessor {
 
     private View loadingLayout;
     private RequestProcessorImpl processor;
@@ -61,7 +60,8 @@ public abstract class BaseProgressFragment extends CommonFragment implements Req
         processor.setOnShowContentLayoutListener(new RequestProcessorImpl.OnShowContentLayoutListener() {
             @Override
             public void onShowContentLayout() {
-                if (!hasLoaded) { // 是否为初次加载，以区分刷新操作
+                // 是否为初次加载，以区分刷新操作
+                if (!hasLoaded) {
                     hasLoaded = true;
                     View contentLayout = View.inflate(context, getLayoutResId(), null);
                     processor.updateContentView(loadingLayout, contentLayout);

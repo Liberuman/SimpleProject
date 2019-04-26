@@ -22,29 +22,35 @@ import java.io.ByteArrayOutputStream;
 
 public class BitmapUtil {
 
+	private BitmapUtil() {
+
+	}
+
 	/**
 	 * 将Drawable对象转换成Bitmap对象
 	 * @param drawable
 	 * @return
 	 */
 	public static Bitmap drawableToBitmap(Drawable drawable) {
-		if (drawable != null) {
-			if (drawable instanceof BitmapDrawable) {
-				return ((BitmapDrawable) drawable).getBitmap();
-			}
+		if (drawable == null) {
+			return null;
+		}
 
-			try {
-				if (!(drawable instanceof ColorDrawable)) {
-					Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-							Bitmap.Config.ARGB_8888);
-					Canvas canvas = new Canvas(bitmap);
-					drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-					drawable.draw(canvas);
-					return bitmap;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (drawable instanceof BitmapDrawable) {
+			return ((BitmapDrawable) drawable).getBitmap();
+		}
+
+		try {
+			if (!(drawable instanceof ColorDrawable)) {
+				Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+						Bitmap.Config.ARGB_8888);
+				Canvas canvas = new Canvas(bitmap);
+				drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+				drawable.draw(canvas);
+				return bitmap;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return null;

@@ -9,12 +9,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.sxu.baselibrary.R;
 import com.sxu.baselibrary.commonutils.BitmapUtil;
@@ -65,6 +63,10 @@ public class ShapeImageView extends AppCompatImageView {
 		}
 
 		Bitmap bitmap = BitmapUtil.drawableToBitmap(drawable);
+		if (bitmap == null) {
+			return;
+		}
+
 		BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);

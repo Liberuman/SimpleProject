@@ -15,17 +15,17 @@ import java.util.Map;
 
 public class CollectionUtil {
 
+	private CollectionUtil() {
+
+	}
+
 	/**
 	 * 判断指定容器是否为空
 	 * @param collection
 	 * @return
 	 */
 	public static boolean isEmpty(Collection collection) {
-		if (collection == null || collection.size() == 0) {
-			return true;
-		}
-
-		return false;
+		return collection == null || collection.size() == 0;
 	}
 
 	/**
@@ -34,11 +34,7 @@ public class CollectionUtil {
 	 * @return
 	 */
 	public static boolean isEmpty(Map collection) {
-		if (collection == null || collection.size() == 0) {
-			return true;
-		}
-
-		return false;
+		return collection == null || collection.size() == 0;
 	}
 
 	/**
@@ -47,11 +43,7 @@ public class CollectionUtil {
 	 * @return
 	 */
 	public static boolean isEmpty(Object[] items) {
-		if (items == null || items.length == 0) {
-			return true;
-		}
-
-		return false;
+		return items == null || items.length == 0;
 	}
 
 	/**

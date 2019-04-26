@@ -4,18 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 
-import com.sxu.basecomponent.R;
 import com.sxu.baselibrary.commonutils.NetworkUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 
 
 /*******************************************************************************
@@ -40,12 +36,12 @@ public class BaseWebViewActivity extends BaseActivity {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.activity_webview_layout;
+		return 0;
 	}
 
 	@Override
 	protected void getViews() {
-		webView = (WebView) findViewById(R.id.web_view);
+		webView = new WebView(this);
 	}
 
 	@Override
@@ -167,9 +163,7 @@ public class BaseWebViewActivity extends BaseActivity {
 	protected void onDestroy() {
 		webView.removeAllViews();
 		webView.destroy();
-		((ViewGroup)webView.getParent()).removeAllViews();
 		webView = null;
 		super.onDestroy();
-		System.exit(0);
 	}
 }

@@ -16,6 +16,10 @@ import android.graphics.Rect;
  *******************************************************************************/
 public class DisplayUtil {
 
+	private DisplayUtil() {
+
+	}
+
 	/**
 	 * 获取屏幕宽度
 	 * @return

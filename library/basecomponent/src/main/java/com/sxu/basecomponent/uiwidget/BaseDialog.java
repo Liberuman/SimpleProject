@@ -3,14 +3,12 @@ package com.sxu.basecomponent.uiwidget;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.sxu.basecomponent.R;
 
@@ -101,11 +99,23 @@ public abstract class BaseDialog extends DialogFragment {
 		return builder.create();
 	}
 
+	/**
+	 * 初始化Material Design风格的对话框
+	 * @param builder
+	 */
 	protected abstract void initMaterialDialog(AlertDialog.Builder builder);
 
+	/**
+	 * 初始化自定义的对话框
+	 * @param builder
+	 */
 	protected abstract void initCustomDialog(AlertDialog.Builder builder);
 
 	public void show(FragmentManager fm) {
 		super.show(fm, getClass().getName());
+	}
+
+	public void show(FragmentActivity context) {
+		super.show(context.getSupportFragmentManager(), getClass().getName());
 	}
 }

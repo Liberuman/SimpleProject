@@ -18,22 +18,40 @@ import android.widget.Toast;
 
 public class ToastUtil {
 
-	// 默认样式
+	private ToastUtil() {
+
+	}
+
+	/**
+	 * 默认样式
+	 */
 	public final static int TOAST_STYLE_DEFAULT = 0;
-	// 成功样式
+	/**
+	 * 成功样式
+	 */
 	public final static int TOAST_STYLE_CORRECT = 1;
-	// 警告样式
+	/**
+	 * 警告样式
+	 */
 	public final static int TOAST_STYLE_WARNING = 2;
-	// 错误样式
+	/**
+	 * 错误样式
+	 */
 	public final static int TOAST_STYLE_ERROR = 3;
 
 	private static Toast toast;
-	private static int defaultColor = Color.parseColor("#424242");
-	private static int correctColor = Color.parseColor("#4caf50");
-	private static int warningColor = Color.parseColor("#ffc107");
-	private static int errorColor = Color.parseColor("#f44336");
 
-	// 记录上次的显示样式，避免每次设置样式
+	/**
+	 * Toast的背景色
+	 */
+	private static final int DEFAULT_COLOR = Color.parseColor("#424242");
+	private static final int CORRECT_COLOR = Color.parseColor("#4caf50");
+	private static final int WARNING_COLOR = Color.parseColor("#ffc107");
+	private static final int ERROR_COLOR = Color.parseColor("#f44336");
+
+	/**
+	 * 记录上次的显示样式，避免每次设置样式
+	 */
 	private static int lastStyle = TOAST_STYLE_DEFAULT;
 
 	public static void show(String info) {
@@ -65,22 +83,22 @@ public class ToastUtil {
 			int verticalPadding = DisplayUtil.dpToPx(8);
 			int horizontalPadding = DisplayUtil.dpToPx(12);
 			textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
-			ViewBgUtil.setShapeBg(textView, defaultColor, DisplayUtil.dpToPx(6));
+			ViewBgUtil.setShapeBg(textView, DEFAULT_COLOR, DisplayUtil.dpToPx(6));
 			toast.setView(textView);
 			toast.setGravity(Gravity.CENTER, 0, DisplayUtil.dpToPx(70));
 		}
 
 		if (lastStyle != toastStyle) {
-			int backgroundColor = defaultColor;
+			int backgroundColor = DEFAULT_COLOR;
 			switch (toastStyle) {
 				case TOAST_STYLE_CORRECT:
-					backgroundColor = correctColor;
+					backgroundColor = CORRECT_COLOR;
 					break;
 				case TOAST_STYLE_WARNING:
-					backgroundColor = warningColor;
+					backgroundColor = WARNING_COLOR;
 					break;
 				case TOAST_STYLE_ERROR:
-					backgroundColor = errorColor;
+					backgroundColor = ERROR_COLOR;
 					break;
 				default:
 					break;

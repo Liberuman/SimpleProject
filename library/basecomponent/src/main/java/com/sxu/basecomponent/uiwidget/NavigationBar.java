@@ -3,6 +3,7 @@ package com.sxu.basecomponent.uiwidget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -251,7 +252,7 @@ public class NavigationBar extends FrameLayout {
 			rootLayout.setBackgroundColor(Color.argb((int)(alpha * 255), 252, 252, 252));
 		} else {
 			bottomLine.setVisibility(VISIBLE);
-			rootLayout.setBackgroundColor(getResources().getColor(R.color.b4));
+			rootLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.b4));
 		}
 	}
 
@@ -263,7 +264,7 @@ public class NavigationBar extends FrameLayout {
 		} else {
 			bottomLine.setVisibility(VISIBLE);
 			returnIcon.setImageResource(R.drawable.nav_back_grey_icon);
-			rootLayout.setBackgroundColor(getResources().getColor(R.color.b4));
+			rootLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.b4));
 		}
 	}
 

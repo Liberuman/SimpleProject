@@ -26,6 +26,8 @@ public class PathManager {
 	private final static String CRASH_DIR_PATH = "crash/";
 	private final static String FILES_DIR_PATH = "files/";
 
+	public final static String ASSET_PATH = "file:///android_asset/";
+
 	private String rootPath;
 	private static PathManager instance;
 
@@ -44,7 +46,9 @@ public class PathManager {
 	public static PathManager getInstance(Context context) {
 		if (instance == null) {
 			synchronized (PathManager.class) {
-				instance = new PathManager(context);
+				if (instance == null) {
+					instance = new PathManager(context.getApplicationContext());
+				}
 			}
 		}
 
@@ -53,8 +57,8 @@ public class PathManager {
 
 	public String setRootPath(Context context) {
 		if (TextUtils.isEmpty(rootPath)) {
-			if (FileUtil.SDCardIsValid()) {
-				// /storage/emulated/0/Android/data/[packagename]在Android2.2之后卸载时会自动删除
+			if (FileUtil.sdcardIsValid()) {
+				// /storage/emulated/0/Android/data/[packageName]在Android2.2之后卸载时会自动删除
 				File file = new File(new File(Environment.getExternalStorageDirectory(), "Android"), "data");
 				rootPath = file.getAbsolutePath();
 			} else {

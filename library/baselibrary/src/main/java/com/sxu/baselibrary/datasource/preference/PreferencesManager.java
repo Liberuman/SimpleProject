@@ -25,7 +25,6 @@ public class PreferencesManager {
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
     private static String PREFERENCE_NAME = "SXU";
-    private static Context context;
 
     static {
         init(BaseContentProvider.context, PREFERENCE_NAME);
@@ -35,8 +34,7 @@ public class PreferencesManager {
         init(context, PREFERENCE_NAME);
     }
 
-    public static void init(Context _context, String preferenceName) {
-        context = _context;
+    public static void init(Context context, String preferenceName) {
         PREFERENCE_NAME = preferenceName;
         preferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();

@@ -17,7 +17,7 @@ import com.sxu.basecomponent.processor.RequestProcessorImpl;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class BaseProgressActivity extends CommonActivity implements RequestProcessor {
+public abstract class BaseProgressActivity extends BaseCommonActivity implements RequestProcessor {
 
     private View loadingLayout;
     private RequestProcessorImpl processor;
@@ -50,7 +50,8 @@ public abstract class BaseProgressActivity extends CommonActivity implements Req
         processor.setOnShowContentLayoutListener(new RequestProcessorImpl.OnShowContentLayoutListener() {
             @Override
             public void onShowContentLayout() {
-                if (!hasLoaded) { // 是否为初次加载，以区分刷新操作
+                // 是否为初次加载，以区分刷新操作
+                if (!hasLoaded) {
                     hasLoaded = true;
                     View contentLayout = View.inflate(context, getLayoutResId(), null);
                     processor.updateContentView(loadingLayout, contentLayout);

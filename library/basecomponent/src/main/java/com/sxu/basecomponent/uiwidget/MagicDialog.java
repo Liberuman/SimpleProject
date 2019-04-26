@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.sxu.basecomponent.activity.BaseActivity;
 
 /*******************************************************************************
  * Description: 可在任意页面显示的Dialog（PS：仅为容器，Dialog的样式需自实现）
@@ -64,6 +60,7 @@ public class MagicDialog extends AppCompatActivity {
 		contentView = dialogContentView;
 		Intent intent = new Intent(context, MagicDialog.class);
 		intent.putExtra(EXTRA_KEY_CANCELABLE, canceledOnTouchOutside);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
 

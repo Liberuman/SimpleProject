@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'AndResGuard'
 apply plugin: 'walle'
 apply plugin: 'android-aspectjx'
@@ -163,6 +164,8 @@ dependencies {
     if (isModule) {
         implementation project(':MainModule')
     }
+
+    //implementation 'com.didichuxing.doraemonkit:doraemonkit:1.1.2'
 }
 
 walle {

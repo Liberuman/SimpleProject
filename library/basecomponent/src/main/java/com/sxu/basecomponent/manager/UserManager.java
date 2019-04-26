@@ -25,7 +25,7 @@ public class UserManager<T> {
 	}
 
 	public static UserManager getInstance() {
-		return SingletonHolder.instance;
+		return SingletonHolder.INSTANCE;
 	}
 
 	private void loadUserInfo() {
@@ -62,6 +62,6 @@ public class UserManager<T> {
 	}
 
 	private static class SingletonHolder {
-		public static final UserManager instance = new UserManager();
+		public static final UserManager INSTANCE = new UserManager();
 	}
 }

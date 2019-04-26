@@ -2,14 +2,10 @@ package com.sxu.basecomponent.uiwidget;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.ArraySet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -21,21 +17,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.sxu.basecomponent.R;
-import com.sxu.basecomponent.adapter.CommonAdapter;
+import com.sxu.basecomponent.adapter.BaseCommonAdapter;
 import com.sxu.basecomponent.adapter.ViewHolder;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static android.widget.AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
-import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
 /*******************************************************************************
  * Description: 选择类的对话框
@@ -61,9 +51,6 @@ public class ChooseDialog extends BaseDialog {
 
 	private AlertDialog.Builder builder;
 
-	private final int VISIBLE_ITEM_MAX_COUNT = 4;
-	private final int ITEM_HEIGHT = 56;
-
 	public ChooseDialog setIsSingle(boolean isSingle) {
 		this.isSingle = isSingle;
 		return this;
@@ -74,7 +61,9 @@ public class ChooseDialog extends BaseDialog {
 	}
 
 	public ChooseDialog setListData(List<String> itemList) {
-		this.items = itemList.toArray(new String[itemList != null ? itemList.size() : 0]);
+		if (itemList != null) {
+			this.items = itemList.toArray(new String[0]);
+		}
 		return this;
 	}
 
@@ -150,19 +139,19 @@ public class ChooseDialog extends BaseDialog {
 		});
 		int state = android.R.attr.state_pressed;
 		int radius = DisplayUtil.dpToPx(8);
-		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(getContext(), R.color.g5)};
+		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(requireActivity(), R.color.g5)};
 		// 根据设置的listener显示按钮，并设置相应的背景
 		if (cancelListener != null && okListener != null) {
 			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
 					new float[] {0 , 0, 0, 0, 0, 0, radius, radius});
 			ViewBgUtil.setSelectorBg(okText, state, bgColor,
 					new float[] {0 , 0, 0, 0, radius, radius, 0, 0});
-		} else if (cancelListener != null && okListener == null) {
+		} else if (cancelListener != null) {
 			gapLine.setVisibility(View.GONE);
 			okText.setVisibility(View.GONE);
 			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
 					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
-		} else if (cancelListener == null && okListener != null) {
+		} else if (okListener != null) {
 			gapLine.setVisibility(View.GONE);
 			cancelText.setVisibility(View.GONE);
 			ViewBgUtil.setSelectorBg(okText, state, bgColor,
@@ -172,9 +161,11 @@ public class ChooseDialog extends BaseDialog {
 		}
 
 		if (items != null && items.length > 0) {
-			if (items.length > VISIBLE_ITEM_MAX_COUNT) {
+			int visibleItemMaxCount = 4;
+			if (items.length > visibleItemMaxCount) {
 				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) contentList.getLayoutParams();
-				params.height = DisplayUtil.dpToPx(ITEM_HEIGHT) * VISIBLE_ITEM_MAX_COUNT;
+				int itemHeight = 56;
+				params.height = DisplayUtil.dpToPx(itemHeight) * visibleItemMaxCount;
 				contentList.setLayoutParams(params);
 			}
 			BaseAdapter adapter;
@@ -196,9 +187,9 @@ public class ChooseDialog extends BaseDialog {
 	}
 
 	private BaseAdapter createSingleChooseAdapter() {
-		return new CommonAdapter<String>(getContext(), items, R.layout.dialog_item_single_choose_layout) {
+		return new BaseCommonAdapter<String>(getContext(), items, R.layout.dialog_item_single_choose_layout) {
 			@Override
-			public void convert(final ViewHolder holder, String paramT, final int position) {
+			public void convert(ViewHolder holder, String paramT, final int position) {
 				holder.setText(R.id.item_text, paramT);
 				final RadioButton radioButton = holder.getView(R.id.radio_button);
 				if (checkedItemIndex == position) {
@@ -230,7 +221,7 @@ public class ChooseDialog extends BaseDialog {
 	}
 
 	private BaseAdapter createMultiChooseDataAdapter() {
-		return new CommonAdapter<String>(getContext(), items, R.layout.dialog_item_multi_choose_layout) {
+		return new BaseCommonAdapter<String>(getContext(), items, R.layout.dialog_item_multi_choose_layout) {
 			@Override
 			public void convert(final ViewHolder holder, String paramT, final int position) {
 				holder.setText(R.id.item_text, paramT);

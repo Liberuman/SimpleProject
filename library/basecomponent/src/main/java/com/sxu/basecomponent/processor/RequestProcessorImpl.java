@@ -36,11 +36,17 @@ public class RequestProcessorImpl implements RequestProcessor {
 	private Context context;
 
 	/**
-	 * 异常布局类型
+	 * 失败时的布局
 	 */
-	private final int LAYOUT_TYPE_FAILURE = 1; // 失败时的布局
-	private final int LAYOUT_TYPE_EMPTY = 2;   // 数据为空时的布局
-	private final int LAYOUT_TYPE_LOGIN = 3;   // 需要登录时的布局
+	private final int LAYOUT_TYPE_FAILURE = 1;
+	/**
+	 * 数据为空时的布局
+	 */
+	private final int LAYOUT_TYPE_EMPTY = 2;
+	/**
+	 * 需要登录时的布局
+	 */
+	private final int LAYOUT_TYPE_LOGIN = 3;
 
 	private Handler handler = new Handler() {
 		@Override
@@ -178,6 +184,9 @@ public class RequestProcessorImpl implements RequestProcessor {
 	}
 
 	public interface OnShowContentLayoutListener {
+		/**
+		 * 开始加载布局
+		 */
 		void onShowContentLayout();
 	}
 }

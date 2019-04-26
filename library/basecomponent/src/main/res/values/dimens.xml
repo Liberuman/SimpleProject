@@ -17,6 +17,7 @@
     <!-- 标题 同样式下中文字体比英文字体大1个sp， 下同 -->
     <dimen name="fs_21">21sp</dimen>
     <dimen name="fs_20">20sp</dimen>
+    <dimen name="fs_18">18sp</dimen>
     <!-- 副标题 -->
     <dimen name="fs_17">17sp</dimen>
     <dimen name="fs_16">16sp</dimen>

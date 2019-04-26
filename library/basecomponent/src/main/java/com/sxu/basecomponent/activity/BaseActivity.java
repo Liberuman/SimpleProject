@@ -12,7 +12,7 @@ import android.view.View;
  *
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
-public abstract class BaseActivity extends CommonActivity {
+public abstract class BaseActivity extends BaseCommonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

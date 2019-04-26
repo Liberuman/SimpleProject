@@ -2,7 +2,6 @@ package com.sxu.commonbusiness.pay;
 
 import android.text.TextUtils;
 
-import java.util.Collections;
 import java.util.Map;
 
 /*******************************************************************************
@@ -27,10 +26,6 @@ public class PayResultBean {
 		}
 
 		String[] resultParams = rawResult.split(";");
-		if (resultParams == null || resultParams.length == 0) {
-			return;
-		}
-
 		for (String resultParam : resultParams) {
 			if (resultParam.startsWith("resultStatus")) {
 				resultStatus = gatValue(resultParam, "resultStatus");

@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class WXUserInfoBean implements Serializable {
 
 	/**
-	 * 1表示男性，2表示女性
+	 * 性别：1表示男性，2表示女性
 	 */
-	public int sex; // 1表示男性，2表示女性
+	public int sex;
 	/**
 	 * 用户统一标识，针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
 	 */

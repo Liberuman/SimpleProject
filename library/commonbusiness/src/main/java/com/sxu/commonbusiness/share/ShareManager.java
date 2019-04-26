@@ -2,11 +2,10 @@ package com.sxu.commonbusiness.share;
 
 import android.app.Activity;
 
-import com.sxu.baselibrary.commonutils.ToastUtil;
-import com.sxu.commonbusiness.share.instance.QQShareInstance;
-import com.sxu.commonbusiness.share.instance.ShareInstance;
-import com.sxu.commonbusiness.share.instance.WeChatShareInstance;
-import com.sxu.commonbusiness.share.instance.WeiboShareInstance;
+import com.sxu.commonbusiness.share.instance.QQBaseShareInstance;
+import com.sxu.commonbusiness.share.instance.BaseShareInstance;
+import com.sxu.commonbusiness.share.instance.WeChatBaseShareInstance;
+import com.sxu.commonbusiness.share.instance.WeiboBaseShareInstance;
 
 /*******************************************************************************
  * Description: 分享管理类
@@ -26,7 +25,7 @@ public class ShareManager {
 	private Activity activity;
 
 	private static ShareManager instance;
-	private ShareInstance shareInstance = null;
+	private BaseShareInstance shareInstance = null;
 
 	private ShareManager() {
 
@@ -50,23 +49,23 @@ public class ShareManager {
 
 	public void share(int flowId, ShareListener listener) {
 		switch (flowId) {
-			case ShareConstants.SHARE_BY_WECAHT:
-				shareInstance = new WeChatShareInstance(activity, flowId, listener);
+			case ShareConstants.SHARE_BY_WECHAT:
+				shareInstance = new WeChatBaseShareInstance(activity, flowId, listener);
 				break;
 			case ShareConstants.SHARE_BY_WECHAT_MOMENT:
-				shareInstance = new WeChatShareInstance(activity, flowId, listener);
+				shareInstance = new WeChatBaseShareInstance(activity, flowId, listener);
 				break;
 			case ShareConstants.SHARE_BY_MINI_PROGRAM:
-				shareInstance = new WeChatShareInstance(activity, ShareConstants.SHARE_BY_MINI_PROGRAM, listener);
+				shareInstance = new WeChatBaseShareInstance(activity, ShareConstants.SHARE_BY_MINI_PROGRAM, listener);
 				break;
 			case ShareConstants.SHARE_BY_WEIBO:
-				shareInstance = new WeiboShareInstance(activity, listener);
+				shareInstance = new WeiboBaseShareInstance(activity, listener);
 				break;
 			case ShareConstants.SHARE_BY_QQ:
-				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ, listener);
+				shareInstance = new QQBaseShareInstance(activity, ShareConstants.SHARE_BY_QQ, listener);
 				break;
 			case ShareConstants.SHARE_BY_QQ_ZONE:
-				shareInstance = new QQShareInstance(activity, ShareConstants.SHARE_BY_QQ_ZONE, listener);
+				shareInstance = new QQBaseShareInstance(activity, ShareConstants.SHARE_BY_QQ_ZONE, listener);
 				break;
 			default:
 				break;
@@ -77,7 +76,7 @@ public class ShareManager {
 		}
 	}
 
-	public ShareInstance getShareInstance() {
+	public BaseShareInstance getShareInstance() {
 		return shareInstance;
 	}
 }

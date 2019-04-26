@@ -36,12 +36,13 @@ class NullOnEmptyConverterFactory extends Converter.Factory {
 				try {
 					JSONObject object = new JSONObject(value.string());
 					Object data = object.get("data");
-					if (data == null || data instanceof List && ((List) data).size() == 0) {
+					boolean isEmpty = (data == null || (data instanceof List && ((List) data).size() == 0));
+					if (isEmpty) {
 						object.remove("data");
 						value = ResponseBody.create(value.contentType(), object.toString());
 					}
 				} catch (Exception e) {
-
+					e.printStackTrace(System.out);
 				}
 
 				return delegate.convert(value);

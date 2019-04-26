@@ -1,12 +1,11 @@
 package com.sxu.basecomponent.uiwidget;
 
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import com.sxu.basecomponent.R;
 import com.sxu.baselibrary.commonutils.CollectionUtil;
 import com.sxu.baselibrary.commonutils.DisplayUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 /*******************************************************************************
@@ -63,7 +61,7 @@ public class BottomDialog extends DialogFragment {
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		final BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+		final BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
 		if (contentView != null) {
 			dialog.setContentView(contentView);
 			return dialog;
@@ -90,14 +88,14 @@ public class BottomDialog extends DialogFragment {
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					DisplayUtil.dpToPx(48));
 			params.gravity = Gravity.CENTER;
-			int textColor = ContextCompat.getColor(getContext(), R.color.b1);
+			int textColor = ContextCompat.getColor(getActivity(), R.color.b1);
 			for (final String menu : menuList) {
-				TextView menuText = new TextView(getContext());
+				TextView menuText = new TextView(getActivity());
 				menuText.setText(menu);
 				menuText.setTextSize(17);
 				menuText.setTextColor(textColor);
 				menuText.setGravity(Gravity.CENTER);
-				menuText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.common_button_bg));
+				menuText.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.common_button_bg));
 
 				menuText.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -120,7 +118,16 @@ public class BottomDialog extends DialogFragment {
 		super.show(fm, getClass().getName());
 	}
 
+	public void show(FragmentActivity context) {
+		super.show(context.getSupportFragmentManager(), getClass().getName());
+	}
+
 	public interface OnItemClickListener {
+		/**
+		 * 对话框中每一项点击事件时被调用
+		 * @param value
+		 * @param position
+		 */
 		void onItemClicked(String value, int position);
 	}
 }

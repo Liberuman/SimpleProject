@@ -1,14 +1,12 @@
 package com.sxu.baselibrary.commonutils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
@@ -24,6 +22,15 @@ import android.widget.TextView;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class ViewBgUtil {
+
+	private ViewBgUtil() {
+
+	}
+
+	/**
+	 * 设置状态式背景时需要的最小资源数量
+	 */
+	public final static int MIN_RESOURCE_COUNT = 2;
 
 	/**
 	 * 圆角相同的纯色背景
@@ -264,13 +271,13 @@ public class ViewBgUtil {
 	 * @return
 	 */
 	public static Drawable getDrawable(Context context, int state, @DrawableRes int[] resId) {
-		if (resId == null || resId.length < 2) {
+		if (resId == null || resId.length < MIN_RESOURCE_COUNT) {
 			throw new IllegalArgumentException();
 		}
 		if (context != null && context.getResources() != null) {
 			StateListDrawable drawable = new StateListDrawable();
-			drawable.addState(new int[]{state}, context.getResources().getDrawable(resId[1]));
-			drawable.addState(new int[]{}, context.getResources().getDrawable(resId[0]));
+			drawable.addState(new int[]{state}, ContextCompat.getDrawable(context, resId[1]));
+			drawable.addState(new int[]{}, ContextCompat.getDrawable(context, resId[0]));
 			return drawable;
 		}
 
@@ -419,7 +426,7 @@ public class ViewBgUtil {
 	 * @return
 	 */
 	public static Drawable getDrawable(int state, int shape, int[] bgColor, int[] borderColor, int borderWidth, int radius) {
-		if (bgColor == null || bgColor.length < 2) {
+		if (bgColor == null || bgColor.length < MIN_RESOURCE_COUNT) {
 			throw new IllegalArgumentException();
 		}
 		StateListDrawable drawable = new StateListDrawable();
@@ -441,7 +448,7 @@ public class ViewBgUtil {
 	 * @return
 	 */
 	public static Drawable getDrawable(int state, int shape, int[] bgColor, int[] borderColor, int borderWidth, float[] radius) {
-		if (bgColor == null || bgColor.length < 2) {
+		if (bgColor == null || bgColor.length < MIN_RESOURCE_COUNT) {
 			throw new IllegalArgumentException();
 		}
 		StateListDrawable drawable = new StateListDrawable();
@@ -470,7 +477,7 @@ public class ViewBgUtil {
 
 	public static Drawable getDrawable(int state, int shape, GradientDrawable.Orientation[] orientation,
 	                                   int[][] bgColor, int[] borderColor, int borderWidth, int radius) {
-		if (bgColor == null || bgColor.length < 2) {
+		if (bgColor == null || bgColor.length < MIN_RESOURCE_COUNT) {
 			throw new IllegalArgumentException();
 		}
 		StateListDrawable drawable = new StateListDrawable();
@@ -497,9 +504,9 @@ public class ViewBgUtil {
 				bgColor, borderColor, borderWidth, radius);
 	}
 
-	public static Drawable getDrawable(int state, int shape, GradientDrawable.Orientation orientation[],
+	public static Drawable getDrawable(int state, int shape, GradientDrawable.Orientation[] orientation,
 	                                   int[][] bgColor, int[] borderColor, int borderWidth, float[] radius) {
-		if (bgColor == null || bgColor.length < 2) {
+		if (bgColor == null || bgColor.length < MIN_RESOURCE_COUNT) {
 			throw new IllegalArgumentException();
 		}
 		StateListDrawable drawable = new StateListDrawable();

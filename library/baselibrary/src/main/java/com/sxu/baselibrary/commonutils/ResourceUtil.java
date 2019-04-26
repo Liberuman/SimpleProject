@@ -1,19 +1,11 @@
 package com.sxu.baselibrary.commonutils;
 
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /*******************************************************************************
  * Description: 获取资源
@@ -25,6 +17,10 @@ import java.io.InputStream;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public class ResourceUtil {
+
+	private ResourceUtil() {
+
+	}
 
 	/**
 	 * 获取Drawable资源

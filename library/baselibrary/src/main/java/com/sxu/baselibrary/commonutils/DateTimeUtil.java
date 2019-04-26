@@ -16,9 +16,31 @@ import java.util.Date;
 
 public class DateTimeUtil {
 
-	private final static long MILLI_SECOND_OF_DAY = 24 * 60 * 60 * 1000;
+	private DateTimeUtil() {
 
-	private final static String[] weeks = {"日", "一", "二", "三", "四", "五", "六"};
+	}
+
+	/**
+	 * 每秒的毫秒数
+	 */
+	private final static long MILLI_SECOND_OF_SECOND = 1000;
+	/**
+	 * 每分钟的毫秒数
+	 */
+	private final static long MILLI_SECOND_OF_MINUTE = 60 * MILLI_SECOND_OF_SECOND;
+	/**
+	 * 每小时的毫秒数
+	 */
+	private final static long MILLI_SECOND_OF_HOUR = 60 * MILLI_SECOND_OF_MINUTE;
+	/**
+	 * 每天的毫秒数
+	 */
+	private final static long MILLI_SECOND_OF_DAY = 24 * MILLI_SECOND_OF_HOUR;
+
+	/**
+	 * 星期的中文描述
+	 */
+	private final static String[] WEEKS = {"日", "一", "二", "三", "四", "五", "六"};
 
 	/**
 	 * 将秒转换成指定格式的日期
@@ -28,7 +50,7 @@ public class DateTimeUtil {
 	 */
 	public static String formatDate(long second, String format) {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Date date = new Date(second * 1000);
+		Date date = new Date(second * MILLI_SECOND_OF_SECOND);
 		return sdf.format(date);
 	}
 
@@ -69,15 +91,12 @@ public class DateTimeUtil {
 	 * @param startDate
 	 * @param endDate
 	 * @param format
-	 * @param spacer
+	 * @param separator
 	 * @return
 	 */
-	public static String formatDurationDate(Date startDate, Date endDate, String format, String spacer) {
+	public static String formatDurationDate(Date startDate, Date endDate, String format, String separator) {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		return new StringBuilder(sdf.format(startDate))
-				.append(spacer)
-				.append(sdf.format(endDate))
-				.toString();
+		return sdf.format(startDate) + separator + sdf.format(endDate);
 	}
 
 	/**
@@ -96,17 +115,14 @@ public class DateTimeUtil {
 	 * @param startTime
 	 * @param endTime
 	 * @param format
-	 * @param spacer
+	 * @param separator
 	 * @return
 	 */
-	public static String formatDurationDate(String startTime, String endTime, String format, String spacer) {
+	public static String formatDurationDate(String startTime, String endTime, String format, String separator) {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Date startDate = new Date(ConvertUtil.stringToLong(startTime) * 1000);
-		Date endDate = new Date(ConvertUtil.stringToLong(endTime) * 1000);
-		return new StringBuilder(sdf.format(startDate))
-				.append(spacer)
-				.append(sdf.format(endDate))
-				.toString();
+		Date startDate = new Date(ConvertUtil.stringToLong(startTime) * MILLI_SECOND_OF_SECOND);
+		Date endDate = new Date(ConvertUtil.stringToLong(endTime) * MILLI_SECOND_OF_SECOND);
+		return sdf.format(startDate) + separator + sdf.format(endDate);
 	}
 
 	/**
@@ -115,11 +131,11 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getWeekText(int weekDay) {
-		if (weekDay < 0 || weekDay >= weeks.length) {
+		if (weekDay < 0 || weekDay >= WEEKS.length) {
 			return "";
 		}
 
-		return "周" + weeks[weekDay];
+		return "周" + WEEKS[weekDay];
 	}
 
 	/**
@@ -135,7 +151,7 @@ public class DateTimeUtil {
 		builder.append(sdf.format(new Date(millisecond)));
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date(millisecond));
-		builder.append(" ").append(prefix).append(weeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+		builder.append(" ").append(prefix).append(WEEKS[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
 
 		return builder.toString();
 	}
@@ -148,7 +164,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getDateAndWeek(String second, String pattern, String prefix) {
-		return getDateAndWeek(ConvertUtil.stringToLong(second) * 1000, pattern, prefix);
+		return getDateAndWeek(ConvertUtil.stringToLong(second) * MILLI_SECOND_OF_SECOND, pattern, prefix);
 	}
 
 	/**
@@ -168,40 +184,21 @@ public class DateTimeUtil {
 	}
 
 
-	//定制订单预约中计时
-	public static String getPassedTime(long startTime, long currentTime) {
-		long msecPerHour = 60 * 60; // 一小时的秒数
-		long msecPerMin = 60; // 一分钟的秒数
-		long hour = 0;
-		long minute = 0;
-		long seconds = 0;
-		StringBuffer strPassedTime = new StringBuffer();
-		long passedTime = currentTime - startTime;
-		if (passedTime > 0) {
-			hour = passedTime / msecPerHour;
-			minute = (passedTime % msecPerHour) / msecPerMin;
-			seconds = (passedTime % msecPerHour % msecPerMin);
-			if (hour > 0) {
-				if (hour < 10) {
-					strPassedTime.append("0");
-				}
-				strPassedTime.append(hour).append(":");
-				if (minute < 10) {
-					strPassedTime.append("0");
-				}
-				strPassedTime.append(minute);
-			} else {
-				if (minute < 10) {
-					strPassedTime.append("0");
-				}
-				strPassedTime.append(minute).append(":");
-				if (seconds < 10) {
-					strPassedTime.append("0");
-				}
-				strPassedTime.append(seconds);
-			}
+	/**
+	 * 获取倒计时的当前时间
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public static String getCountDownTime(long startTime, long endTime) {
+		final long countDownTime = endTime > startTime ? endTime - startTime : 0;
+		if (countDownTime == 0) {
+			return null;
 		}
 
-		return strPassedTime.toString();
+		final String remindTimeFormat = "%02d:%02d:%02d";
+		return String.format(remindTimeFormat, countDownTime / MILLI_SECOND_OF_HOUR,
+				countDownTime % MILLI_SECOND_OF_HOUR / MILLI_SECOND_OF_MINUTE,
+				countDownTime % MILLI_SECOND_OF_MINUTE / MILLI_SECOND_OF_SECOND);
 	}
 }

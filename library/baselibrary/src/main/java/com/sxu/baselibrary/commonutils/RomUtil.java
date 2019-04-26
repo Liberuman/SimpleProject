@@ -19,6 +19,10 @@ import java.io.InputStreamReader;
 
 public class RomUtil {
 
+	private RomUtil() {
+
+	}
+
 	private static final String TAG = "Rom";
 
 	public static final String ROM_MIUI = "MIUI";
@@ -108,23 +112,17 @@ public class RomUtil {
 	}
 
 	public static String getProp(String name) {
-		String line = null;
+		String line;
 		BufferedReader input = null;
 		try {
 			Process p = Runtime.getRuntime().exec("getprop " + name);
-			input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+			input = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"), 1024);
 			line = input.readLine();
 			input.close();
 		} catch (IOException ex) {
 			return null;
 		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			FileUtil.quietClose(input);
 		}
 		return line;
 	}

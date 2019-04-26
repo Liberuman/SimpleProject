@@ -14,6 +14,10 @@ import android.view.View;
  *******************************************************************************/
 public class ViewUtil {
 
+	private ViewUtil() {
+
+	}
+
 	/**
 	 * 获取View在屏幕上的上边距
 	 * @param view

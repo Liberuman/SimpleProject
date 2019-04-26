@@ -3,15 +3,12 @@ package com.sxu.commonbusinessdemo.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.sxu.baselibrary.commonutils.ToastUtil;
 import com.sxu.commonbusiness.login.instance.WXLoginInstance;
 import com.sxu.commonbusiness.share.ShareConstants;
-import com.sxu.commonbusiness.share.instance.WeChatShareInstance;
+import com.sxu.commonbusiness.share.instance.WeChatBaseShareInstance;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -48,7 +45,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         if (resp.getType() == WX_SDK_LOGIN) {
             WXLoginInstance.onResp(this, resp);
         } else if (resp.getType() == WX_SDK_SHARE) {
-            WeChatShareInstance.onResp(this, resp);
+            WeChatBaseShareInstance.onResp(this, resp);
         }
     }
 }

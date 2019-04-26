@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.sxu.basecomponent.R;
-import com.sxu.baselibrary.commonutils.DisplayUtil;
 import com.sxu.baselibrary.commonutils.ViewBgUtil;
 
 /*******************************************************************************
@@ -51,6 +50,8 @@ public class ContainerLayoutStyleImpl implements ContainerLayoutStyle {
 				break;
 			case TOOL_BAR_STYLE_TRANSLUCENT:
 				containerLayout = createTransparentToolbarLayout(false);
+				break;
+			default:
 				break;
 		}
 	}

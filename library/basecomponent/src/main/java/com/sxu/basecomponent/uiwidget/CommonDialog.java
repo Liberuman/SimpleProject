@@ -60,19 +60,19 @@ public class CommonDialog extends BaseDialog {
 		});
 		int state = android.R.attr.state_pressed;
 		int radius = DisplayUtil.dpToPx(8);
-		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(getContext(), R.color.g5)};
+		int[] bgColor = new int[] {Color.WHITE, ContextCompat.getColor(requireActivity(), R.color.g5)};
 		// 根据设置的listener显示按钮，并设置相应的背景
 		if (cancelListener != null && okListener != null) {
 			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
 					new float[] {0 , 0, 0, 0, 0, 0, radius, radius});
 			ViewBgUtil.setSelectorBg(okText, state, bgColor,
 					new float[] {0 , 0, 0, 0, radius, radius, 0, 0});
-		} else if (cancelListener != null && okListener == null) {
+		} else if (cancelListener != null) {
 			gapLine.setVisibility(View.GONE);
 			okText.setVisibility(View.GONE);
 			ViewBgUtil.setSelectorBg(cancelText, state, bgColor,
 					new float[] {0 , 0, 0, 0, radius, radius, radius, radius});
-		} else if (cancelListener == null && okListener != null) {
+		} else if (okListener != null) {
 			gapLine.setVisibility(View.GONE);
 			cancelText.setVisibility(View.GONE);
 			ViewBgUtil.setSelectorBg(okText, state, bgColor,

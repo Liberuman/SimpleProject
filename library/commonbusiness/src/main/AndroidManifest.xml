@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
           package="com.sxu.commonbusiness">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -115,9 +114,6 @@
 
         <activity android:name=".share.activity.ShareActivity"
             android:theme="@style/cb_CommonDialog"/>
-
-        <activity android:name="com.sxu.commonbusiness.permission.PermissionActivity"
-                  android:theme="@style/cb_TransparentTheme"/>
 
     </application>
 </manifest>

@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.sxu.basecomponent.R;
 import com.sxu.baselibrary.commonutils.CollectionUtil;
-import com.sxu.baselibrary.commonutils.LogUtil;
 
 import java.util.List;
 
@@ -86,9 +85,7 @@ public class FragmentHandlerManager {
 		switch (operator) {
 			case OPERATOR_ADD:
 				List<Fragment> fragmentList = fm.getFragments();
-				transaction.setCustomAnimations(R.anim.anim_translate_right_in_300, R.anim.anim_translate_left_out_300,
-						R.anim.anim_translate_left_in_300, R.anim.anim_translate_right_out_300)
-						.add(containerId, fragment);
+				transaction.add(containerId, fragment);
 				if (!CollectionUtil.isEmpty(fragmentList)) {
 					transaction.hide(fragmentList.get(fragmentList.size() - 1));
 				}

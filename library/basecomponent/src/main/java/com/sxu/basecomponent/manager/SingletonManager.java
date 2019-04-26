@@ -17,24 +17,27 @@ import java.util.concurrent.ConcurrentHashMap;
  *******************************************************************************/
 public class SingletonManager {
 
-	private static Map<Class, Object> singletonMap = new ConcurrentHashMap<>();
+	/**
+	 * 内部类的分隔符
+	 */
+	private final static String INNER_CLASS_SEPARATOR = "$";
+
+	private final static Map<Class, Object> SINGLETON_MAP = new ConcurrentHashMap<>();
 
 	public static<T> T getInstance(@NonNull Class<T> tClass) {
-		if (tClass.getName().contains("$")) {
+		if (tClass.getName().contains(INNER_CLASS_SEPARATOR)) {
 			throw new IllegalArgumentException("tClass can't be inner class!");
 		}
-		Object result = singletonMap.get(tClass);
+		Object result = SINGLETON_MAP.get(tClass);
 		if (result == null) {
-			synchronized (singletonMap) {
-				if (result == null) {
-					try {
-						Constructor constructor = tClass.getDeclaredConstructor();
-						constructor.setAccessible(true);
-						result = constructor.newInstance();
-						singletonMap.put(tClass, result);
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
+			synchronized (SINGLETON_MAP) {
+				try {
+					Constructor constructor = tClass.getDeclaredConstructor();
+					constructor.setAccessible(true);
+					result = constructor.newInstance();
+					SINGLETON_MAP.put(tClass, result);
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -43,10 +46,10 @@ public class SingletonManager {
 	}
 
 	public static void removeInstance(@NonNull Class<?> tClass) {
-		singletonMap.remove(tClass);
+		SINGLETON_MAP.remove(tClass);
 	}
 
 	public static void clear() {
-		singletonMap.clear();
+		SINGLETON_MAP.clear();
 	}
 }

@@ -1,11 +1,7 @@
 package com.sxu.module1;
 
 import android.os.Handler;
-import android.view.View;
 
-import com.sxu.basecomponent.activity.CommonActivity;
-import com.sxu.basecomponent.mvp.BasePresenter;
-import com.sxu.basecomponent.mvp.BaseView;
 import com.sxu.basecomponent.processor.RequestProcessor;
 
 /*******************************************************************************

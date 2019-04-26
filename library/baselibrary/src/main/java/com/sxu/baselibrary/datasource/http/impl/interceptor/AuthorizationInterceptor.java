@@ -22,13 +22,11 @@ import okhttp3.Response;
 
 public class AuthorizationInterceptor implements Interceptor {
 
-	private final String AUTH_KEY = "AUTH";
-
 	@Override
 	public Response intercept(Chain chain) throws IOException {
-
 		Request newRequest = chain.request();
-		String authorization = PreferencesManager.getString(AUTH_KEY);
+		String authKey = "KEY_AUTH";
+		String authorization = PreferencesManager.getString(authKey);
 		if (!TextUtils.isEmpty(authorization)) {
 			newRequest = newRequest.newBuilder()
 					.addHeader("Authorization", authorization)
@@ -39,7 +37,7 @@ public class AuthorizationInterceptor implements Interceptor {
 		if (response != null) {
 			authorization = response.header("WWW-Authenticate");
 			if (!TextUtils.isEmpty(authorization)) {
-				PreferencesManager.putString(AUTH_KEY, authorization);
+				PreferencesManager.putString(authKey, authorization);
 			}
 		}
 

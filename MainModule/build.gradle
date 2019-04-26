@@ -4,6 +4,7 @@ if (isModule) {
     apply plugin: 'com.android.application'
 }
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'android-aspectjx'
 
 android {
@@ -19,7 +20,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
 
@@ -27,11 +28,11 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a'
         }
 
-        manifestPlaceholders =[
+        manifestPlaceholders = [
                 JPUSH_PKGNAME: "${applicationId}",
                 JPUSH_APPKEY : "appkey",
-                JPUSH_CHANNEL : "channel",
-                QQ_ID: "qq_id"
+                JPUSH_CHANNEL: "channel",
+                QQ_ID        : "qq_id"
         ]
     }
 

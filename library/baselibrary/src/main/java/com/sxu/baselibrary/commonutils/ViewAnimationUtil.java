@@ -20,6 +20,10 @@ import android.view.animation.TranslateAnimation;
  *******************************************************************************/
 public class ViewAnimationUtil {
 
+	private ViewAnimationUtil() {
+
+	}
+
 	private final static int DEFAULT_DURATION = 350;
 
 	public static void translate(View view, int startX, int startY, int endX, int endY) {
@@ -35,7 +39,7 @@ public class ViewAnimationUtil {
 	}
 
 	public static void translate(View view, int startX, int startY, int endX, int endY, int duration, Interpolator interpolator) {
-		TranslateAnimation animation = new TranslateAnimation(startX, startY, endX, endY);
+		TranslateAnimation animation = new TranslateAnimation(startX, endX, startY, endY);
 		animation.setDuration(duration);
 		animation.setFillAfter(true);
 		animation.setInterpolator(interpolator);

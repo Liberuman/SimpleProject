@@ -3,9 +3,8 @@ package com.sxu.baselibrary.commonutils;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import java.math.BigInteger;
 import java.net.URLEncoder;
-import java.security.MessageDigest;
+import java.util.Arrays;
 
 /*******************************************************************************
  * Description: 字符串编码
@@ -17,6 +16,10 @@ import java.security.MessageDigest;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 public final class EncodeUtil {
+
+	private EncodeUtil() {
+
+	}
 
 	/**
 	 * 使用utf-8字符集进行URL编码
@@ -78,7 +81,7 @@ public final class EncodeUtil {
 	public static String encodeByBase(String content) {
 		if (!TextUtils.isEmpty(content)) {
 			try {
-				return Base64.encode(content.getBytes(), Base64.DEFAULT).toString();
+				return Arrays.toString(Base64.encode(content.getBytes("UTF-8"), Base64.DEFAULT));
 			} catch (Exception e) {
 				e.printStackTrace(System.out);
 			}
@@ -95,7 +98,7 @@ public final class EncodeUtil {
 	public static String decodeByBase(String content) {
 		if (!TextUtils.isEmpty(content)) {
 			try {
-				return Base64.decode(content.getBytes(), Base64.DEFAULT).toString();
+				return Arrays.toString(Base64.decode(content.getBytes("UTF-8"), Base64.DEFAULT));
 			} catch (Exception e) {
 				e.printStackTrace(System.out);
 			}

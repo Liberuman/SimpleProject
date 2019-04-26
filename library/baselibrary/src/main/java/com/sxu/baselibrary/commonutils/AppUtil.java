@@ -21,6 +21,10 @@ import java.util.List;
 
 public class AppUtil {
 
+	private AppUtil() {
+
+	}
+
 	/**
 	 * 获取APP的VersionCode
 	 * @param context
@@ -61,6 +65,10 @@ public class AppUtil {
 	public static String getProcessName(Context context) {
 		int pid = Process.myPid();
 		ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		if (am == null) {
+			return null;
+		}
+
 		for (ActivityManager.RunningAppProcessInfo process : am.getRunningAppProcesses()) {
 			if (process.pid == pid) {
 				return process.processName;
@@ -77,11 +85,17 @@ public class AppUtil {
 	 */
 	public static boolean appIsRunning(Context context) {
 		ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-		List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(50);
-		//100表示取的最大的任务数，info.topActivity表示当前正在运行的Activity，info.baseActivity表系统后台有此进程在运行
-		for (ActivityManager.RunningTaskInfo info : list) {
-			if (context.getPackageName().equals(info.topActivity.getPackageName())
-					|| context.getPackageName().equals(info.baseActivity.getPackageName())) {
+		if (am == null) {
+			return false;
+		}
+
+		List<ActivityManager.RunningAppProcessInfo> appList = am.getRunningAppProcesses();
+		if (appList == null) {
+			return false;
+		}
+
+		for (ActivityManager.RunningAppProcessInfo appInfo : appList) {
+			if (context.getPackageName().equals(appInfo.processName)) {
 				return true;
 			}
 		}
@@ -96,9 +110,20 @@ public class AppUtil {
 	 */
 	public static boolean appIsForeground(Context context) {
 		ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-		List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(1);
-		if (!CollectionUtil.isEmpty(taskList) && context.getPackageName().equals(taskList.get(0).topActivity.getPackageName())) {
-			return true;
+		if (am == null) {
+			return false;
+		}
+
+		List<ActivityManager.RunningAppProcessInfo> appList = am.getRunningAppProcesses();
+		if (appList == null) {
+			return false;
+		}
+
+		for (ActivityManager.RunningAppProcessInfo appInfo : appList) {
+			if (context.getPackageName().equals(appInfo.processName)
+					&& appInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+				return true;
+			}
 		}
 
 		return false;
@@ -120,18 +145,6 @@ public class AppUtil {
 		}
 
 		return false;
-	}
-
-	/**
-	 * 指定的Activity是否运行在前台
-	 * @param context
-	 * @param className
-	 * @return
-	 */
-	public static boolean activityIsForeground(Context context, String className) {
-		ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-		List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(1);
-		return !CollectionUtil.isEmpty(taskList) && className.equals(taskList.get(0).topActivity.getClassName());
 	}
 }
 

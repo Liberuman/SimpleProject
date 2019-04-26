@@ -1,16 +1,11 @@
 package com.sxu.basecomponent.adapter;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,25 +21,25 @@ import java.util.List;
  * Copyright: all rights reserved by Freeman.
  *******************************************************************************/
 
-public abstract class CommonAdapter<T extends Object> extends BaseAdapter {
+public abstract class BaseCommonAdapter<T> extends BaseAdapter {
 
 	private Context mContext;
 	private List<T> mData;
 	private @LayoutRes int[] mResId;
 
-	public CommonAdapter(Context context, List<T> data, @LayoutRes int resId) {
+	public BaseCommonAdapter(Context context, List<T> data, @LayoutRes int resId) {
 		this.mContext = context;
 		this.mData = data;
 		this.mResId = new int[] {resId};
 	}
 
-	public CommonAdapter(Context context, List<T> data, @LayoutRes int[] resId) {
+	public BaseCommonAdapter(Context context, List<T> data, @LayoutRes int[] resId) {
 		this.mContext = context;
 		this.mData = data;
 		this.mResId = resId;
 	}
 
-	public CommonAdapter(Context context, T[] data, @LayoutRes int resId) {
+	public BaseCommonAdapter(Context context, T[] data, @LayoutRes int resId) {
 		this(context, Arrays.asList(data), resId);
 	}
 
@@ -76,7 +71,7 @@ public abstract class CommonAdapter<T extends Object> extends BaseAdapter {
 
 	@Override
 	public View getView(int i, View view, ViewGroup viewGroup) {
-		ViewHolder holder = null;
+		ViewHolder holder;
 		if (view == null) {
 			view = LayoutInflater.from(mContext).inflate(mResId[getItemViewType(i)], viewGroup, false);
 			holder = ViewHolder.getInstance(view);
@@ -89,6 +84,12 @@ public abstract class CommonAdapter<T extends Object> extends BaseAdapter {
 		return view;
 	}
 
+	/**
+	 * Adapter中数据的填充过程
+	 * @param holder
+	 * @param paramT
+	 * @param position
+	 */
 	public abstract void convert(final ViewHolder holder, final T paramT, final int position);
 
 
